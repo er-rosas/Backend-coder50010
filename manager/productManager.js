@@ -5,20 +5,17 @@ class ProductManager {
     }
 
     addProduct(title, description, price, thumbnail, code, stock) {
-    // Validar campos obligatorios
     if (!title || !description || !price || !thumbnail || !code || !stock) {
         console.error("Todos los campos son obligatorios");
         return;
     }
 
-    // Validar que no se repita el campo "code"
     const existingProduct = this.products.find((product) => product.code === code);
     if (existingProduct) {
         console.log("Ya existe un producto con ese código");
         return;
     }
 
-    // Crear el producto con un id autoincrementable
     const newProduct = {
         id: this.productId,
         title,
@@ -29,10 +26,8 @@ class ProductManager {
         stock
     };
 
-    // Incrementar el id para el próximo producto
     this.productId++;
 
-    // Agregar el producto al arreglo de productos
     this.products.push(newProduct);
     console.log("Producto agregado:", newProduct);
     }
@@ -50,7 +45,6 @@ class ProductManager {
     }
 }
 
-// Ejemplo de uso
 const manager = new ProductManager();
 
 manager.addProduct("Producto 1", "Descripción del Producto 1", 20, "imagen1", "abc123", 10);
@@ -58,4 +52,4 @@ manager.addProduct("Producto 2", "Descripción del Producto 2", 30, "imagen2", "
 
 console.log("Todos los productos:", manager.getProducts());
 console.log("Producto con id 2:", manager.getProductById(2));
-console.log("Producto con id 5:", manager.getProductById(5)); // Debería mostrar un error
+console.log("Producto con id 5:", manager.getProductById(3));
