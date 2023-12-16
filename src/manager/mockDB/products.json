@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Toallas de baño",
+    "description": "Toallas de algodón de alta calidad.",
+    "price": 25,
+    "thumbnail": "ruta_imagen_toallas.jpg",
+    "code": "ABC001",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "title": "Set de utensilios de cocina",
+    "description": "Juego de utensilios de cocina (espátulas, cucharones, pinzas, etc.).",
+    "price": 35,
+    "thumbnail": "ruta_imagen_utensilios.jpg",
+    "code": "ABC002",
+    "stock": 10
+  },
+  {
+    "id": 3,
+    "title": "Juego de sábanas",
+    "description": "Sábanas de algodón suaves para la cama.",
+    "price": 50,
+    "thumbnail": "ruta_imagen_sabanas.jpg",
+    "code": "ABC003",
+    "stock": 10
+  },
+  {
+    "id": 4,
+    "title": "Set de vasos y copas",
+    "description": "Vasos y copas para distintas bebidas.",
+    "price": 30,
+    "thumbnail": "ruta_imagen_vasos.jpg",
+    "code": "ABC004",
+    "stock": 10
+  },
+  {
+    "id": 5,
+    "title": "Almohadas",
+    "description": "Almohadas confortables para el descanso.",
+    "price": 40,
+    "thumbnail": "ruta_imagen_almohadas.jpg",
+    "code": "ABC005",
+    "stock": 10
+  },
+  {
+    "id": 6,
+    "title": "Organizador de armario",
+    "description": "Sistema de organización para maximizar el espacio en el armario.",
+    "price": 55,
+    "thumbnail": "ruta_imagen_organizador.jpg",
+    "code": "ABC006",
+    "stock": 10
+  },
+  {
+    "id": 7,
+    "title": "Set de recipientes herméticos",
+    "description": "Contenedores para almacenar alimentos de manera segura.",
+    "price": 20,
+    "thumbnail": "ruta_imagen_recipientes.jpg",
+    "code": "ABC007",
+    "stock": 10
+  },
+  {
+    "id": 8,
+    "title": "Funda nórdica",
+    "description": "Funda para el edredón nórdico.",
+    "price": 60,
+    "thumbnail": "ruta_imagen_funda.jpg",
+    "code": "ABC008",
+    "stock": 10
+  },
+  {
+    "id": 9,
+    "title": "Cortinas o persianas",
+    "description": "Cortinas o persianas para decorar y controlar la luz.",
+    "price": 45,
+    "thumbnail": "ruta_imagen_cortinas.jpg",
+    "code": "ABC009",
+    "stock": 10
+  },
+  {
+    "id": 10,
+    "title": "Set de toallas de cocina",
+    "description": "Toallas de cocina absorbentes.",
+    "price": 18,
+    "thumbnail": "ruta_imagen_toallas_cocina.jpg",
+    "code": "ABC010",
+    "stock": 10
+  }
+]
