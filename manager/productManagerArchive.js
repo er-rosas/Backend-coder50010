@@ -130,3 +130,14 @@ const manager = new ProductManager('./mockDB/products.json');
 
 // manager.deleteProduct(1);
 // manager.getProducts().then(console.log);
+
+
+
+
+
+
+
+
+
+
+

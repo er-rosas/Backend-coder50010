@@ -56,3 +56,11 @@ manager.addProduct("Producto 2", "Descripción del Producto 2", 30, "imagen2", "
 console.log("Todos los productos:", manager.getProducts());
 console.log("Producto con id 2:", manager.getProductById(2));
 console.log("Producto con id 5:", manager.getProductById(3));
+
+
+
+
+
+
+
+
