@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 class ProductManager {
-    constructor(filePath) {
-        this.path = filePath;
+    constructor() {
+        this.path = './src/mockDB/products.json';
     }
 
     async addProduct(product) {
@@ -109,7 +109,7 @@ class ProductManager {
 }
 
 // Crear una instancia de ProductManager con la nueva ruta del archivo
-const manager = new ProductManager('./mockDB/products.json');
+const manager = new ProductManager('../mockDB/products.json');
 
 module.exports = ProductManager;
 
