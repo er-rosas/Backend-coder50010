@@ -7,12 +7,13 @@ class ProductManager {
 
     async addProduct(product) {
         try {
-            const { title, description, price, thumbnail, code, stock } = product;
+            // const { title, description, price, thumbnail, code, stock } = product;
+            const { code } = product;
     
-            if (!title || !description || !price || !thumbnail || !code || !stock) {
-                console.log('Todos los campos son obligatorios');
-                return;
-            }
+            // if (!title || !description || !price || !code || !stock) {
+            //     console.log('Todos los campos son obligatorios');
+            //     return;
+            // }
     
             const products = await this.getProductsFromFile();
             
@@ -109,7 +110,7 @@ class ProductManager {
 }
 
 // Crear una instancia de ProductManager con la nueva ruta del archivo
-const manager = new ProductManager('../mockDB/products.json');
+// const manager = new ProductManager('../mockDB/products.json');
 
 module.exports = ProductManager;
 

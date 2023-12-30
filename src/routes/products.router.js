@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 
-const ProductManager = require('../manager/productManager');
+const ProductManager = require('../manager/productManager.js');
 const manager = new ProductManager('.src/mockDB/products.json');
-
 
 router.get('/', async (req, res) => {
     try {
@@ -62,7 +61,7 @@ router.post('/', async (req, res) => {
             status: true,
             stock: Number(stock),
             category,
-            thumbnails: thumbnails || [], // Si no se proporciona thumbnails, establecer como un array vacío
+            thumbnails: thumbnails || [], // Si no hay thumbnails establecer como un array vacío
         };
 
         const addedProduct = await manager.addProduct(newProduct);
@@ -98,7 +97,7 @@ router.delete('/:pid', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router
 
 // 1. Obtener todos los productos:
 // Método: GET

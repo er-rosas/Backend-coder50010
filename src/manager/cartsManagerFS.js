@@ -3,7 +3,7 @@ const fs = require('node:fs/promises')
 
 class CartsManagerFS {
     constructor(){
-        this.path = './src/mockDB/Carts.json'
+        this.path = './src/mockDB/carts.json'
     }
 
     async readFile(){
@@ -47,11 +47,11 @@ class CartsManagerFS {
         try {
             const carts = await this.readFile()
             const cartIndex = carts.findIndex(cart => cart.id === cid)
-            if(cartIndex === -1){
+            if(cartIndex == -1){
                 return 'No existe el carrito'
             }
             const productIndex = carts[cartIndex].products.findIndex(producto => producto.product == pid)
-            if(productIndex === -1){
+            if(productIndex == -1){
                 carts[cartIndex].products.push({
                     product: pid,
                     quantity: 1
