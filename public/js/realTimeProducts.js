@@ -31,16 +31,19 @@ const socket = io(); // Conexión con el servidor de Socket.io
         this.reset();
     });
 
-    // Manejar la recepción de un nuevo producto desde el servidor
-    socket.on('addProduct', function(product) {
-        // Agregar el nuevo producto a la lista en la vista
+    socket.on('updateProducts', function(products) {
+        // Actualizar la lista de productos en la vista
         const productList = document.getElementById('productList');
-        const newItem = document.createElement('li');
-        newItem.innerHTML = `
-            <strong>ID:</strong> ${product.id} <br>
-            <strong>Título:</strong> ${product.title} <br>
-            <strong>Descripción:</strong> ${product.description} <br>
-            <!-- Otros detalles del producto -->
-        `;
-        productList.appendChild(newItem);
+        productList.innerHTML = ''; // Limpiar la lista antes de agregar los productos actualizados
+    
+        products.forEach(product => {
+            const newItem = document.createElement('li');
+            newItem.innerHTML = `
+                <strong>ID:</strong> ${product.id} <br>
+                <strong>Título:</strong> ${product.title} <br>
+                <strong>Descripción:</strong> ${product.description} <br>
+                <!-- Otros detalles del producto -->
+            `;
+            productList.appendChild(newItem);
+        });
     });

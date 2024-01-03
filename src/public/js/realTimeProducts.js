@@ -1,28 +1,49 @@
-const express = require('express');
-const router = express.Router();
-const fs = require('fs');
-const { Server: ServerIO } = require('socket.io');
+const socket = io(); // Conexión con el servidor de Socket.io
 
-const productsData = fs.readFileSync('./src/mockDB/products.json', 'utf-8');
-const productos = JSON.parse(productsData);
+    // Manejar el envío del formulario para agregar un nuevo producto
+    document.getElementById('addProductForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-router.get('/', (req, res) => {
-    res.render('realTimeProducts', { productos });
-});
+        // Obtener los valores del formulario
+        const title = document.getElementById('title').value.trim();
+        const description = document.getElementById('description').value.trim();
+        const code = document.getElementById('code').value.trim();
+        const price = parseFloat(document.getElementById('price').value);
+        const stock = parseInt(document.getElementById('stock').value);
+        const category = document.getElementById('category').value.trim();
+        const thumbnails = document.getElementById('thumbnails').value.trim().split(',');
 
-// Agregar una ruta para manejar la creación de nuevos productos por WebSocket
-router.post('/add-product', (req, res) => {
-    // Obtener los datos del producto del formulario
-    const { productName } = req.body;
+        // Construir el objeto del nuevo producto
+        const newProduct = {
+            title,
+            description,
+            code,
+            price,
+            stock,
+            category,
+            thumbnails
+        };
 
-    // Agregar el nuevo producto a la lista de productos
-    productos.push(productName);
+        // Enviar los datos del nuevo producto al servidor a través de WebSocket
+        socket.emit('addProduct', newProduct);
 
-    // Emitir el evento 'addProduct' a través del socket.io al cliente
-    io.emit('addProduct', productName);
+        // Limpiar el formulario después de enviar los datos
+        this.reset();
+    });
 
-    // Enviar una respuesta al cliente, por ejemplo, un código 200 para indicar éxito
-    res.status(200).send('Product added successfully');
-});
-
-module.exports = router;
+    socket.on('updateProducts', function(products) {
+        // Actualizar la lista de productos en la vista
+        const productList = document.getElementById('productList');
+        productList.innerHTML = ''; // Limpiar la lista antes de agregar los productos actualizados
+    
+        products.forEach(product => {
+            const newItem = document.createElement('li');
+            newItem.innerHTML = `
+                <strong>ID:</strong> ${product.id} <br>
+                <strong>Título:</strong> ${product.title} <br>
+                <strong>Descripción:</strong> ${product.description} <br>
+                <!-- Otros detalles del producto -->
+            `;
+            productList.appendChild(newItem);
+        });
+    });

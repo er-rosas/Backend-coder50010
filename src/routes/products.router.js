@@ -111,7 +111,7 @@ module.exports = router
 
 // 3. Agregar un nuevo producto:
 // Método: POST
-// URL: http://localhost:8080/api/products/
+// URL: http://localhost:8080/api/products
 // Cuerpo (en formato JSON):
 // {
 //     "title": "Producto nuevo",

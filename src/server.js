@@ -237,7 +237,8 @@
 
 
 
-
+// const http = require('http').createServer(app);
+// const io = require('socket.io')(http);
 
 
 const express = require('express');
@@ -245,12 +246,12 @@ const app = express();
 const handlebars = require('express-handlebars');
 const { Server: ServerIO, Server }  = require('socket.io')
 const fs = require('fs');
+// import __dirname from "./utils.js";
 
-// const http = require('http').createServer(app);
-// const io = require('socket.io')(http);
 
-// const usersRouter = require('./routes/users.router.js')
-// const cartsRouter = require('./routes/carts.router.js')
+
+const cartRouter = require('./routes/carts.router.js')
+const productRouter = require('./routes/products.router.js')
 // const homeRouter = require('./routes/home.router.js')
 // const realtimeproductsRouter = require('./routes/realtimeproducts.router.js')
 
@@ -259,7 +260,8 @@ const productsData = fs.readFileSync('./src/mockDB/products.json', 'utf-8');
 const productos = JSON.parse(productsData);
 
 
-app.use(express.static(__dirname+'/public'))
+// app.use(express.static(__dirname+'/public'))
+app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
@@ -278,6 +280,18 @@ app.get('/realtimeproducts', (req, res) => {
     res.render('realTimeProducts', { productos });
 });
 
+
+// app.use('/', homeRouter)
+// app.use('/realtimeproducts', realtimeproductsRouter)
+app.use('/api/carts', cartRouter)
+app.use('/api/products', productRouter)
+
+
+
+
+
+
+
 // app.post('/add-product', (req, res) => {
 //     // Obtener los datos del producto del formulario
 //     const { productName } = req.body;
@@ -292,10 +306,7 @@ app.get('/realtimeproducts', (req, res) => {
 //     res.status(200).send('Product added successfully');
 // });
 
-// app.use('/', homeRouter)
-// app.use('/realtimeproducts', realtimeproductsRouter)
-// app.use('/api/carts', cartRouter)
-// app.use('/api/products', productRouter)
+
 
 
 
@@ -309,8 +320,20 @@ io.on('connection', (socket) => {
     console.log('Usuario conectado');
     socket.emit('updateProducts', productos);
 
-    socket.on('addProduct', (productName) => {
-    productos.push(productName);
-    io.emit('updateProducts', productos);
+    socket.on('addProduct', (newProduct) => {
+        // Agregar el nuevo producto a la lista
+        productos.push(newProduct);
+    
+        // Guardar los cambios en el archivo JSON
+        fs.writeFile('./src/mockDB/products.json', JSON.stringify(productos), (err) => {
+            if (err) {
+                console.error('Error writing to products.json', err);
+                return;
+            }
+            console.log('Product added and database updated.');
+    
+            // Emitir la lista actualizada de productos a todos los clientes
+            io.emit('updateProducts', productos);
+        });
     });
 });
