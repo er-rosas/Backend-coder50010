@@ -39,17 +39,25 @@
 </p>
 
 <ul id="productList">
-    {{#each productos}}
+    <h1>Lista de productos:</h1>
+    {{#each products}}
     <li>
+        <h4>{{this.code}}: {{this.title}}</h4>
+        <p>ID de producto: {{this.id}}</p>
+        <p>{{this.description}} - ${{this.price}} - Stock: {{this.stock}}</p>
+        <button type="button" onclick="deleteProduct('{{this.id}}')">Eliminar producto</button>
+    </li>
+    {{!-- <li>
         <!-- Mostrar detalles del producto -->
         <strong>ID:</strong> {{this.id}} <br>
         <strong>Título:</strong> {{this.title}} <br>
         <strong>Descripción:</strong> {{this.description}} <br>
+        <button type="button" onclick="deleteProduct('{{this.id}}')">Eliminar producto</button>
         <!-- Otros detalles del producto -->
-    </li>
+    </li> --}}
     {{/each}}
 </ul>
 
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="./js/realTimeProducts.js"></script>
+<script src="/js/realTimeProducts.js"></script>

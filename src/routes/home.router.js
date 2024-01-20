@@ -1,12 +1,21 @@
 const express = require('express');
+const ProductManager = require('../manager/productManager.js')
+
 const router = express.Router();
-const fs = require('fs');
+const productManager = new ProductManager();
 
-const productsData = fs.readFileSync('./src/mockDB/products.json', 'utf-8');
-const productos = JSON.parse(productsData);
-
-router.get('/', (req, res) => {
-    res.render('home', { productos });
+router.get("/", async (req, res) => {
+    try {
+        // const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
+        const products = await productManager.getProducts();
+        console.log('GET / route called - Rendering home');
+        // console.log(products)
+        res.render("home", { products });
+    } catch (error) {
+        console.log(error);
+        res.render("Error al obtener la lista de productos!");
+        return;
+    }
 });
 
 module.exports = router;

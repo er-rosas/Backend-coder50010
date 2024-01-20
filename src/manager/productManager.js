@@ -4,16 +4,17 @@ class ProductManager {
     constructor() {
         this.path = './src/mockDB/products.json';
     }
-
+    
+    
     async addProduct(product) {
         try {
-            // const { title, description, price, thumbnail, code, stock } = product;
-            const { code } = product;
-    
-            // if (!title || !description || !price || !code || !stock) {
-            //     console.log('Todos los campos son obligatorios');
-            //     return;
-            // }
+            const { title, description, price, thumbnail, code, stock, category } = product;
+            // const { code } = product;
+            
+            if (!title || !description || !code || !price || !stock || !category) {
+                console.log('Todos los campos son obligatorios');
+                return;
+            }
     
             const products = await this.getProductsFromFile();
             
@@ -85,7 +86,7 @@ class ProductManager {
             console.log('Error al borrar el producto:', error);
         }
     }
-
+    
     async getProductsFromFile() {
         try {
             const data = await fs.promises.readFile(this.path, 'utf-8');
@@ -99,7 +100,7 @@ class ProductManager {
             }
         }
     }
-
+    
     async saveProductsToFile(products) {
         try {
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2));
