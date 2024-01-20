@@ -84,5 +84,3 @@ products.router.js:
 // 5. Eliminar un producto por su ID:
 // Método: DELETE
 // URL: http://localhost:8080/api/products/{pid}
-
-

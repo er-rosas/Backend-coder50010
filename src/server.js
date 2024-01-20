@@ -12,9 +12,11 @@ const cartRouter = require('./routes/carts.router.js')
 const homeRouter = require('./routes/home.router.js')
 const realtimeproductsRouter = require('./routes/realTimeProducts.router.js')
 const ProductManager = require('./manager/productManager.js')
+const { connectDB } = require('./config/connectDB.js')
 
-const PORT = 8080;
+const PORT = 8080 || process.env.PORT;
 const app = express();
+connectDB()
 
 
 app.use(express.static(__dirname + "/public"));
