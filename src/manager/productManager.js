@@ -114,24 +114,3 @@ class ProductManager {
 // const manager = new ProductManager('../mockDB/products.json');
 
 module.exports = ProductManager;
-
-
-// manager.getProducts().then(console.log);
-
-// Para realizar el testing:
-
-// Los fui agregando de a uno:
-// manager.addProduct({ title: "Producto 1", description: "Descripción...", price: 20, thumbnail: "ruta_imagen.jpg", code: "ABC123", stock: 10 });
-// manager.addProduct({ title: "Producto 2", description: "Descripción...", price: 30, thumbnail: "ruta_imagen.jpg", code: "ABC124", stock: 10 });
-
-// manager.getProducts().then(console.log);
-
-
-// manager.getProductById(1).then(console.log);
-
-// manager.updateProduct(1, { price: 40, stock: 15 });
-// manager.getProducts().then(console.log);
-
-
-// manager.deleteProduct(1);
-// manager.getProducts().then(console.log);

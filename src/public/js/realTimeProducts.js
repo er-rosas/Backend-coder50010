@@ -26,16 +26,6 @@ addProductForm.addEventListener('submit', (event) => {
             thumbnails
         };
 
-        // const newProduct = {
-        //     title: data.title,
-        //     description: data.description,
-        //     price: data.price,
-        //     thumbnail: data.thumbnail,
-        //     code: data.code,
-        //     stock: data.stock,
-        //     category: data.category
-        // };
-
         // Enviar los datos del nuevo producto al servidor a través de WebSocket
         socket.emit('addProduct', newProduct);
 
@@ -46,20 +36,9 @@ addProductForm.addEventListener('submit', (event) => {
     socket.on('updateProducts', (products) => {
         // Actualizar la lista de productos en la vista
         const productList = document.getElementById('productList');
-        // productList.innerHTML = ''; // Limpiar la lista antes de agregar los productos actualizados
-    
-        // products.forEach(product => {
-        //     const newItem = document.createElement('li');
-        //     newItem.innerHTML = `
-        //         <h4>${product.code}: ${product.title}</h4>
-        //         <p>ID de producto: ${product.id}</p>
-        //         <p>${product.description} - $${product.price} - Stock: ${product.stock}</p>
-        //         <button type="button" onclick="deleteProduct('${product.id}')">Eliminar producto</button>
-        //     `;
-        //     productList.appendChild(newItem);
-        // });
+
         if (productList && Array.isArray(products)) {
-            productList.innerHTML = "";
+            productList.innerHTML = ""; // Limpiar la lista antes de agregar los productos actualizados
             const h1 = document.createElement("h1");
             h1.textContent = "Lista de productos:";
             productList.appendChild(h1);
@@ -81,10 +60,3 @@ addProductForm.addEventListener('submit', (event) => {
     function deleteProduct(idProduct) {
         socket.emit("deleteProduct", { idProduct });
     }
-    
-
-    // <strong>ID:</strong> ${product.id} <br>
-    //             <strong>Título:</strong> ${product.title} <br>
-    //             <strong>Descripción:</strong> ${product.description} <br>
-    //             <button type="button" onclick="deleteProduct('${product.id}')">Eliminar producto</button>
-    //             <!-- Otros detalles del producto --></br>
