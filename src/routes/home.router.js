@@ -1,5 +1,6 @@
-const express = require('express');
-const ProductManager = require('../manager/productManager.js')
+import express from 'express';
+import ProductManager from '../daos/file/productManager.js';
+
 
 const router = express.Router();
 const productManager = new ProductManager();
@@ -18,4 +19,4 @@ router.get("/", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

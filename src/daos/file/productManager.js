@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 class ProductManager {
     constructor() {
@@ -113,4 +113,4 @@ class ProductManager {
 // Crear una instancia de ProductManager con la nueva ruta del archivo
 // const manager = new ProductManager('../mockDB/products.json');
 
-module.exports = ProductManager;
+export default ProductManager;

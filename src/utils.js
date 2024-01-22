@@ -1,7 +1,19 @@
-import { fileURLToPath } from "url";
-import path from "path";
+import multer from 'multer'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+export const __dirname  = dirname(__filename)
 
-export default __dirname;
+const storage = multer.diskStorage({
+    destination: function (request, file, callback) {
+        callback(null, `${__dirname}/public/image`)
+    },
+    filename: function (request, file, callback) {
+        callback(null, `${Date.now()}-${file.originalname}`)
+    }
+})
+
+export const uploader = multer({
+    storage
+})

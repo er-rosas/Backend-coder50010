@@ -1,27 +1,30 @@
-// import __dirname from "./utils.js";
-
-const express = require('express');
-const handlebars = require('express-handlebars');
-const { Server: ServerIO, Server }  = require('socket.io')
-
+import express from "express";
+import logger from 'morgan'
+import handlebars from 'express-handlebars'
+import { __dirname, uploader } from "./utils.js";
+import { Server as ServerIO, Server } from 'socket.io';
 
 // /api/products y /api/carts de la entrega anterior
-const productRouter = require('./routes/products.router.js')
-const cartRouter = require('./routes/carts.router.js')
+// import productRouter from './routes/products.router.js';
+// import cartRouter from './routes/carts.router.js';
 
-const homeRouter = require('./routes/home.router.js')
-const realtimeproductsRouter = require('./routes/realTimeProducts.router.js')
-const ProductManager = require('./manager/productManager.js')
-const { connectDB } = require('./config/connectDB.js')
+// import homeRouter from './routes/home.router.js';
+// import realtimeproductsRouter from './routes/realTimeProducts.router.js';
+import ProductManager from './daos/file/productManager.js';
+import { connectDB } from './config/connectDB.js';
+import appRouter from './routes/index.js'
 
+// Server
 const PORT = 8080 || process.env.PORT;
 const app = express();
 connectDB()
 
+// Configuración para enviar por body
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(logger('dev'))
 
 
 // Configuración de Handlebars
@@ -29,11 +32,15 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views');
 app.set('view engine', 'handlebars');
 
-app.use('/api/products', productRouter)
-app.use('/api/carts', cartRouter)
+app.use(appRouter)
 
-app.use('/', homeRouter)
-app.use('/realtimeproducts', realtimeproductsRouter)
+
+
+// app.use('/api/products', productRouter)
+// app.use('/api/carts', cartRouter)
+
+// app.use('/', homeRouter)
+// app.use('/realtimeproducts', realtimeproductsRouter)
 
 const httpServer = app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
@@ -69,3 +76,20 @@ io.on('connection', (socket) => {
         io.emit("updateProducts", updatedProducts);
     });
 });
+
+
+// import __dirname from "./utils.js";
+
+// const express = require('express');
+// const handlebars = require('express-handlebars');
+// const { Server: ServerIO, Server }  = require('socket.io')
+
+
+// // /api/products y /api/carts de la entrega anterior
+// const productRouter = require('./routes/products.router.js')
+// const cartRouter = require('./routes/carts.router.js')
+
+// const homeRouter = require('./routes/home.router.js')
+// const realtimeproductsRouter = require('./routes/realTimeProducts.router.js')
+// const ProductManager = require('./manager/productManager.js')
+// const { connectDB } = require('./config/connectDB.js')

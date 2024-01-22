@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
+import ProductManager from '../daos/file/productManager.js';
+
+
 const router = express.Router();
-
-
-const ProductManager = require('../manager/productManager.js');
 const manager = new ProductManager('.src/mockDB/products.json');
 
 router.get('/', async (req, res) => {
@@ -97,4 +97,4 @@ router.delete('/:pid', async (req, res) => {
     }
 });
 
-module.exports = router
+export default router;

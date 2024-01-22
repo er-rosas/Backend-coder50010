@@ -1,5 +1,5 @@
-const { json } = require('express')
-const fs = require('node:fs/promises')
+// import { json } from 'express';
+import fs from 'node:fs/promises';
 
 class CartsManagerFS {
     constructor(){
@@ -69,4 +69,4 @@ class CartsManagerFS {
 
 }
 
-module.exports = CartsManagerFS
+export default CartsManagerFS;

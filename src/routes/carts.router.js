@@ -1,5 +1,5 @@
-const express = require('express')
-const CartsManagerFS = require('../manager/cartsManagerFS')
+import express from 'express';
+import CartsManagerFS from '../daos/file/cartsManagerFS.js';
 
 const router = express.Router()
 
@@ -41,4 +41,4 @@ router.post('/:cid/product/:pid', async (req, res)=>{
     }
 })
 
-module.exports = router
+export default router;
