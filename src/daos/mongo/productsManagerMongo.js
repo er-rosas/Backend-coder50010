@@ -1,5 +1,5 @@
 import  mongoose from 'mongoose';
-import productsModel from "../../models/products.model";
+import productsModel from "../../models/products.model.js";
 
 class ProductManagerMongo {
     async getProducts() {

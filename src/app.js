@@ -11,6 +11,8 @@ import { Server as ServerIO, Server } from 'socket.io';
 // import homeRouter from './routes/home.router.js';
 // import realtimeproductsRouter from './routes/realTimeProducts.router.js';
 import ProductManager from './daos/file/productManager.js';
+import ProductManager2 from './daos/mongo/productsManagerMongo.js';
+import messageModel from './models/messages.models.js';
 import { connectDB } from './config/connectDB.js';
 import appRouter from './routes/index.js'
 
