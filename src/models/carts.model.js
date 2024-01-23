@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose')
+// const { Schema, model } = require('mongoose')
+import {Schema, model} from 'mongoose'
 
 const collection = 'carts'
 
@@ -20,6 +21,7 @@ CartsSchema.pre('findOne', function () {
 
 const cartsModel = model(collection, CartsSchema)
 
-module.exports = {
-    cartsModel
-}
+// module.exports = {
+//     cartsModel
+// }
+export default model('carts', cartsModel)

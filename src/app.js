@@ -75,21 +75,16 @@ io.on('connection', (socket) => {
         const updatedProducts = await productManager.getProducts();
         io.emit("updateProducts", updatedProducts);
     });
+
+    socket.on('getMessages', async(data) => {
+        const message = await messageModel.find();
+        io.emit('messageLogs', message)
+    })
+    
+    socket.on('message', async (data) => {
+        await messageModel.create(data);
+    
+        const message = await messageModel.find();
+        io.emit('messageLogs', message)
+    })
 });
-
-
-// import __dirname from "./utils.js";
-
-// const express = require('express');
-// const handlebars = require('express-handlebars');
-// const { Server: ServerIO, Server }  = require('socket.io')
-
-
-// // /api/products y /api/carts de la entrega anterior
-// const productRouter = require('./routes/products.router.js')
-// const cartRouter = require('./routes/carts.router.js')
-
-// const homeRouter = require('./routes/home.router.js')
-// const realtimeproductsRouter = require('./routes/realTimeProducts.router.js')
-// const ProductManager = require('./manager/productManager.js')
-// const { connectDB } = require('./config/connectDB.js')

@@ -4,7 +4,7 @@ import { usersRouter } from './users.router.js'
 // Importacion por default
 import homeRouter from './home.router.js';
 import realtimeproductsRouter from './realTimeProducts.router.js';
-import viewsRouter from './views.router.js'
+import multerRouter from './multer.router.js'
 import messaggesRouter from './messages.router.js'
 
 import productRouter from './products.router.js';
@@ -14,7 +14,7 @@ const router = Router()
 
 router.use('/', homeRouter)
 router.use('/realtimeproducts', realtimeproductsRouter)
-router.use('/views', viewsRouter)
+router.use('/multer', multerRouter)
 router.use('/messages', messaggesRouter)
 
 router.use('/api/users', usersRouter)

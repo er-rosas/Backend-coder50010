@@ -55,5 +55,3 @@ usersRouter
             console.log(error)
         }
     })
-
-    // messages - post get
