@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import userModel from '../models/user.model.js'
+import userModel from '../daos/models/user.model.js'
 export const usersRouter = Router()
 
 usersRouter
     .get('/', async (request, responses)=>{
         try {
             const users = await userModel.find({isActive: true})
-            responses.json({
+            responses.send({
                 status: 'success',
                 result: users
             })

@@ -3,13 +3,19 @@ import {Schema, model} from 'mongoose'
 const collection = 'products'
 
 const ProductsSchema = new Schema({
-    title: String,
+    title: {
+        type: String,
+        index: true,
+        },
     description: String, 
     code: String,
     price: Number,
     stock: Number,
-    category: String,
-    thumbnail: String,
+    category: {
+        type: String,
+        index: true,
+        },
+    thumbnail: Array,
     status: {
         type: Boolean,
         default: true,

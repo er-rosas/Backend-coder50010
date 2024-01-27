@@ -84,3 +84,36 @@ products.router.js:
 // 5. Eliminar un producto por su ID:
 // Método: DELETE
 // URL: http://localhost:8080/api/products/{pid}
+
+
+
+
+
+
+
+
+
+
+
+
+
+User
+http://localhost:8080/api/users/
+{
+    "first_name": "fede",
+    "last_name": "String",
+    "email": "fede@gmial.com",
+    "password": "123"
+}
+
+Product
+http://localhost:8080/api/products/
+{
+    "title": String,
+    "description": String, 
+    "code": String,
+    "price": Number,
+    "stock": Number,
+    "category": String,
+    "thumbnail": "[]"
+}

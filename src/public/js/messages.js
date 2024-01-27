@@ -9,7 +9,7 @@ Swal.fire({
     inputValidator: (value) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
-        return "Ingrese un correo válido para continuar.";
+            return "Ingrese un correo válido para continuar.";
         }
         return !value && "Ingrese un correo válido para continuar.";
     },
@@ -22,12 +22,12 @@ Swal.fire({
 const chatbox = document.querySelector("#chatbox");
 
 chatbox.addEventListener("keyup", (evt) => {
-if (evt.key === "Enter") {
-    if (chatbox.value.trim().length > 0) {
-        socket.emit("message", { user, message: chatbox.value });
-        chatbox.value = "";
+    if (evt.key === "Enter") {
+        if (chatbox.value.trim().length > 0) {
+            socket.emit("message", { user, message: chatbox.value });
+            chatbox.value = "";
+        }
     }
-}
 });
 
 socket.on("messageLogs", (data) => {

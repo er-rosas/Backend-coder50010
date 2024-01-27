@@ -1,4 +1,4 @@
-import cartsModel from "../../models/carts.model";
+import cartsModel from "../models/carts.model.js";
 
 class CartManagerMongo {
     // Crear un carrito

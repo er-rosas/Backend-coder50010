@@ -1,44 +1,49 @@
 import express from 'express';
-import CartsManagerFS from '../daos/file/cartsManagerFS.js';
+// import CartManagerMongo from '../daos/mongo/cartsManagerMongo.js';
+import cartsModel from '../daos/models/carts.model.js'
 
 const router = express.Router()
 
-const cartsService = new CartsManagerFS()
-
-router.post('/', async (req, res)=>{
-    try {
-        const result = await cartsService.createCart()
-        res.send({
-            status: 'success',
-            payload: result
-        })
-    } catch (error) {
-        res.status(500).send(`Error de server ${error.message}`)
-    }
-})
-router.get('/:cid', async (req, res)=>{
-    try {
-        const {cid} = req.params
-        const cart = await cartsService.getCartById(parseInt(cid))
-        res.send({
-            status: 'success',
-            payload: cart
-        })
-    } catch (error) {
-        console.log(error)
-    }
-})
-router.post('/:cid/product/:pid', async (req, res)=>{
-    try {
-        const {cid, pid} = req.params
-        const result = await cartsService.addProductToCart(Number(cid), Number(pid))
-        res.send({
-            status: 'success',
-            payload: result
+router
+    .get("/:cid", async (req, res) => {
+        try {
+            const { cid } = req.params;
+            const cart = await cartsModel.findOne({ _id: cid });
+            console.log(cart.products);
+            res.send({
+                status: "succes",
+                payload: cart,
+            });
+        } catch (error) {
+            res.status(500).send(`Error de servidor. ${error.message}`);
+        }
     })
-    } catch (error) {
-        console.log(error)
-    }
-})
+
+    .post("/", async (req, res) => {
+        try {
+            const result = await cartsModel.create({ products: [] });
+            res.send({
+                status: "succes",
+                payload: result,
+            });
+        } catch (error) {
+            res.status(500).send(`Error de servidor. ${error.message}`);
+        }
+    })
+
+    .post("/:cid/product/:pid", async (req, res) => {
+        try {
+            const { cid, pid } = req.params;
+            const cart = await cartsModel.findById({ _id: cid });
+            cart.products.push({ product: pid });
+            let result = await cartsModel.findByIdAndUpdate({ _id: cid }, cart);
+            res.send({
+                status: "succes",
+                payload: result,
+            });
+        } catch (error) {
+            res.status(500).send(`Error de servidor. ${error.message}`);
+        }
+    });
 
 export default router;

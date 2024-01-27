@@ -33,29 +33,31 @@ addProductForm.addEventListener('submit', (event) => {
         addProductForm.reset();
     });
 
-    socket.on('updateProducts', (products) => {
-        // Actualizar la lista de productos en la vista
-        const productList = document.getElementById('productList');
+    socket.on("updateProducts", (data) => {
+        const productList = document.getElementById("productList");
 
-        if (productList && Array.isArray(products)) {
-            productList.innerHTML = ""; // Limpiar la lista antes de agregar los productos actualizados
+        if (productList && Array.isArray(data.products)) {
+            productList.innerHTML = "";
             const h1 = document.createElement("h1");
             h1.textContent = "Lista de productos:";
             productList.appendChild(h1);
-            products.forEach((product) => {
+            data.products.forEach((product) => {
+                const id = product._id.toString();
                 const productContainer = document.createElement("div");
-                productContainer.innerHTML = `      
+                const parametro = "id";
+                productContainer.setAttribute(parametro, id);
+                productContainer.innerHTML = ` 
                 <h4>${product.code}: ${product.title}</h4>
-                <p>ID de producto: ${product.id}</p>
+                <p>ID de producto: ${id}</p>
                 <p>${product.description} - $${product.price} - Stock: ${product.stock}</p>
-                <button type="button" onclick="deleteProduct('${product.id}')">Eliminar producto</button>
-            `;
+                <button type="button" onclick="deleteProduct('${id}')">Eliminar producto</button>   
+                `;
                 productList.appendChild(productContainer);
-            });
-          } //else {
-        //     console.log("Error: La estructura de datos de 'data' no es válida.");
-        //   }
-    });
+                });
+            } else {
+                console.log("Error: La estructura de datos de 'data' no es válida.");
+            }
+        });
 
     function deleteProduct(idProduct) {
         socket.emit("deleteProduct", { idProduct });

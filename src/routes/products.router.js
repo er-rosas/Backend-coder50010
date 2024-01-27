@@ -1,14 +1,13 @@
 import express from 'express';
-import ProductManager from '../daos/file/productManager.js';
-
+import ProductManagerMongo from '../daos/mongo/productsManagerMongo.js';
 
 const router = express.Router();
-const manager = new ProductManager('.src/mockDB/products.json');
+const managerMongo = new ProductManagerMongo();
 
 router.get('/', async (req, res) => {
     try {
         const limit = req.query.limit;
-        let products = await manager.getProducts();
+        let products = await managerMongo.getProducts();
 
         if (limit) {
             products = products.slice(0, parseInt(limit));
@@ -22,8 +21,8 @@ router.get('/', async (req, res) => {
 
 router.get('/:pid', async (req, res) => {
     try {
-        const productId = parseInt(req.params.pid);
-        const product = await manager.getProductById(productId);
+        const productId = req.params.pid;
+        const product = await managerMongo.getProductById(productId);
 
         if (!product) {
             return res.status(404).json({ message: 'Producto no encontrado' });
@@ -47,24 +46,21 @@ router.post('/', async (req, res) => {
             thumbnails
         } = req.body;
 
-        // Validar campos obligatorios
         if (!title || !description || !code || !price || !stock || !category) {
             return res.status(400).json({ error: 'Todos los campos son obligatorios excepto thumbnails' });
         }
 
-        // Crear el nuevo producto
         const newProduct = {
             title,
             description,
             code,
             price: Number(price),
-            status: true,
             stock: Number(stock),
             category,
-            thumbnails: thumbnails || [], // Si no hay thumbnails establecer como un array vacío
+            thumbnails: thumbnails || [],
         };
 
-        const addedProduct = await manager.addProduct(newProduct);
+        const addedProduct = await managerMongo.createproduct(newProduct);
 
         res.status(201).json(addedProduct);
     } catch (error) {
@@ -74,10 +70,10 @@ router.post('/', async (req, res) => {
 
 router.put('/:pid', async (req, res) => {
     try {
-        const productId = parseInt(req.params.pid);
+        const productId = req.params.pid;
         const updatedFields = req.body;
 
-        await manager.updateProduct(productId, updatedFields);
+        await managerMongo.updateProduct({ idProduct: productId, ...updatedFields });
 
         res.json({ message: 'Producto actualizado correctamente' });
     } catch (error) {
@@ -87,9 +83,9 @@ router.put('/:pid', async (req, res) => {
 
 router.delete('/:pid', async (req, res) => {
     try {
-        const productId = parseInt(req.params.pid);
+        const productId = req.params.pid;
 
-        await manager.deleteProduct(productId);
+        await managerMongo.deleteProduct(productId);
 
         res.json({ message: 'Producto eliminado correctamente' });
     } catch (error) {

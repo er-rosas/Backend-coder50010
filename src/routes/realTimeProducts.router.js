@@ -1,16 +1,20 @@
 import express from 'express';
-import ProductManager from '../daos/file/productManager.js';
+// import ProductManager from '../daos/file/productManager.js';
+import ProductManagerMongo from '../daos/mongo/productsManagerMongo.js';
 
 const router = express.Router();
-const productManager = new ProductManager();
+// const productManager = new ProductManager();
+const managerMongo = new ProductManagerMongo();
 
 
 router.get("/", async (req, res) => {
     try {
-        // const limit = req.query.limit ? parseInt(req.query.limit) : undefined;
-        const products = await productManager.getProducts();
+        const products = await managerMongo.getProducts();
+        const product = products.map((product) => ({
+            ...product.toObject(),
+            }));
         console.log('GET / route called - Rendering realTimeProducts');
-        res.render("realTimeProducts", { products });
+        res.render("realTimeProducts", { product });
     } catch (error) {
         console.log(error);
         res.render("Error al obtener la lista de productos!");
@@ -21,7 +25,7 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     try {
         const { pid } = req.params;
-        const product = await productManager.getProductById(Number(pid));
+        const product = await managerMongo.getProductById(pid);
         if (product) {
             res.json(product);
         } else {
@@ -36,7 +40,7 @@ router.get("/:pid", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const product = req.body;
-        const newProduct = await productManager.addProduct(product);
+        const newProduct = await managerMongo.createProduct(product);
         res.status(201).json(newProduct);
     } catch (error) {
         console.error("Error al intentar agregar el producto:", error);
@@ -49,7 +53,7 @@ router.put("/:pid", async (req, res) => {
         const { pid } = req.params;
         const updatedFields = req.body;
 
-        await productManager.updateProduct(parseInt(pid), updatedFields);
+        await managerMongo.updateProduct(pid, updatedFields);
 
         res.status(201).send({
             status: "success",
@@ -64,7 +68,7 @@ router.put("/:pid", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
     try {
         const { pid } = req.params;
-        await productManager.deleteProduct(parseInt(pid));
+        await managerMongo.deleteProduct(pid);
 
         res.status(201).send({
             status: "success",
