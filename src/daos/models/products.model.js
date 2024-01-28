@@ -1,8 +1,9 @@
-import {Schema, model} from 'mongoose'
+import {Schema, model} from 'mongoose';
+import paginate from "mongoose-paginate-v2";
 
 const collection = 'products'
 
-const ProductsSchema = new Schema({
+const productsSchema = new Schema({
     title: {
         type: String,
         index: true,
@@ -24,8 +25,10 @@ const ProductsSchema = new Schema({
         type: Boolean,
         default: true
     }
-})
+});
 
-const proudctModel = model(collection, ProductsSchema)
+productsSchema.plugin(paginate);
 
-export default proudctModel
+const proudctModel = model(collection, productsSchema);
+
+export default proudctModel;

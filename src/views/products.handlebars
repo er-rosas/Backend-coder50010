@@ -1,26 +1,18 @@
-<style>
-/* Estilos para los elementos <li> */
-li {
-    margin-bottom: 20px; /* Espacio entre elementos de la lista */
-    padding: 10px; /* Padding para dar espacio alrededor de cada elemento */
-    border: 1px solid #ccc; /* Borde para resaltar cada elemento */
-}
-</style>
-<h1>Lista de Productos</h1>
-<ul>
-{{#each products}}
-    <li>
-    <strong>ID:</strong> {{this.id}} <br>
-    <strong>Título:</strong> {{this.title}} <br>
-    <strong>Descripción:</strong> {{this.description}} <br>
-    <strong>Código:</strong> {{this.code}} <br>
-    <strong>Precio:</strong> {{this.price}} <br>
-    <strong>status:</strong> {{this.status}} <br>
-    <strong>Stock:</strong> {{this.stock}} <br>
-    <strong>Categria:</strong> {{this.category}} <br>
-    <strong>Thumbnails:</strong> {{this.thumbnails}} <br>
-    </li>
-{{/each}}
-</ul>
+<div>
+    <center>
+        <h1>Users</h1>
+        {{#each users}}
+            <p><strong>Nombre: </strong>{{this.first_name}} {{this.last_name}}- <strong>Email: </strong>{{this.email}}</p>
+        {{/each}}
+        {{#if hasPrevPage}}
+            <a href="users?pageQuery={{prevPage}}">Anterior</a>
+        {{/if}}
+        <label>{{page}}</label>
+        {{#if hasNextPage}}
+            <a href="/users?pageQuery={{nextPage}}">Siguiente</a>
+        {{/if}}
+
+    </center>
+</div>
 {{!-- <script src="/socket.io/socket.io.js"></script> --}}
 {{!-- <script src="/src/public/js/home.js"></script> --}}
