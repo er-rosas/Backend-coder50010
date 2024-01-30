@@ -32,7 +32,14 @@
     <center>
         <div>
             <h1>Products</h1>
-            
+            <div>
+                <p>Filtrar por cartegoria</p>
+                <ul>
+                    <li><a href="/api/products/filter?category=apple">Apple</a></li>
+                    <li><a href="/api/products/filter?category=samsung">Samsung</a></li>
+                    <li><a href="/api/products/filter?category=xiaomi">Xiaomi</a></li>
+                </ul>
+            </div>
             {{#each product}}
             <div class="card">
                 <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
@@ -48,11 +55,11 @@
         </div>
         <div>
             {{#if hasPrevPage}}
-                <a href="/api/products/products/ud?pageQuery={{prevPage}}">Anterior</a>
+                <a href="/api/products/list?pageQuery={{prevPage}}">Anterior</a>
             {{/if}}
             <label>{{page}}</label>
             {{#if hasNextPage}}
-                <a href="/api/products/products/ud?pageQuery={{nextPage}}">Siguiente</a>
+                <a href="/api/products/list?pageQuery={{nextPage}}">Siguiente</a>
             {{/if}}
         </div>
     </center>

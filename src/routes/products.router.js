@@ -5,7 +5,7 @@ import proudctModel from '../daos/models/products.model.js';
 const router = express.Router();
 const managerMongo = new ProductManagerMongo();
 
-router.get('/products/ud', async (req, res) => {
+router.get('/list', async (req, res) => {
     try {
         const {limit = 5, pageQuery = 1} = req.query
         const {
@@ -28,7 +28,36 @@ router.get('/products/ud', async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-})
+});
+
+router.get('/filter', async (req, res) => {
+    try {
+        const { limit = 5, pageQuery = 1, category } = req.query;
+
+        const query = category ? { category } : {};
+
+        const {
+            docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            page,
+        } = await proudctModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
+
+        console.log(page);
+        res.render('products', {
+            product: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            page
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 router.get('/', async (req, res) => {
     try {

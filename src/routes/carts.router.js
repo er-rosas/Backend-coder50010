@@ -31,12 +31,22 @@ router
             res.status(500).send(`Error de servidor. ${error.message}`);
         }
     })
-
+    
+    // Agregar un producto a un carrito
     .post("/:cid/product/:pid", async (req, res) => {
         try {
             const { cid, pid } = req.params;
+
+            const { quantity } = req.body;
+
+            // Verificar si la cantidad es un número positivo
+            if (!Number.isInteger(quantity) || quantity <= 0) {
+                return res.status(400).send("La cantidad debe ser un número entero positivo.");
+            }
+
             const cart = await cartsModel.findById({ _id: cid });
-            cart.products.push({ product: pid });
+            cart.products.push({ product: pid, quantity  });
+
             let result = await cartsModel.findByIdAndUpdate({ _id: cid }, cart);
             res.send({
                 status: "succes",
@@ -71,7 +81,7 @@ router
     });
     //PUT api/carts/:cid 
     // Ruta para actualizar el carrito con un arreglo de productos
-    router.put('/api/carts/:cid', async (req, res) => {
+    router.put('/:cid', async (req, res) => {
         const { cid } = req.params;
         const { products } = req.body;
 
@@ -85,7 +95,7 @@ router
 
     //PUT api/carts/:cid/products/:pid 
     // Ruta para actualizar la cantidad de un producto en el carrito
-    router.put('/quantity/:cid/products/:pid', async (req, res) => {
+    router.put('/:cid/products/:pid', async (req, res) => {
         const { cid, pid } = req.params;
         const { quantity } = req.body;
 
@@ -100,7 +110,7 @@ router
 
     //DELETE api/carts/:cid
     // Ruta para eliminar todos los productos del carrito
-    router.delete('/api/carts/:cid', async (req, res) => {
+    router.delete('/borrarproductos/:cid', async (req, res) => {
         const { cid } = req.params;
 
         try {

@@ -74,7 +74,7 @@ router
         }
     })
 
-router.get('/users/ud', async (req, res) => {
+router.get('/list', async (req, res) => {
         try {
             const {limit = 5, pageQuery = 1} = req.query
             const {

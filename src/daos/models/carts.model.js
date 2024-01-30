@@ -10,7 +10,10 @@ const CartsSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'products'
             },
-            quantity: Number,
+            quantity: {
+                type: Number, // Indica que es un array de Strings
+                default: 1,    // Valor por defecto: un array vacío
+            },
         }]
     }
 })
