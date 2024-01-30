@@ -1,6 +1,6 @@
 import cartsModel from "../models/carts.model.js";
 
-class CartManagerMongo {
+class cartManagerMongo {
     // Crear un carrito
     async createCart() {
         const cart = await cartsModel.create({ products: [] });
@@ -37,9 +37,68 @@ class CartManagerMongo {
 
     // Actualizar un carrito
     async updateCart(cartId, updatedCart) {
-        const result = await cartsModel.findByIdAndUpdate(cartId, updatedCart);
+        const result = await cartsModel.findByIdAndUpdate(cartId, updatedCart, { new: true }).lean();
+        if (!result) {
+            throw new Error('Carrito no encontrado');
+        }
         return result;
+    }
+
+    async removeProductFromCart(cartId, productId) {
+        console.log('Cart ID in removeProductFromCart:', cartId);
+        console.log('Product ID in removeProductFromCart:', productId);
+        const cart = await cartsModel.findById(cartId);
+        if (!cart) {
+            throw new Error("Carrito no encontrado");
+        }
+
+        // cart.products = cart.products.filter(item => item.product.toString() !== productId);
+        // cart.products = cart.products.filter(product => product.product != productId);
+        // await cart.save();
+        // return cart;
+        // const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
+        console.log(cart.products)
+        const productIndex = cart.products.findIndex(item => item._id.toString() === productId);
+
+        if (productIndex !== -1) {
+            cart.products.splice(productIndex, 1);
+            await cart.save();
+            return cart;
+        } else {
+            throw new Error("Producto no encontrado en el carrito");
+        }
+    }
+
+    // Actualizar la cantidad de un producto en el carrito
+    async updateProductQuantity(cartId, productId, quantity) {
+        const cart = await cartsModel.findById(cartId);
+        if (!cart) {
+            throw new Error("Carrito no encontrado");
+        }
+
+        const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
+        if (productIndex !== -1) {
+            // Asegurarse de que la cantidad sea un número válido
+            if (isNaN(quantity) || quantity < 0) {
+                throw new Error("La cantidad debe ser un número válido y mayor o igual a cero");
+            }
+            cart.products[productIndex].quantity = quantity;
+            await cart.save();
+        }
+
+        return cart;
+    }
+
+    // Eliminar todos los productos del carrito
+    async removeAllProductsFromCart(cartId) {
+        const cart = await cartsModel.findById(cartId);
+        if (!cart) {
+            throw new Error("Carrito no encontrado");
+        }
+
+        cart.products = [];
+        await cart.save();
     }
 }
 
-export default CartManagerMongo
+export default cartManagerMongo

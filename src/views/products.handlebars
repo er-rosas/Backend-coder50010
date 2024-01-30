@@ -1,17 +1,60 @@
+<style>
+    .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px;
+            width: 300px; /* Puedes ajustar el ancho según tus necesidades */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            color: #555;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            display: block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
 <div>
     <center>
-        <h1>Users</h1>
-        {{#each users}}
-            <p><strong>Nombre: </strong>{{this.first_name}} {{this.last_name}}- <strong>Email: </strong>{{this.email}}</p>
-        {{/each}}
-        {{#if hasPrevPage}}
-            <a href="users?pageQuery={{prevPage}}">Anterior</a>
-        {{/if}}
-        <label>{{page}}</label>
-        {{#if hasNextPage}}
-            <a href="/users?pageQuery={{nextPage}}">Siguiente</a>
-        {{/if}}
-
+        <div>
+            <h1>Products</h1>
+            
+            {{#each product}}
+            <div class="card">
+                <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
+                {{!-- <p class="card-text"><strong>Description: </strong>{{this.description}}</p> --}}
+                {{!-- <p class="card-text"><strong>Code: </strong>{{this.code}}</p> --}}
+                <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
+                {{!-- <p class="card-text"><strong>Stock: </strong>{{this.stock}}</p> --}}
+                {{!-- <p class="card-text"><strong>Category: </strong>{{this.category}}</p> --}}
+                {{!-- <p class="card-text"><strong>Status: </strong>{{this.status}}</p> --}}
+                <a href="/productdetail/{{this._id}}">Ver detalle</a>
+            </div>
+            {{/each}}
+        </div>
+        <div>
+            {{#if hasPrevPage}}
+                <a href="/api/products/products/ud?pageQuery={{prevPage}}">Anterior</a>
+            {{/if}}
+            <label>{{page}}</label>
+            {{#if hasNextPage}}
+                <a href="/api/products/products/ud?pageQuery={{nextPage}}">Siguiente</a>
+            {{/if}}
+        </div>
     </center>
 </div>
 {{!-- <script src="/socket.io/socket.io.js"></script> --}}

@@ -16,7 +16,10 @@ const productsSchema = new Schema({
         type: String,
         index: true,
         },
-    thumbnail: Array,
+    thumbnails: {
+        type: [String], // Indica que es un array de Strings
+        default: [],    // Valor por defecto: un array vacío
+    },
     status: {
         type: Boolean,
         default: true,

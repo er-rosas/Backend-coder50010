@@ -1,8 +1,34 @@
 import express from 'express';
 import ProductManagerMongo from '../daos/mongo/productsManagerMongo.js';
+import proudctModel from '../daos/models/products.model.js';
 
 const router = express.Router();
 const managerMongo = new ProductManagerMongo();
+
+router.get('/products/ud', async (req, res) => {
+    try {
+        const {limit = 5, pageQuery = 1} = req.query
+        const {
+            docs,
+            hasPrevPage, 
+            hasNextPage,
+            prevPage, 
+            nextPage,
+            page 
+        } = await proudctModel.paginate({}, {limit, page: pageQuery, sort: {title: -1}, lean: true})
+        console.log(page)
+        res.render('products', {
+            product: docs,
+            hasPrevPage, 
+            hasNextPage,
+            prevPage, 
+            nextPage,
+            page 
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 router.get('/', async (req, res) => {
     try {

@@ -1,18 +1,36 @@
-import { Router } from 'express'
+import express from 'express';
 import userModel from '../daos/models/user.model.js'
-export const usersRouter = Router()
 
-usersRouter
+
+const router = express.Router();
+
+router
     .get('/', async (request, responses)=>{
+        // try {
+        //     const users = await userModel.find({isActive: true})
+        //     responses.send({
+        //         status: 'success',
+        //         result: users
+        //     })
+        // } catch (error) {
+        //     console.log(error)
+        // }
         try {
-            const users = await userModel.find({isActive: true})
-            responses.send({
-                status: 'success',
-                result: users
-            })
-        } catch (error) {
-            console.log(error)
-        }
+            const {
+                docs,
+                hasPrevPage, 
+                hasNextPage,
+                prevPage, 
+                nextPage,
+                page 
+                } = await userModel.paginate({isActive: true}, {limit: 50, page: 2, lean: true})
+                responses.send({
+                    status: 'success',
+                    // result: users
+                })
+            } catch (error) {
+                console.log(error)
+            }
     })
     .post('/', async (request, responses)=>{
         try {
@@ -55,3 +73,30 @@ usersRouter
             console.log(error)
         }
     })
+
+router.get('/users/ud', async (req, res) => {
+        try {
+            const {limit = 5, pageQuery = 1} = req.query
+            const {
+                docs,
+                hasPrevPage, 
+                hasNextPage,
+                prevPage, 
+                nextPage,
+                page 
+            } = await userModel.paginate({}, {limit, page: pageQuery, sort: {first_name: -1}, lean: true})
+            console.log(page)
+            res.render('users', {
+                users: docs,
+                hasPrevPage, 
+                hasNextPage,
+                prevPage, 
+                nextPage,
+                page 
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
+
+export default router;
