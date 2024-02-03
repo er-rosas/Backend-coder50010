@@ -1,9 +1,7 @@
 import express from 'express';
-// import ProductManager from '../daos/file/productManager.js';
 import ProductManagerMongo from '../daos/mongo/productsManagerMongo.js';
 
 const router = express.Router();
-// const productManager = new ProductManager();
 const managerMongo = new ProductManagerMongo();
 
 

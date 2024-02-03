@@ -39,22 +39,11 @@
                         <li><a href="/api/products?category={{this}}">{{this}}</a></li>
                     {{/each}}
                 </ul>
-                {{!-- <p>Filtrar por cartegoria</p>
-                <ul>
-                    <li><a href="/api/products/filter?category=apple">Apple</a></li>
-                    <li><a href="/api/products/filter?category=samsung">Samsung</a></li>
-                    <li><a href="/api/products/filter?category=xiaomi">Xiaomi</a></li>
-                </ul> --}}
             </div>
             {{#each product}}
             <div class="card">
                 <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
-                {{!-- <p class="card-text"><strong>Description: </strong>{{this.description}}</p> --}}
-                {{!-- <p class="card-text"><strong>Code: </strong>{{this.code}}</p> --}}
                 <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
-                {{!-- <p class="card-text"><strong>Stock: </strong>{{this.stock}}</p> --}}
-                {{!-- <p class="card-text"><strong>Category: </strong>{{this.category}}</p> --}}
-                {{!-- <p class="card-text"><strong>Status: </strong>{{this.status}}</p> --}}
                 <a href="/productdetail/{{this._id}}">Ver detalle</a>
             </div>
             {{/each}}
@@ -70,5 +59,3 @@
         </div>
     </center>
 </div>
-{{!-- <script src="/socket.io/socket.io.js"></script> --}}
-{{!-- <script src="/src/public/js/home.js"></script> --}}

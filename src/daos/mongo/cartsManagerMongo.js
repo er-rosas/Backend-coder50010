@@ -51,12 +51,6 @@ class cartManagerMongo {
         if (!cart) {
             throw new Error("Carrito no encontrado");
         }
-
-        // cart.products = cart.products.filter(item => item.product.toString() !== productId);
-        // cart.products = cart.products.filter(product => product.product != productId);
-        // await cart.save();
-        // return cart;
-        // const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
         console.log(cart.products)
         const productIndex = cart.products.findIndex(item => item._id.toString() === productId);
 

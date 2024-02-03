@@ -6,16 +6,8 @@ const router = express.Router();
 
 router
     .get('/', async (request, responses)=>{
-        // try {
-        //     const users = await userModel.find({isActive: true})
-        //     responses.send({
-        //         status: 'success',
-        //         result: users
-        //     })
-        // } catch (error) {
-        //     console.log(error)
-        // }
         try {
+            const {limit = 5, pageQuery = 1} = request.query
             const {
                 docs,
                 hasPrevPage, 
@@ -23,10 +15,14 @@ router
                 prevPage, 
                 nextPage,
                 page 
-                } = await userModel.paginate({isActive: true}, {limit: 50, page: 2, lean: true})
-                responses.send({
-                    status: 'success',
-                    // result: users
+                } = await userModel.paginate({isActive: true}, {limit, page: pageQuery, sort: {first_name: -1}, lean: true})
+                responses.render('users', {
+                    users: docs,
+                    hasPrevPage, 
+                    hasNextPage,
+                    prevPage, 
+                    nextPage,
+                    page,
                 })
             } catch (error) {
                 console.log(error)
