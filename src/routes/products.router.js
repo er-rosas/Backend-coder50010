@@ -19,6 +19,13 @@ router.get('/', async (req, res) => {
             page 
         } = await proudctModel.paginate(query, {limit, page: pageQuery, sort: {title: -1}, lean: true})
         console.log(page)
+
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+        const user = req.session.user;
+        console.log(user);
+
         res.render('products', {
             product: docs,
             hasPrevPage, 
@@ -26,56 +33,13 @@ router.get('/', async (req, res) => {
             prevPage, 
             nextPage,
             page,
-            uniqueCategories
+            uniqueCategories,
+            user
         })
     } catch (error) {
         console.log(error)
     }
 });
-
-// router.get('/filter', async (req, res) => {
-//     try {
-//         const { limit = 5, pageQuery = 1, category } = req.query;
-
-//         const query = category ? { category } : {};
-
-//         const {
-//             docs,
-//             hasPrevPage,
-//             hasNextPage,
-//             prevPage,
-//             nextPage,
-//             page,
-//         } = await proudctModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
-
-//         console.log(page);
-//         res.render('products', {
-//             product: docs,
-//             hasPrevPage,
-//             hasNextPage,
-//             prevPage,
-//             nextPage,
-//             page
-//         });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
-// router.get('/', async (req, res) => {
-//     try {
-//         const limit = req.query.limit;
-//         let products = await managerMongo.getProducts();
-
-//         if (limit) {
-//             products = products.slice(0, parseInt(limit));
-//         }
-
-//         res.json(products);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Error al obtener los productos' });
-//     }
-// });
 
 router.get('/:pid', async (req, res) => {
     try {

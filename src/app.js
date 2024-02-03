@@ -9,16 +9,38 @@ import messageModel from './daos/models/messages.models.js';
 import { connectDB } from './config/connectDB.js';
 import appRouter from './routes/index.js'
 
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
 // Server
 const PORT = 8080 || process.env.PORT;
 const app = express();
 connectDB()
 
+// Middlewares
 // Configuración para enviar por body
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(logger('dev'))
+app.use(cookieParser('palabrasecretaparafirmarcookie'))
+
+// Session config
+// Session with mongo
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://errosas24:QvBOVYSG5ndTvKTr@cluster0.o1tsu31.mongodb.net/backendCoder50010?retryWrites=true&w=majority',
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        },
+        ttl: 150000
+    }),
+    secret: 'secretCoder',
+    resave: true,
+    saveUninitialized: true
+}))
 
 
 // Configuración de Handlebars

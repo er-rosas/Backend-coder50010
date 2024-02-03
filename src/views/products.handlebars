@@ -32,6 +32,16 @@
     <center>
         <div>
             <h1>Products</h1>
+            {{#with user}}
+            {{!-- <p>Bienvenido {{this.username}}</p> --}}
+            <p>Bienvenido</p>
+            <p>Usuario: {{this.username}}</p>
+            {{!-- <p>Apellido: {{this.last_name}}</p> --}}
+            <p>Email: {{this.email}}</p>
+            <p>Role: {{this.role}}</p>
+            {{/with}}
+            {{!-- <button action="/api/sessions/logout" method="GET" href="/api/sessions/logout">Logout</button> --}}
+            <a href="/api/sessions/logout">Logout</a>
             <div>
                     <p>Filtrar por cartegoria</p>
                 <ul>

@@ -14,9 +14,12 @@ import usersRouter from './users.router.js'
 
 import productDetail from './productDetail.router.js'
 
+import pruebasRouter from './apis/pruebas.router.js'
+import sessionsRouter from './apis/sessions.router.js';
+
 const router = Router()
 
-router.use('/', homeRouter)
+router.use('/links', homeRouter)
 router.use('/realtimeproducts', realtimeproductsRouter)
 router.use('/multer', multerRouter)
 router.use('/messages', messaggesRouter)
@@ -26,5 +29,16 @@ router.use('/api/products', productRouter)
 router.use('/api/carts', cartRouter)
 
 router.use('/productdetail', productDetail)
+
+router.use('/pruebas', pruebasRouter)
+router.use('/api/sessions', sessionsRouter)
+
+router.get('/', (req, res) => {
+    res.render('login')
+})
+
+router.get('/register', (req, res) => {
+    res.render('register')
+})
 
 export default router

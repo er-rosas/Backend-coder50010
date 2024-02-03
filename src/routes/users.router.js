@@ -4,6 +4,10 @@ import userModel from '../daos/models/user.model.js'
 
 const router = express.Router();
 
+router.get('/login', (req, res) => {
+    res.render('login')
+})
+
 router
     .get('/', async (request, responses)=>{
         try {
