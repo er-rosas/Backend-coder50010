@@ -5,9 +5,11 @@ import proudctModel from '../daos/models/products.model.js';
 const router = express.Router();
 const managerMongo = new ProductManagerMongo();
 
-router.get('/list', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const {limit = 5, pageQuery = 1} = req.query
+        const {limit = 5, pageQuery = 1, category} = req.query
+        const uniqueCategories = await managerMongo.getUniqueCategories(); // Provisional hasta que tengamos una coleccion de categorias en la base de datos
+        const query = category ? { category, isActive: true } : { isActive: true };
         const {
             docs,
             hasPrevPage, 
@@ -15,7 +17,7 @@ router.get('/list', async (req, res) => {
             prevPage, 
             nextPage,
             page 
-        } = await proudctModel.paginate({}, {limit, page: pageQuery, sort: {title: -1}, lean: true})
+        } = await proudctModel.paginate(query, {limit, page: pageQuery, sort: {title: -1}, lean: true})
         console.log(page)
         res.render('products', {
             product: docs,
@@ -23,56 +25,57 @@ router.get('/list', async (req, res) => {
             hasNextPage,
             prevPage, 
             nextPage,
-            page 
+            page,
+            uniqueCategories
         })
     } catch (error) {
         console.log(error)
     }
 });
 
-router.get('/filter', async (req, res) => {
-    try {
-        const { limit = 5, pageQuery = 1, category } = req.query;
+// router.get('/filter', async (req, res) => {
+//     try {
+//         const { limit = 5, pageQuery = 1, category } = req.query;
 
-        const query = category ? { category } : {};
+//         const query = category ? { category } : {};
 
-        const {
-            docs,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
-            page,
-        } = await proudctModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
+//         const {
+//             docs,
+//             hasPrevPage,
+//             hasNextPage,
+//             prevPage,
+//             nextPage,
+//             page,
+//         } = await proudctModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
 
-        console.log(page);
-        res.render('products', {
-            product: docs,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
-            page
-        });
-    } catch (error) {
-        console.log(error);
-    }
-});
+//         console.log(page);
+//         res.render('products', {
+//             product: docs,
+//             hasPrevPage,
+//             hasNextPage,
+//             prevPage,
+//             nextPage,
+//             page
+//         });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
 
-router.get('/', async (req, res) => {
-    try {
-        const limit = req.query.limit;
-        let products = await managerMongo.getProducts();
+// router.get('/', async (req, res) => {
+//     try {
+//         const limit = req.query.limit;
+//         let products = await managerMongo.getProducts();
 
-        if (limit) {
-            products = products.slice(0, parseInt(limit));
-        }
+//         if (limit) {
+//             products = products.slice(0, parseInt(limit));
+//         }
 
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al obtener los productos' });
-    }
-});
+//         res.json(products);
+//     } catch (error) {
+//         res.status(500).json({ error: 'Error al obtener los productos' });
+//     }
+// });
 
 router.get('/:pid', async (req, res) => {
     try {

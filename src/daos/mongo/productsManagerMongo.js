@@ -59,6 +59,21 @@ class ProductManagerMongo {
     async getProductCode(code) {
         return await productsModel.findOne({ code });
     }
+
+
+    // Provisional hasta que tengamos una coleccion de categorias en la base de datos
+    async getUniqueCategories() {
+        try {
+            const allProducts = await productsModel.find({ isActive: true });
+            const allCategories = allProducts.map(product => product.category);
+            const uniqueCategoriesSet = new Set(allCategories);
+            const uniqueCategories = [...uniqueCategoriesSet];
+            return uniqueCategories;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }
 
 export default ProductManagerMongo;

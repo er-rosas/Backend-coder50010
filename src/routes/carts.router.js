@@ -5,22 +5,51 @@ import cartsModel from '../daos/models/carts.model.js'
 const router = express.Router()
 const cartsManagerMongo = new cartManagerMongo();
 
-router
-    .get("/:cid", async (req, res) => {
-        try {
-            const { cid } = req.params;
-            const cart = await cartsModel.findOne({ _id: cid });
-            console.log(cart.products);
-            res.send({
-                status: "succes",
-                payload: cart,
-            });
-        } catch (error) {
-            res.status(500).send(`Error de servidor. ${error.message}`);
-        }
-    })
+router.get("/:cid", async (req, res) => {
+    try {
+        const { cid } = req.params;
+        const cart = await cartsModel.findOne({ _id: cid });
+        console.log(cart.products);
+        const cartId = await cartsManagerMongo.getCartById(cid);
+        const cartObject = cartId.toObject();
+        const carrito = cartObject.products
+        res.render("carts", { carrito });
+        // res.render("carts", { carrito, status: "succes", payload: cart });
+        // res.status(status).send(body)
+        // res.status(200).send({ carrito, status: "success", payload: cart });
+        // res.send({
+        //     status: "succes",
+        //     payload: cart,
+        // });
 
-    .post("/", async (req, res) => {
+    } catch (error) {
+        res.status(500).send(`Error de servidor. ${error.message}`);
+    }
+});
+
+// get /carts/:cid 
+// router.get('/carts/:cid', async (req, res) => {
+//     try {
+//         const { cid } = req.params;
+//         const cartId = await cartsManagerMongo.getCartById(cid);
+//         // console.log(cartId + "1")
+
+//         // if (!productid) {
+//         //     return res.status(404).json({ message: 'Producto no encontrado' });
+//         // }
+//         // const product = productid.map((product) => ({
+//         //     ...product.toObject(),
+//         //     }));
+//         //     console.log(product)
+//         const cart = cartId.toObject();
+//         // console.log(cart.products)
+//         const carrito = cart.products
+//         res.render("carts", { carrito });
+//     } catch (error) {
+//         res.status(500).json({ error: 'Error al obtener el cart por ID' });
+//     }
+// });
+router.post("/", async (req, res) => {
         try {
             const result = await cartsModel.create({ products: [] });
             res.send({
@@ -30,10 +59,10 @@ router
         } catch (error) {
             res.status(500).send(`Error de servidor. ${error.message}`);
         }
-    })
+    });
     
     // Agregar un producto a un carrito
-    .post("/:cid/product/:pid", async (req, res) => {
+    router.post("/:cid/product/:pid", async (req, res) => {
         try {
             const { cid, pid } = req.params;
 
@@ -57,28 +86,6 @@ router
         }
     });
 
-    // get /carts/:cid 
-    router.get('/carts/:cid', async (req, res) => {
-        try {
-            const { cid } = req.params;
-            const cartId = await cartsManagerMongo.getCartById(cid);
-            console.log(cartId + "1")
-    
-            // if (!productid) {
-            //     return res.status(404).json({ message: 'Producto no encontrado' });
-            // }
-            // const product = productid.map((product) => ({
-            //     ...product.toObject(),
-            //     }));
-            //     console.log(product)
-            const cart = cartId.toObject();
-            console.log(cart.products)
-            const carrito = cart.products
-            res.render("carts", { carrito });
-        } catch (error) {
-            res.status(500).json({ error: 'Error al obtener el cart por ID' });
-        }
-    });
     //PUT api/carts/:cid 
     // Ruta para actualizar el carrito con un arreglo de productos
     router.put('/:cid', async (req, res) => {
@@ -110,7 +117,7 @@ router
 
     //DELETE api/carts/:cid
     // Ruta para eliminar todos los productos del carrito
-    router.delete('/borrarproductos/:cid', async (req, res) => {
+    router.delete('/:cid', async (req, res) => {
         const { cid } = req.params;
 
         try {
@@ -124,7 +131,7 @@ router
 
     //DELETE api/carts/:cid/products/:pid
     // Ruta para eliminar un producto del carrito
-    router.delete('/borrarproducto/:cid/products/:pid', async (req, res) => {
+    router.delete('/:cid/products/:pid', async (req, res) => {
         try {
             const { cid, pid } = req.params;
             const updatedCart = await cartsManagerMongo.removeProductFromCart(cid, pid);

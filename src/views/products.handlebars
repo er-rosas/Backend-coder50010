@@ -33,12 +33,18 @@
         <div>
             <h1>Products</h1>
             <div>
-                <p>Filtrar por cartegoria</p>
+                    <p>Filtrar por cartegoria</p>
+                <ul>
+                    {{#each uniqueCategories}}
+                        <li><a href="/api/products?category={{this}}">{{this}}</a></li>
+                    {{/each}}
+                </ul>
+                {{!-- <p>Filtrar por cartegoria</p>
                 <ul>
                     <li><a href="/api/products/filter?category=apple">Apple</a></li>
                     <li><a href="/api/products/filter?category=samsung">Samsung</a></li>
                     <li><a href="/api/products/filter?category=xiaomi">Xiaomi</a></li>
-                </ul>
+                </ul> --}}
             </div>
             {{#each product}}
             <div class="card">
@@ -55,11 +61,11 @@
         </div>
         <div>
             {{#if hasPrevPage}}
-                <a href="/api/products/list?pageQuery={{prevPage}}">Anterior</a>
+                <a href="/api/products?pageQuery={{prevPage}}">Anterior</a>
             {{/if}}
             <label>{{page}}</label>
             {{#if hasNextPage}}
-                <a href="/api/products/list?pageQuery={{nextPage}}">Siguiente</a>
+                <a href="/api/products?pageQuery={{nextPage}}">Siguiente</a>
             {{/if}}
         </div>
     </center>
