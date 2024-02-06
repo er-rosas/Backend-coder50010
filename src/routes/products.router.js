@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         console.log(page)
 
         if (!req.session.user) {
-            return res.redirect('/login');
+            return res.redirect('/');//login
         }
         const user = req.session.user;
         console.log(user);

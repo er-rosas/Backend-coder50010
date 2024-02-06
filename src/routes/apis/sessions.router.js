@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
 
         const result = sessionService.createUser(newUser)
         // res.send({status: 'success', payload: newUser })
-        res.redirect('/login');
+        res.redirect('/login'); //login
     } catch (error) {
         res.send({status: 'error', error: error.message })
     }
@@ -53,7 +53,7 @@ router.get('/logout', (req, res) => {
         if (error) {return res.status(401).send(error)}
         // res.send({status: 'success', message: 'Logout ok'})
     });
-    res.redirect('/login');
+    res.redirect('/login'); //login
 });
 
 router.get('/current', auth,(req, res) => {
