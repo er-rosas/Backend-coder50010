@@ -1,6 +1,6 @@
 import passport from 'passport';
 import local from 'passport-local';
-import userModel from '../daos/models/user.model.js'; // accedemos al user model a través del manager
+import userModel from '../daos/models/user.model.js';
 import hashBcrypt from '../utils/hashBcrypt.js';
 
 import GithubStrategy from 'passport-github2'
@@ -12,7 +12,7 @@ const LocalStrategy = local.Strategy;
 
 const initializePassport = () => {
     passport.use('register', new LocalStrategy({
-        passReqToCallback: true, // accediendo al req
+        passReqToCallback: true,
         usernameField: 'email'
     }, async (req, username, password, done) => {
         const { first_name, last_name, email } = req.body;
@@ -29,7 +29,7 @@ const initializePassport = () => {
             };
 
             let result = await userModel.create(newUser);
-            // done funciona como el next
+
             return done(null, result);
         } catch (error) {
             return done(error);
@@ -41,16 +41,6 @@ const initializePassport = () => {
         usernameField: 'email'
     }, async (username, password, done) => {
         try {
-            // if (username === 'adminCoder@coder.com' && password === 'adminCod3r123') {
-            //     req.session.user = {id: "coderHouse", first_name: "Coder House", username: "adminCoder@coder.com", role: "admin"}
-            //     res.redirect('/api/products');
-            //     return;
-            // };
-            // if (username === 'adminCoder@coder.com' && password === 'adminCod3r123') {
-            //     // Establecer la sesión de usuario para el admin
-            //     user = { id: "coderHouse", first_name: "Coder House", email: "adminCoder@coder.com", role: "admin" };
-            //     return done(null, user);
-            // }
             const user = await userModel.findOne({ email: username });
             if (!user) {
                 console.log('user no encontrado');
