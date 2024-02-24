@@ -62,21 +62,11 @@ router.post("/", async (req, res) => {
         try {
             const { cid, pid } = req.params;
 
-            // const { quantity } = req.body;
-
-            // // Verificar si la cantidad es un número positivo
-            // if (!Number.isInteger(quantity) || quantity <= 0) {
-            //     return res.status(400).send("La cantidad debe ser un número entero positivo.");
-            // }
-
             const cart = await cartsModel.findById({ _id: cid });
             cart.products.push({ product: pid   }); //quantity
 
             let result = await cartsModel.findByIdAndUpdate({ _id: cid }, cart);
-            // res.send({
-            //     status: "succes",
-            //     payload: result,
-            // });
+
             res.redirect('/api/carts/65b830c5d2b1935598426a25');
         } catch (error) {
             res.status(500).send(`Error de servidor. ${error.message}`);
