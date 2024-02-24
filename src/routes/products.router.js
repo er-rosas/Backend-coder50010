@@ -5,41 +5,79 @@ import proudctModel from '../daos/models/products.model.js';
 const router = express.Router();
 const managerMongo = new ProductManagerMongo();
 
-router.get('/', async (req, res) => {
+// router.get('/', async (req, res) => {
+//     try {
+//         const {limit = 5, pageQuery = 1, category} = req.query
+//         const uniqueCategories = await managerMongo.getUniqueCategories(); // Provisional hasta que tengamos una coleccion de categorias en la base de datos
+//         const query = category ? { category, isActive: true } : { isActive: true };
+//         const {
+//             docs,
+//             hasPrevPage, 
+//             hasNextPage,
+//             prevPage, 
+//             nextPage,
+//             page 
+//         } = await proudctModel.paginate(query, {limit, page: pageQuery, sort: {title: -1}, lean: true})
+//         console.log(page)
+
+//         // if (!req.session.user) {
+//         //     return res.redirect('/');//login
+//         // }
+//         // const user = req.session.user;
+//         // console.log(user);
+
+//         res.render('products', {
+//             product: docs,
+//             hasPrevPage, 
+//             hasNextPage,
+//             prevPage, 
+//             nextPage,
+//             page,
+//             uniqueCategories,
+//             // user
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
+// });
+
+router.get('/', (req, res, next) => {
+    // Verificar si la cookieToken no está presente en la solicitud
+    if (!req.cookies.cookieToken) {
+        // Redirigir al usuario al login
+        return res.redirect('/login');
+    }
+    // Si la cookieToken está presente, continuar con la ejecución de la ruta
+    next();
+}, async (req, res) => {
     try {
-        const {limit = 5, pageQuery = 1, category} = req.query
-        const uniqueCategories = await managerMongo.getUniqueCategories(); // Provisional hasta que tengamos una coleccion de categorias en la base de datos
+        const { limit = 5, pageQuery = 1, category } = req.query;
+        const uniqueCategories = await managerMongo.getUniqueCategories();
         const query = category ? { category, isActive: true } : { isActive: true };
         const {
             docs,
-            hasPrevPage, 
+            hasPrevPage,
             hasNextPage,
-            prevPage, 
+            prevPage,
             nextPage,
-            page 
-        } = await proudctModel.paginate(query, {limit, page: pageQuery, sort: {title: -1}, lean: true})
-        console.log(page)
-
-        if (!req.session.user) {
-            return res.redirect('/');//login
-        }
-        const user = req.session.user;
-        console.log(user);
+            page
+        } = await proudctModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
 
         res.render('products', {
             product: docs,
-            hasPrevPage, 
+            hasPrevPage,
             hasNextPage,
-            prevPage, 
+            prevPage,
             nextPage,
             page,
-            uniqueCategories,
-            user
-        })
+            uniqueCategories
+        });
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(500).send('Internal Server Error');
     }
 });
+
 
 router.get('/:pid', async (req, res) => {
     try {

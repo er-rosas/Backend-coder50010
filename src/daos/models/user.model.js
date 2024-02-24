@@ -22,10 +22,13 @@ const usersSchema = new Schema({
         type: Boolean,
         default: true
     },
+    cartId: {
+        type: String
+    },
     role: {
         type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
+        enum: ['user', 'admin', 'PUBLIC'],
+        default: 'PUBLIC'
     }
 })
 

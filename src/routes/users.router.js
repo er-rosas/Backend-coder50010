@@ -1,5 +1,7 @@
 import express from 'express';
 import userModel from '../daos/models/user.model.js'
+import { passportCall } from '../middleware/pasportCall.js';
+import { authorization } from '../middleware/authentication.js';
 
 
 const router = express.Router();
@@ -9,7 +11,7 @@ router.get('/login', (req, res) => {
 })
 
 router
-    .get('/', async (request, responses)=>{
+    .get('/', passportCall('jwt'), authorization( ['USER_PREMIUM', 'ADMIN'] ), async (request, responses)=>{
         try {
             const {limit = 5, pageQuery = 1} = request.query
             const {

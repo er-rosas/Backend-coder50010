@@ -4,20 +4,27 @@ import handlebars from 'express-handlebars'
 import { __dirname, uploader } from "./utils.js";
 import { Server as ServerIO, Server } from 'socket.io';
 
-import ProductManagerMongo from './daos/mongo/productsManagerMongo.js';
-import messageModel from './daos/models/messages.models.js';
-import { connectDB } from './config/connectDB.js';
+import {configObject, connectDB} from './config/connectDB.js';
 import appRouter from './routes/index.js'
 
-import cookieParser from "cookie-parser";
-import session from "express-session";
-import MongoStore from "connect-mongo";
 
-import passport from "passport";
-import initializePassport from "./config/passport.config.js";
+
+import ProductManagerMongo from './daos/mongo/productsManagerMongo.js';
+import messageModel from './daos/models/messages.models.js';
+
+import cookieParser from "cookie-parser"
+import passport from "passport"
+import { initializePassport } from "./config/initializePassport.config.js";
+
+// import cookieParser from "cookie-parser";
+// // import session from "express-session";
+// // import MongoStore from "connect-mongo";
+
+// import passport from "passport";
+// import initializePassport from "./config/passport.config.js";
 
 // Server
-const PORT = 8080 || process.env.PORT;
+const PORT = configObject.port;
 const app = express();
 connectDB()
 
@@ -27,26 +34,34 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(logger('dev'))
-app.use(cookieParser('palabrasecretaparafirmarcookie'))
+// app.use(cookieParser('palabrasecretaparafirmarcookie'))
 
-// Session config
-// Session with mongo
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl: 'mongodb+srv://errosas24:QvBOVYSG5ndTvKTr@cluster0.o1tsu31.mongodb.net/backendCoder50010?retryWrites=true&w=majority',
-        mongoOptions: {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        },
-        ttl: 150000
-    }),
-    secret: 'secretCoder',
-    resave: true,
-    saveUninitialized: true
-}));
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
+
+
+app.use(cookieParser())
+
+initializePassport()
+app.use(passport.initialize())
+
+
+// // Session config
+// // Session with mongo
+// app.use(session({
+//     store: MongoStore.create({
+//         mongoUrl: 'mongodb+srv://errosas24:QvBOVYSG5ndTvKTr@cluster0.o1tsu31.mongodb.net/backendCoder50010?retryWrites=true&w=majority',
+//         mongoOptions: {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true
+//         },
+//         ttl: 150000
+//     }),
+//     secret: 'secretCoder',
+//     resave: true,
+//     saveUninitialized: true
+// }));
+// initializePassport();
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 // Configuración de Handlebars
