@@ -4,7 +4,7 @@
 <div>
     <center>
         <h1>Product Details</h1>
-        <a href="http://localhost:8080/api/carts/65b830c5d2b1935598426a25">Ver carrito</a>
+        <a href="http://localhost:8080/api/carts/{{user.cartId}}">Ver carrito</a>
         {{#with product}}
             <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
             <p class="card-text"><strong>Description: </strong>{{this.description}}</p>
@@ -14,6 +14,6 @@
             <p class="card-text"><strong>Category: </strong>{{this.category}}</p>
             <p class="card-text"><strong>Status: </strong>{{this.status}}</p>
         {{/with}}
-        <a href="http://localhost:8080/api/carts/65b830c5d2b1935598426a25/product/{{product._id}}">Agregar al carrito</a>
+        <a href="http://localhost:8080/api/carts/{{user.cartId}}/product/{{product._id}}">Agregar al carrito</a>
     </center>
 </div>

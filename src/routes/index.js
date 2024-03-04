@@ -24,14 +24,14 @@ router.use('/realtimeproducts', realtimeproductsRouter)
 router.use('/multer', multerRouter)
 router.use('/messages', messaggesRouter)
 
+router.use('/api/sessions', sessionsRouter)
 router.use('/api/users', usersRouter)
 router.use('/api/products', productRouter)
+router.use('/api/productdetail', productDetail)
 router.use('/api/carts', cartRouter)
 
-router.use('/productdetail', productDetail)
 
 router.use('/pruebas', pruebasRouter)
-router.use('/api/sessions', sessionsRouter)
 
 router.get('/', (req, res) => {
     res.redirect('/login');
@@ -43,6 +43,10 @@ router.get('/login', (req, res) => {
 
 router.get('/register', (req, res) => {
     res.render('register')
+})
+
+router.get('*', (req, res) => {
+    res.send('Not found.')
 })
 
 export default router

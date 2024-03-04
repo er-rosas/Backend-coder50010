@@ -38,8 +38,9 @@
             <p>Email: {{this.email}}</p>
             <p>Role: {{this.role}}</p>
             {{/with}}
+            
             <a href="/api/sessions/logout">Logout</a>
-            <a href="http://localhost:8080/api/carts/65b830c5d2b1935598426a25">Ver carrito</a>
+            <a href="http://localhost:8080/api/carts/{{user.cartId}}">Ver carrito</a>
             <div>
                     <p>Filtrar por cartegoria</p>
                 <ul>
@@ -52,7 +53,7 @@
             <div class="card">
                 <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
                 <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
-                <a href="/productdetail/{{this._id}}">Ver detalle</a>
+                <a href="/api/productdetail/{{this._id}}">Ver detalle</a>
             </div>
             {{/each}}
         </div>

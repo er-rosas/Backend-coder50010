@@ -1,6 +1,6 @@
 import cartsModel from "../models/carts.model.js";
 
-class cartManagerMongo {
+class CartManagerMongo {
     // Crear un carrito
     async createCart() {
         const cart = await cartsModel.create({ products: [] });
@@ -95,4 +95,4 @@ class cartManagerMongo {
     }
 }
 
-export default cartManagerMongo
+export default CartManagerMongo

@@ -17,7 +17,7 @@ class ProductManagerMongo {
     }
     }
 
-    async createproduct(newProduct) {
+    async createProduct(newProduct) {
         try {
             return await productsModel.create(newProduct);
         } catch (error) {
@@ -73,6 +73,10 @@ class ProductManagerMongo {
             console.error(error);
             throw error;
         }
+    }
+
+    async getProductPaginate (limit, pageQuery, query){
+        return await productsModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
     }
 }
 

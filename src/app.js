@@ -20,6 +20,7 @@ import { initializePassport } from "./config/initializePassport.config.js";
 const PORT = configObject.port;
 const app = express();
 connectDB()
+connectDB()
 
 // Middlewares
 // Configuración para enviar por body
@@ -74,7 +75,7 @@ io.on('connection', (socket) => {
             return "Ya existe un producto con el mismo código.";
         }
 
-        await managerMongo.createproduct(newProduct);
+        await managerMongo.createProduct(newProduct);
         const updateProducts = await managerMongo.getProducts();
         io.emit("updateProducts", { products: updateProducts });
     });
