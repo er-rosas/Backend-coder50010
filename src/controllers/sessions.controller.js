@@ -1,6 +1,6 @@
-import ProductManagerMongo from "../daos/mongo/productsManagerMongo.js";
-import UserManagerMongo from "../daos/mongo/userManagerMongo.js";
-import CartManagerMongo from "../daos/mongo/cartsManagerMongo.js";
+// import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
+import UserManagerMongo from "../daos/mongo/userDao.mongo.js";
+import CartManagerMongo from "../daos/mongo/carts.mongo.js";
 import { generateToken, verifyToken } from "../utils/jsonwebtoken.js";
 import { createHash, isValidPassword } from "../utils/hashBcrypt.js";
 
@@ -67,37 +67,43 @@ class SessionController{
         res.clearCookie('cookieToken').redirect('/login')
     };
     currentSession = async (req, res) => {
-        // Obtener el token de la cookie
-        const token = req.cookies.cookieToken;
-        
-        // Verificar si el token está presente
-        if (!token) {
-            return res.status(401).send('No se proporcionó el token');
-        }
-    
         try {
-            // Verificar el token
-            const decodedToken = verifyToken(token);
-            
-            // Obtener el usuario asociado al token
-            const user = await this.service.getUser(decodedToken.id);
-            
-            if (!user) {
-                return res.status(404).send('Usuario no encontrado');
-            }
-    
-            // Si todo está bien, enviar los datos del usuario
-            return res.send({
-                id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email
-                // Otros datos sensibles que desees devolver
-            });
+            res.send({message: 'datos sensibles'})            
         } catch (error) {
-            console.error(error);
-            return res.status(401).send('Token inválido');
+            res.send({status: 'error', error})   
         }
+        
+        // // Obtener el token de la cookie
+        // const token = req.cookies.cookieToken;
+        
+        // // Verificar si el token está presente
+        // if (!token) {
+        //     return res.status(401).send('No se proporcionó el token');
+        // }
+    
+        // try {
+        //     // Verificar el token
+        //     const decodedToken = verifyToken(token);
+            
+        //     // Obtener el usuario asociado al token
+        //     const user = await this.service.getUser(decodedToken.id);
+            
+        //     if (!user) {
+        //         return res.status(404).send('Usuario no encontrado');
+        //     }
+    
+        //     // Si todo está bien, enviar los datos del usuario
+        //     return res.send({
+        //         id: user._id,
+        //         first_name: user.first_name,
+        //         last_name: user.last_name,
+        //         email: user.email
+        //         // Otros datos sensibles que desees devolver
+        //     });
+        // } catch (error) {
+        //     console.error(error);
+        //     return res.status(401).send('Token inválido');
+        // }
     };
 };
 

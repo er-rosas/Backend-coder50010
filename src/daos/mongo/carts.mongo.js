@@ -1,20 +1,21 @@
-import cartsModel from "../models/carts.model.js";
+import cartsModel from "./models/carts.model.js";
+import ticketModel from "./models/ticket.model.js";
 
 class CartManagerMongo {
     // Crear un carrito
-    async createCart() {
+    async create() {
         const cart = await cartsModel.create({ products: [] });
         return cart;
     }
 
     // Buscar un carrito por ID
-    async getCartById(cartId) {
+    async getById(cartId) {
         const cart = await cartsModel.findById(cartId);
         return cart;
     }
 
     // Agregar un producto al carrito
-    async addProductToCart(cartId, productId) {
+    async addProduct(cartId, productId) {
         const cart = await cartsModel.findById(cartId);
         if (!cart) {
             throw new Error("Carrito no encontrado");
@@ -26,7 +27,7 @@ class CartManagerMongo {
     }
 
     // Obtener todos los productos en un carrito
-    async getProductsInCart(cartId) {
+    async getProducts(cartId) {
         const cart = await cartsModel.findById(cartId);
         if (!cart) {
             throw new Error("Carrito no encontrado");
@@ -92,6 +93,16 @@ class CartManagerMongo {
 
         cart.products = [];
         await cart.save();
+    }
+
+    async createTicket(code, amount, purchaser) {
+        const ticket = await ticketModel.create({
+            code,
+            // purchase_datetime: purchase
+            amount,
+            purchaser
+        });
+        return ticket;
     }
 }
 

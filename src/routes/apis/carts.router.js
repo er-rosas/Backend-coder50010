@@ -1,9 +1,9 @@
 import express from 'express';
-import CartManagerMongo from '../daos/mongo/cartsManagerMongo.js';
-import cartsModel from '../daos/models/carts.model.js'
-import CartController from '../controllers/carts.controller.js';
-import { passportCall } from '../middleware/pasportCall.js';
-import { authorization } from '../middleware/authentication.js';
+import CartManagerMongo from '../../daos/mongo/carts.mongo.js';
+// import cartsModel from '../../daos/models/carts.model.js'
+import CartController from '../../controllers/carts.controller.js';
+import { passportCall } from '../../middleware/pasportCall.js';
+import { authorization } from '../../middleware/authentication.js';
 
 const router = express.Router()
 
@@ -16,7 +16,8 @@ const {
     updateCart,
     updateProductQuantityOfCart,
     deleteAllProductOfCart,
-    deleteOneProductOfCart
+    deleteOneProductOfCart,
+    purchaseCart
 } = new CartController();
 
 // Ruta para traer un carrito
@@ -43,5 +44,8 @@ router.delete('/:cid', deleteAllProductOfCart)
 
 // Ruta para eliminar un producto del carrito
 router.delete('/:cid/products/:pid', deleteOneProductOfCart)
+
+// Esa ruta permitirá finalizar el proceso de compra de dicho carrito.
+router.post('/:cid/purchase', purchaseCart)
 
 export default router;

@@ -1,4 +1,4 @@
-import ProductManagerMongo from "../daos/mongo/productsManagerMongo.js";
+import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
 
 class ProductController{
     constructor(){
@@ -26,7 +26,19 @@ class ProductController{
                 nextPage,
                 page
             } = await this.service.getProductPaginate(limit, pageQuery, query);
-    
+            
+            // res.send({
+            //     status: 'success',
+            //     // payload: products
+            //     product: docs,
+            //     hasPrevPage,
+            //     hasNextPage,
+            //     prevPage,
+            //     nextPage,
+            //     page,
+            //     uniqueCategories,
+            //     user: userData
+            // });
             res.render('products', {
                 product: docs,
                 hasPrevPage,

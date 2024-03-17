@@ -1,52 +1,39 @@
-import { Router } from 'express'
-// Importacion nombrada
-// import { usersRouter } from './users.router.js'
-// Importacion por default
-import homeRouter from './home.router.js';
-import realtimeproductsRouter from './realTimeProducts.router.js';
-import multerRouter from './multer.router.js'
-import messaggesRouter from './messages.router.js'
+import express from 'express';
 
-import productRouter from './products.router.js';
-import cartRouter from './carts.router.js';
-
-import usersRouter from './users.router.js'
-
-import productDetail from './productDetail.router.js'
-
-import pruebasRouter from './apis/pruebas.router.js'
+import viewsRouter from './views.router.js';
 import sessionsRouter from './apis/sessions.router.js';
+import usersRouter from './apis/users.router.js';
 
-const router = Router()
+import productsRouter from './apis/products.router.js';
+import productDetail from './apis/productDetail.router.js';
+import cartsRouter from './apis/carts.router.js';
+import ordersRouter from '';
+import realtimeproductsRouter from './apis/realTimeProducts.router.js';
 
-router.use('/links', homeRouter)
-router.use('/realtimeproducts', realtimeproductsRouter)
-router.use('/multer', multerRouter)
-router.use('/messages', messaggesRouter)
+import multerRouter from './apis/multer.router.js';
+import messaggesRouter from './apis/messages.router.js';
+import pruebasRouter from './apis/pruebas.router.js';
 
-router.use('/api/sessions', sessionsRouter)
+const router = express.Router()
+
+router.use('/', viewsRouter.getRouter())
+router.use('/sessions', sessionsRouter)
 router.use('/api/users', usersRouter)
-router.use('/api/products', productRouter)
+
+router.use('/api/products', productsRouter)
 router.use('/api/productdetail', productDetail)
-router.use('/api/carts', cartRouter)
+router.use('/api/carts', cartsRouter)
+router.use('/api/orders', ordersRouter.getRouter())
+router.use('/api/realtimeproducts', realtimeproductsRouter)
 
+router.use('/api/pruebas', pruebasRouter)
+router.use('/api/messages', messaggesRouter)
+router.use('/api/multer', multerRouter)
 
-router.use('/pruebas', pruebasRouter)
-
-router.get('/', (req, res) => {
-    res.redirect('/login');
-})
-
-router.get('/login', (req, res) => {
-    res.render('login')
-})
-
-router.get('/register', (req, res) => {
-    res.render('register')
-})
-
-router.get('*', (req, res) => {
-    res.send('Not found.')
-})
+router.use('*', async (req, res)=>{
+    res.status(404).json({
+        mensaje: 'ruta no encontrada'
+    })
+});
 
 export default router

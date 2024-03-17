@@ -1,4 +1,4 @@
-import ProductManagerMongo from "../daos/mongo/productsManagerMongo.js";
+import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
 
 class RealTimeProductsController {
     constructor(){

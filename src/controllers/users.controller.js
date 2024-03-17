@@ -1,6 +1,6 @@
-import UserManagerMongo from '../daos/mongo/userManagerMongo.js';
-import { passportCall } from '../middleware/pasportCall.js';
-import { authorization } from '../middleware/authentication.js';
+import UserManagerMongo from '../daos/mongo/userDao.mongo.js';
+// import { passportCall } from '../middleware/pasportCall.js';
+// import { authorization } from '../middleware/authentication.js';
 
 // const userService = new UserManagerMongo()
 
@@ -87,7 +87,7 @@ class UserController{
             console.log(error)
         }
     };
-    getAllUser = async (request, responses)=>{
+    getAllUsers = async (request, responses)=>{
         try {
             const users = await this.service.getUsers()
             responses.send({

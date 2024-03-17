@@ -3,15 +3,16 @@ import mongoose from "mongoose";
 const orderCollection = 'orders'
 
 const orderSchema = new mongoose.Schema({
-    name: String,
-    size: {
-        type: String,
-        enum: ["small", "medium", "large"],
-        default: "medium"
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'usuarios'
     },
-    price: Number,
-    quantity: Number,
-    date: Date
+    products: [{
+        type: Schema.Types.ObjectId,
+        ref: 'productos'
+    }],
+    totalprice: Number,
+    created: Date
 })
 
 const orderModel = mongoose.model(orderCollection, orderSchema)

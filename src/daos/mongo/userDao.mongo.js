@@ -1,4 +1,4 @@
-import userModel from "../../daos/models/user.model.js";
+import userModel from "./models/user.model.js";
 
 class UserManagerMongo {
     // async getUsersPaginate(limit=10, page=1){
