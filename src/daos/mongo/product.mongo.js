@@ -1,15 +1,30 @@
 import productsModel from "./models/products.model.js";
 
 class ProductManagerMongo {
-    async getProducts() {
+    // constructor(){
+    //     this.product = productsModel
+    // }
+    //get
+    //getById
+    //create
+    //update
+    //remove
+    async gets() {
         try {
             return await productsModel.find({ isActive: true });
         } catch (error) {
             console.error(error);
         }
     }
+    async get(uid) {
+        try {
+            return await productsModel.findOne(uid);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-    async getProductById(pid) {
+    async getById(pid) {
     try {
         return await productsModel.findOne({ _id: pid });
     } catch (error) {
@@ -17,7 +32,7 @@ class ProductManagerMongo {
     }
     }
 
-    async createProduct(newProduct) {
+    async create(newProduct) {
         try {
             return await productsModel.create(newProduct);
         } catch (error) {
@@ -25,7 +40,7 @@ class ProductManagerMongo {
         }
         }
 
-    async updateProduct(data) {
+    async update(data) {
         try {
             return await productsModel.findByIdAndUpdate(
                 { _id: data.idProduct },
@@ -45,7 +60,7 @@ class ProductManagerMongo {
         }
         }
 
-    async deleteProduct(pid) {
+    async delete(pid) {
         try {
             return await productsModel.findByIdAndUpdate(
             { _id: pid },
@@ -55,11 +70,6 @@ class ProductManagerMongo {
             console.log(error);
         }
     }
-
-    async getProductCode(code) {
-        return await productsModel.findOne({ code });
-    }
-
 
     // Provisional hasta que tengamos una coleccion de categorias en la base de datos
     async getUniqueCategories() {
@@ -75,7 +85,7 @@ class ProductManagerMongo {
         }
     }
 
-    async getProductPaginate (limit, pageQuery, query){
+    async getPaginate (limit, pageQuery, query){
         return await productsModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
     }
 }

@@ -1,0 +1,41 @@
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    /* font-size: 18px; */
+    align-items: center;
+}
+
+.product-title {
+    font-size: 30px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    width: 400px; /* Tamaño de la tarjeta */
+    font-size: 18px; /* Tamaño del texto */
+}
+.card-title {
+    font-size: 24px; /* Tamaño del título */
+    margin-bottom: 10px;
+}
+.card-text {
+    margin-bottom: 5px;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+}

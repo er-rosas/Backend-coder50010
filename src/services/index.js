@@ -1,8 +1,8 @@
 import { 
-    UserDao, 
-    ProductDao, 
-    OrderDao, 
-    CartDao 
+    UserDao,
+    ProductDao,
+    CartDao,
+    OrderDao
 } from '../daos/factory.js'; // Daos - Manager
 
 import ProductRepositories from '../repositories/product.repositories.js'; // Service

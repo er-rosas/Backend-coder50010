@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { configObject } from '../config/connectDB.js';
+import { configObject } from '../config/config.js';
 
 const PRIVATE_KEY = configObject.jwt_secret_Key
 

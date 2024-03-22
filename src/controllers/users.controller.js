@@ -1,12 +1,13 @@
-import UserManagerMongo from '../daos/mongo/userDao.mongo.js';
-// import { passportCall } from '../middleware/pasportCall.js';
-// import { authorization } from '../middleware/authentication.js';
 
-// const userService = new UserManagerMongo()
+// import { UserDao } from "../daos/factory.js";
+// import UserManagerMongo from '../daos/mongo/userDao.mongo.js';
+
+import { userService } from "../services/index.js";
+// import UserDTO from "../dto/user.dto.js";
 
 class UserController{
     constructor(){
-        this.service = new UserManagerMongo()
+        this.service = userService
     }
     getUsers = async (request, responses)=>{
         try {
@@ -18,7 +19,7 @@ class UserController{
                 prevPage, 
                 nextPage,
                 page 
-                } = await this.service.getUsersPaginate(limit, pageQuery)
+                } = await this.service.getPaginate(limit, pageQuery)
                 responses.render('users', {
                     users: docs,
                     hasPrevPage, 
@@ -34,7 +35,7 @@ class UserController{
     getUser = async (request, responses)=>{
         try {
             const { uid } = request.params
-            const user = await this.service.getUser({_id: uid})
+            const user = await this.service.get({_id: uid})
             responses.json({
                 status: 'success',
                 result: user
@@ -45,8 +46,15 @@ class UserController{
     };
     createUser = async (request, responses)=>{
         try {
-            const { body } = request
-            const result = await this.service.createUser(body)
+            const { first_name, last_name, email, password } = request.body
+
+            const newUser = ({
+                first_name,
+                last_name,
+                email,
+                password })
+
+            const result = await this.service.create(newUser)
 
             responses.send({
                 status: 'success',
@@ -63,7 +71,7 @@ class UserController{
             
             // Aquí podrías validar que hay datos en el body antes de intentar actualizar el usuario
             
-            const result = await this.service.updateUser(uid, body);
+            const result = await this.service.update(uid, body);
             
             responses.send({
                 status: 'success',
@@ -81,7 +89,7 @@ class UserController{
     deleteUser = async (request, responses)=>{
         try {
             const {uid} = request.params
-            const result = await this.service.deleteUser(uid)
+            const result = await this.service.delete(uid)
             responses.send('delete user')
         } catch (error) {
             console.log(error)
@@ -89,7 +97,8 @@ class UserController{
     };
     getAllUsers = async (request, responses)=>{
         try {
-            const users = await this.service.getUsers()
+            // const users = await this.service.gets()
+            const users = await userService.getUsers()
             responses.send({
                 status: 'success',
                 result: users

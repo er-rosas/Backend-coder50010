@@ -1,130 +1,208 @@
-// import CartManagerMongo from "../daos/mongo/cartsDao.mongo"
-// import ProductManagerMongo from "../daos/mongo/productsDao.mongo"
-// import UserManagerMongo from "../daos/mongo/userDao.mongo"
-
-// class viewsController {
-//     constructor(){
-//         this.cartDao = new CartManagerMongo()
-//         this.productDao = new ProductManagerMongo()
-//         this.userDao = new UserManagerMongo()
-//     };
-// }
-
-import { productService, cartService, userService } from '../services';
-import { logger } from '../middleware/logger';
+import { productService, cartService, userService } from '../services/index.js';
+// import { userService } from '../services/index.js';
+// import { logger } from '../middleware/logger';
 
 class ViewsController {
-    async renderInicio(req, res) {
+    async renderRedirect(req, res) {
         try {
-            const products = [
-                { title: 'Gorra rosa', price: 400, imageUrl: 'https://cdn.palbincdn.com/users/31244/images/GORRA-BASICA-JUNIOR-CUSTOMIZASHOPBF10B-COLOR-ROSA-1611838353.jpg', category: 'gorras' },
-                { title: 'Gorra rosa', price: 350, imageUrl: 'https://cdn.palbincdn.com/users/31244/images/GORRA-BASICA-JUNIOR-CUSTOMIZASHOPBF10B-COLOR-ROSA-1611838353.jpg', category: 'gorras' },
-                { title: 'Gorra rosa', price: 300, imageUrl: 'https://cdn.palbincdn.com/users/31244/images/GORRA-BASICA-JUNIOR-CUSTOMIZASHOPBF10B-COLOR-ROSA-1611838353.jpg', category: 'gorras' },
-                { title: 'Gorra rosa', price: 200, imageUrl: 'https://cdn.palbincdn.com/users/31244/images/GORRA-BASICA-JUNIOR-CUSTOMIZASHOPBF10B-COLOR-ROSA-1611838353.jpg', category: 'gorras' },
-                { title: 'Gorra rosa', price: 150, imageUrl: 'https://cdn.palbincdn.com/users/31244/images/GORRA-BASICA-JUNIOR-CUSTOMIZASHOPBF10B-COLOR-ROSA-1611838353.jpg', category: 'gorras' }
-            ];
-
-            let users = [{ email: 'fede@gmail.com', password: 'fede', role: 'admin' }];
-            console.log('auth principal');
-            let testUser = {
-                name: 'Federico',
-                last_name: 'Osandón',
-                role: 'admin',
-            };
-            // req.session.user = testUser.name
-            // req.session.admin = true
-            res.status(200).render('index', {
-                user: testUser,
-                isAdmin: testUser.role === 'admin',
-                products,
-                showNav: true
-                // style: 'index.css'
-            });
+            res.redirect('/login');
         } catch (error) {
-            logger.info(error);
-        }
-    }
-
-    async renderProfile(req, res) {
-        try {
-            res.status(200).render('profile', {
-                showNav: true
-            });
-        } catch (error) {
-            logger.error(error);
-        }
-    }
-
-    async renderCart(req, res) {
-        try {
-            const { cid } = req.params;
-
-            const cart = await cartService.getCart(cid);
-            console.log(cart.products);
-            res.render('cart', {
-                cart,
-                showNav: true
-            });
-        } catch (error) {
-            logger.error(error);
-        }
-    }
-
-    async renderProducts(req, res) {
-        try {
-            res.status(200).render('products', {
-                showNav: true
-            });
-        } catch (error) {
-            logger.info(error);
-        }
-    }
-
-    async renderDetalle(req, res) {
-        try {
-            const { pid } = req.params;
-            const product = await productService.getProduct(pid);
-            res.render('detalle', {
-                product,
-                showNav: true
-            });
-        } catch (error) {
-            logger.error(error);
-        }
-    }
+            console.log(error);
+            res.redirect("Error");
+            return;
+        }}
 
     async renderLogin(req, res) {
         try {
             res.status(200).render('login', {
-                showNav: true
+                //showNav: true,
+                style: 'login.css'
             });
         } catch (error) {
-            logger.info(error);
+            // logger.info(error);
         }
     }
 
     async renderRegister(req, res) {
         try {
             res.status(200).render('register', {
-                showNav: true
+                //showNav: true,
+                style: 'register.css'
             });
         } catch (error) {
-            logger.info(error);
+            // logger.info(error);
         }
     }
 
+    async renderIndex(req, res) {
+        try {
+            res.render('index', {
+                showNav: true,
+                style: 'index.css'
+            });
+        } catch (error) {
+            console.log(error);
+            res.render("Error");
+            return;
+        }}
+
+    // async renderProfile(req, res) {
+    //     try {
+    //         res.status(200).render('profile', {
+    //             showNav: true
+    //         });
+    //     } catch (error) {
+    //         // logger.error(error);
+    //     }
+    // }
+
+    async renderCart(req, res) {
+        try {
+            const { cid } = req.params;
+            const cart = await cartService.getCart(cid);
+            console.log(cart);
+            const cartId = await cartService.getCart(cid);
+            const cartObject = cartId.toObject();
+            const carrito = cartObject.products
+            res.render("carts", { 
+                carrito,
+                cart,
+                showNav: true
+            });
+    
+        } catch (error) {
+            res.status(500).send(`Error de servidor. ${error.message}`);
+        }
+    }
+
+    async renderProducts(req, res) {
+        try {
+            // Verificar si la cookieToken no está presente en la solicitud
+            if (!req.cookies.cookieToken) {
+                // Redirigir al usuario al login
+                return res.redirect('/login');
+            }
+
+            // Obtener los datos del usuario del objeto request
+            const userData = req.user;
+    
+            const { limit = 5, pageQuery = 1, category } = req.query;
+            const uniqueCategories = await productService.getUniqueCategories();
+            const query = category ? { category, isActive: true } : { isActive: true };
+            const {
+                docs,
+                hasPrevPage,
+                hasNextPage,
+                prevPage,
+                nextPage,
+                page
+            } = await productService.getPaginate(limit, pageQuery, query);
+            // const productsData = await productService.getProducts();
+            res.status(200).render('products', {
+                showNav: true,
+                product: docs,
+                hasPrevPage,
+                hasNextPage,
+                prevPage,
+                nextPage,
+                page,
+                uniqueCategories,
+                user: userData,
+                style: 'products.css'
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+            // logger.info(error);
+        }
+    }
+
+    async renderDetail(req, res) {
+        // try {
+        //     const { pid } = req.params;
+        //     const product = await productService.getProduct(pid);
+        //     res.render('productDetail', {
+        //         product,
+        //         showNav: true
+        //     });
+        // } catch (error) {
+        //     // logger.error(error);
+        // }
+        try {
+            const { pid } = req.params;
+            const productid = await productService.getProduct(pid);
+            // console.log(productid)
+            const userData = req.user;
+    
+            if (!productid) {
+                return res.status(404).json({ message: 'Producto no encontrado' });
+            }
+    
+            const product = productid.toObject();
+            // console.log(product)
+            res.render("productDetail", {
+                showNav: true,
+                product, 
+                user: userData,
+                style: 'productDetail.css'
+            });
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener el producto por ID' });
+        }
+    }
+
+    async renderUsers(request, responses) {
+        try {
+            const {limit = 2, pageQuery = 1} = request.query
+            const {
+                docs,
+                hasPrevPage, 
+                hasNextPage,
+                prevPage, 
+                nextPage,
+                page 
+                } = await userService.getPaginate(limit, pageQuery)
+                responses.render('users', {
+                    showNav: true,
+                    users: docs,
+                    hasPrevPage, 
+                    hasNextPage,
+                    prevPage, 
+                    nextPage,
+                    page,
+                })
+            } catch (error) {
+                console.log(error)
+            }
+    };
+
     async renderRealTimeProducts(req, res) {
         try {
-            // console.log('realtime products')
-            // return  res.send('realtime')
-            // const products = await Product.getProducts()
-            res.render('productsRealTime', {
+            const products = await productService.getProducts();
+            const product = products.map((product) => ({
+                ...product.toObject(),
+                }));
+            // console.log('GET / route called - Rendering realTimeProducts');
+            res.render("realTimeProducts", {
+                product,
                 showNav: true
             });
         } catch (error) {
             console.log(error);
+            res.render("Error al obtener la lista de productos!");
+            return;
         }
+        // try {
+        //     // console.log('realtime products')
+        //     // return  res.send('realtime')
+        //     // const products = await Product.getProducts()
+        //     res.render('realTimeProducts', {
+        //         showNav: true
+        //     });
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 }
 
-export default new ViewsController();
+export default ViewsController;

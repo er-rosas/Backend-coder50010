@@ -1,11 +1,10 @@
-<center>
-    <form id="loginForm" action="/api/sessions/login" method="POST">
-        <label for="email">Email</label><br>
-        <input type="text" name="email" placeholder="Ingrese el email"><br>
-        <label for="password">Password</label><br>
-        <input type="text" name="password" placeholder="Ingrese el password"><br>
-        <button type="submit">Enviar</button>
+<section class="login-section">
+    <form id="loginForm" action="/api/sessions/login" method="POST" class="login-form">
+        <label for="email" class="login-label">Email</label><br>
+        <input type="text" name="email" placeholder="Ingrese el email" class="login-input"><br>
+        <label for="password" class="login-label">Password</label><br>
+        <input type="password" name="password" placeholder="Ingrese el password" class="login-input"><br>
+        <button type="submit" class="login-button">Enviar</button>
     </form>
-    <a href="/register">Registrarse</a><br>
-    {{!-- <a href="/api/sessions/github">GITHUB</a> --}}
-</center>
+    <a href="/register" class="register-link">Registrarse</a><br>
+</section>

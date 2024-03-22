@@ -1,8 +1,10 @@
-import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
+import ProductManagerMongo from "../daos/mongo/product.mongo.js";
+import { productService } from "../services/index.js";
 
 class RealTimeProductsController {
     constructor(){
-        this.service = new ProductManagerMongo()
+        // this.service = new ProductManagerMongo()
+        this.service = productService
     };
     getRealTaProducts = async (req, res) => {
         try {

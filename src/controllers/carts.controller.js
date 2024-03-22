@@ -1,12 +1,15 @@
-import CartManagerMongo from "../daos/mongo/carts.mongo.js";
+// import CartManagerMongo from "../daos/mongo/cart.mongo.js";
+import { cartService } from "../services/index.js";
+//const { cartService } = require("../services")
 
 class CartController{
     constructor(){
-        this.service = new CartManagerMongo()
+        // this.service = new CartManagerMongo()
+        this.service = cartService
     };
     createCart = async (req, res) => {
         try {
-            const result = await this.service.create({ products: [] });
+            const result = await this.service.createCart({ products: [] });
             res.send({
                 status: "succes",
                 payload: result,
@@ -29,34 +32,54 @@ class CartController{
             res.status(500).send(`Error de servidor. ${error.message}`);
         }
     };
+    // arreglar despues
     addProductToCart = async (req, res) => {
         try {
-            const { cid, pid } = req.params;
-            
-            // Antes era const
-            let { quantity } = req.body;
-            
+            const { cid, pid } = req.params
+            // const { quantity } = req.body
             // De esta forma si no hay quantity se añade 1
-            if (quantity === undefined) {
-                quantity = 1;
-            }
-    
-            // Verificar si la cantidad es un número positivo
-            if (!Number.isInteger(quantity) || quantity <= 0) {
-                return res.status(400).send("La cantidad debe ser un número entero positivo.");
-            }
-    
-            const cart = await this.service.getById({ _id: cid });
-            cart.products.push({ product: pid, quantity });
-    
-            let result = await this.service.updateCart({ _id: cid }, cart);
-            res.send({
-                status: "succes",
-                payload: result,
-            });
-            const userData = req.user;
-            // console.log(userData);
-            res.redirect(`/api/carts/${userData.cartId}`);
+            // if (quantity === undefined) {
+            //     quantity = 1;
+            // }
+            const quantity =1
+            const product = { id: pid, quantity }
+            console.log('cart controller: ',product)
+            console.log('cart controller cid: ',cid)
+            console.log('cart controller pid: ',pid)
+            const resp = await cartService.addProductToCart(cid, product)
+            if (!resp) return res.status(404).json({status: 'error', message: 'Cart not found'})
+            // res.status(200).redirect(`/carts/${req.user._id}`);
+            res.status(200).json({
+                status: 'success', 
+                message: 'Product added to cart',
+                payload: resp
+            })
+            // const { cid, pid } = req.params;
+            
+            // // Antes era const
+            // let { quantity } = req.body;
+            
+            // // De esta forma si no hay quantity se añade 1
+            // if (quantity === undefined) {
+            //     quantity = 1;
+            // }
+            
+            // // Verificar si la cantidad es un número positivo
+            // if (!Number.isInteger(quantity) || quantity <= 0) {
+            //     return res.status(400).send("La cantidad debe ser un número entero positivo.");
+            // }
+            
+            // const cart = await this.service.getCart({ _id: cid });
+            // // cart.products.push({ product: pid, quantity });
+            
+            // let result = await this.service.addProductToCart({ _id: cid }, cart);
+            // res.send({
+                //     status: "succes",
+                //     payload: result,
+                // });
+                // console.log(userData);
+            // const userData = req.user;
+            // res.redirect(`/carts/${userData.cartId}`);
         } catch (error) {
             res.status(500).send(`Error de servidor. ${error.message}`);
         }
@@ -87,7 +110,7 @@ class CartController{
         try {
             const { cid } = req.params;
         
-            await this.service.removeAllProductsFromCart(cid);
+            await this.service.removeAllProducts(cid);
             res.json({ message: 'Productos eliminados del carrito correctamente' });
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -96,7 +119,7 @@ class CartController{
     deleteOneProductOfCart = async (req, res) => {
         try {
             const { cid, pid } = req.params;
-            const updatedCart = await this.service.removeProductFromCart(cid, pid);
+            const updatedCart = await this.service.deleteProductFromCart(cid, pid);
             res.json(updatedCart);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -184,7 +207,7 @@ class CartController{
             }
 
             await cart.save();
-            // await this.service.removeAllProductsFromCart(cid);
+            // await this.service.removeAllProducts(cid);
 
             res.json({
                 status: 'success',

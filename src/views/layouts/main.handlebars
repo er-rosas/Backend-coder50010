@@ -4,8 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/{{style}}">
 </head>
 <body>
+    {{#if showNav}}
+        <nav class="navbar">
+            <a href="/inicio">Inicio</a>
+            <a href="/users">Usuarios</a>
+            {{!-- <a href="/profile">Perfil</a> --}}
+            <a href="/products">Productos</a>
+            <a href="/realtimeproducts">Productos en tiempo real</a>
+            {{!-- <a href="/api/chats">Chats en tiempo real</a> --}}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+            <a href="/api/session/logout">Logout</a>
+            {{!-- <a href="/cart">🛒</a> --}}
+            {{!-- <a href="#" id="cart">🛒</a> --}}
+            {{!-- <a href="http://localhost:8080/multer/">multer</a> --}}
+        </nav>
+    {{/if}}
     {{{body}}}
 </body>
 {{!-- <script src="/socket.io/socket.io.js"></script> --}}

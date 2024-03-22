@@ -5,14 +5,20 @@ import MongoSingleton from '../utils/mongoSingleton.js'
 
 const { mode } = program.opts()
 console.log(mode)
+
+const enviroment = mode || "development"
+
 dotenv.config({
-    path: mode === 'development' ? './.env.development' : './.env.production'
+    path: enviroment === 'development' ? './.env.development' : './.env.production'
 })
 
 export const configObject = {
     port: process.env.PORT || 8080,
     mongo_url: process.env.MONGO_URL,
-    jwt_secret_Key: process.env.JWT_SECRET_KEY
+    jwt_secret_Key: process.env.JWT_SECRET_KEY,
+    persistence: process.env.PERSISTENCE, // || "MONGO",
+    gmail_user: process.env.GMAIL_USER_APP,
+    gmail_pass: process.env.GMAIL_PASS_APP
 }
 
 export const connectDB = async () => {

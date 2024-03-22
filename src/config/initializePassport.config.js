@@ -2,7 +2,7 @@ import passport from 'passport'
 import { Strategy, ExtractJwt } from 'passport-jwt'
 // import { PRIVATE_KEY } from '../utils/jsonwebtoken.js'
 
-import { configObject } from '../config/connectDB.js';
+import { configObject } from '../config/config.js';
 
 const PRIVATE_KEY = configObject.jwt_secret_Key
 

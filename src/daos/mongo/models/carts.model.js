@@ -3,6 +3,11 @@ import {Schema, model} from 'mongoose';
 const collection = 'carts'
 
 const CartsSchema = new Schema({
+    userEmail: {
+        type: String,
+        unique: true,
+        required: true
+    },
     products: {
         type: [{
             product: {

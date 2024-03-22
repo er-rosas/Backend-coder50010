@@ -1,16 +1,20 @@
-import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
+// import { ProductDao } from "../daos/factory.js";
+// import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
+import { productService } from "../services/index.js";
 
 class ProductController{
     constructor(){
-        this.service = new ProductManagerMongo()
+        this.service = productService
+        // this.service = ProductDao
+        // this.service = new ProductManagerMongo()
     };
     getProducts = async (req, res) => {
         try {
             // Verificar si la cookieToken no está presente en la solicitud
-            if (!req.cookies.cookieToken) {
-                // Redirigir al usuario al login
-                return res.redirect('/login');
-            }
+            // if (!req.cookies.cookieToken) {
+            //     // Redirigir al usuario al login
+            //     return res.redirect('/login');
+            // }
 
             // Obtener los datos del usuario del objeto request
             const userData = req.user;
@@ -25,21 +29,9 @@ class ProductController{
                 prevPage,
                 nextPage,
                 page
-            } = await this.service.getProductPaginate(limit, pageQuery, query);
-            
-            // res.send({
-            //     status: 'success',
-            //     // payload: products
-            //     product: docs,
-            //     hasPrevPage,
-            //     hasNextPage,
-            //     prevPage,
-            //     nextPage,
-            //     page,
-            //     uniqueCategories,
-            //     user: userData
-            // });
-            res.render('products', {
+            } = await this.service.getPaginate(limit, pageQuery, query);
+
+            res.status(200).json( {
                 product: docs,
                 hasPrevPage,
                 hasNextPage,
@@ -57,7 +49,7 @@ class ProductController{
     getProductById = async (req, res) => {
         try {
             const productId = req.params.pid;
-            const product = await this.service.getProductById(productId);
+            const product = await this.service.getProduct(productId);
     
             if (!product) {
                 return res.status(404).json({ message: 'Producto no encontrado' });
@@ -130,7 +122,7 @@ class ProductController{
     productDetail = async (req, res) => {
         try {
             const { pid } = req.params;
-            const productid = await this.service.getProductById(pid);
+            const productid = await this.service.getProduct(pid);
             // console.log(productid)
             const userData = req.user;
     

@@ -1,10 +1,7 @@
-<style>
-/* Estilos para los elementos */
-</style>
-<div>
+{{!-- <div>
     <center>
         <h1>Product Details</h1>
-        <a href="http://localhost:8080/api/carts/{{user.cartId}}">Ver carrito</a>
+        <a href="http://localhost:8080/carts/{{user.cartId}}">Ver carrito</a>
         {{#with product}}
             <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
             <p class="card-text"><strong>Description: </strong>{{this.description}}</p>
@@ -16,4 +13,24 @@
         {{/with}}
         <a href="http://localhost:8080/api/carts/{{user.cartId}}/product/{{product._id}}">Agregar al carrito</a>
     </center>
-</div>
+</div> --}}
+<section class="centered-content">
+    <div class="size">
+        <h1 class="product-title">Product Details</h1>
+        <a href="http://localhost:8080/carts/{{user.cartId}}" class="button-link">Ver carrito</a>
+    </div>
+    <div class="card">
+        {{#with product}}
+            <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
+            <p class="card-text"><strong>Description: </strong>{{this.description}}</p>
+            <p class="card-text"><strong>Code: </strong>{{this.code}}</p>
+            <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
+            <p class="card-text"><strong>Stock: </strong>{{this.stock}}</p>
+            <p class="card-text"><strong>Category: </strong>{{this.category}}</p>
+            <p class="card-text"><strong>Status: </strong>{{this.status}}</p>
+        {{/with}}
+    </div>
+    <div class="size">
+        <a href="http://localhost:8080/api/carts/{{user.cartId}}/product/{{product._id}}" class="button-link">Agregar al carrito</a>
+    </div>
+</section>

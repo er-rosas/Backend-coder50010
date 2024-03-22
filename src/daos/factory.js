@@ -1,75 +1,44 @@
-// import { configObject, connectBD } from '../config/connectDB.js';
-// import UserDaoMongo from '';
-// import ProductDaoMongo from '';
-
-
-
-
-// let UserDao
-// let ProductDao
-// let CartsDao
-
-
-// // persistence MONGO
-// switch (configObject.persistence) {
-//     case 'FILE':
-//         const UserDaoFile =  // require("./File/userManagerFile")
-//         UserDao = UserDaoFile
-
-
-//         break;
-//     case 'MEMORY':
-        
-//         break;
-
-//     default:
-//         // la linea de abajo es para import from
-//         // const UserDaoMongo = (async import('./Mongo/usersDao.mongo')).default
-//         connectBD()
-
-//         const UserDaoMongo = // require("./Mongo/usersDao.mongo")
-//         UserDao = UserDaoMongo
-
-//         const ProductDaoMongo = // require("./Mongo/productsDao.mongo")
-//         ProductDao = ProductDaoMongo
-
-//         break;
-// }
-
-// // module.exports = {
-    // //     UserDao,
-    // //     ProductDao
-    // // }
-    
-    // export default {}
-    
-import config from '../config/connectDB.js';
-import ProductDaoMongo from './mongo/product.mongo.js';
+import { configObject, connectDB } from '../config/config.js';
+// import UserDaoMongo2 from './mongo/user.mongo.js'
 import UserDaoMongo from './mongo/user.mongo.js';
+import ProductDaoMongo from './mongo/product.mongo.js';
 import OrderDaoMongo from './mongo/orders.mongo.js';
 import CartDaoMongo from './mongo/cart.mongo.js';
-import UserDaoMemory from './memory/user.memory.js';
 
 let ProductDao;
-let UserDao;
-let CartDao;
+let UserDao // = new UserDaoMongo2();
 let OrderDao;
+let CartDao;
 
-const { persistence, connectDB } = config;
+const { persistence } = configObject;
+// const persistence = 'MONGO';
 
 switch (persistence) {
+    // case 'MONGO':
+    //     connectDB(); // 2 llamada a la conexión
+    //     const ProductDaoMongo = (import('./mongo/product.mongo.js')).default
+    //     //  import ProductDaoMongo from './mongo/product.mongo.js';
+    //     ProductDao = ProductDaoMongo;
+        
+    //     const UserDaoMongo = import('./mongo/user.mongo.js').default
+    //     UserDao = UserDaoMongo;
+        
+    //     const OrderDaoMongo = (import('./mongo/orders.mongo.js')).default
+    //     OrderDao = OrderDaoMongo;
+        
+    //     const CartDaoMongo = (import('./mongo/cart.mongo.js')).default
+    //     CartDao = CartDaoMongo;
+    //     break;
     case 'MONGO':
-        connectDB(); // 2 llamada a la conexión
+        connectDB(); // Llamar a la conexión a la base de datos
+        
         ProductDao = ProductDaoMongo;
-
         UserDao = UserDaoMongo;
-
         OrderDao = OrderDaoMongo;
-
         CartDao = CartDaoMongo;
         break;
     case 'MEMORY':
-        UserDao = UserDaoMemory;
+        // Código para el caso de persistencia en memoria;
         break;
     case 'ARCHIVO':
         // Código para el caso de persistencia en archivo

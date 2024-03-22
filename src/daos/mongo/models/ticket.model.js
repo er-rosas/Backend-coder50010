@@ -4,17 +4,28 @@ const ticketCollection = 'tickets';
 
 const ticketSchema = new mongoose.Schema({
     code: {
-        type: String,
+        type: Number,
         unique: true
     },
+    purchaser: String,
     purchase_datetime: {
-        // type: Date,
-        // default: Date.now
-        type: String,
-        default: getFormattedDate
+        type: Date,
+        default: Date.now
+        // type: String,
+        // default: getFormattedDate
     },
-    amount: Number,
-    purchaser: String
+    // products: {
+    //     type: [{
+    //         product: {
+    //             type: Schema.Types.ObjectId,
+    //             ref: 'products'
+    //         },
+    //         quantity: {
+    //             type: Number
+    //         },
+    //     }]
+    // },
+    amount: Number
 });
 
 function getFormattedDate() {

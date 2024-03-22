@@ -1,70 +1,40 @@
-<style>
-    .card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px;
-            width: 300px; /* Puedes ajustar el ancho según tus necesidades */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-title {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            color: #555;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007bff;
-            display: block;
-            margin-top: 10px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-</style>
-<div>
-    <center>
-        <div>
-            <h1>Products</h1>
-            {{#with user}}
+<section class="product-section">
+    <div class="title-product">
+        <h1>Products</h1>
+        {{#with user}}
             <p>Bienvenido</p>
             <p>Usuario: {{this.first_name}}</p>
             <p>Email: {{this.email}}</p>
             <p>Role: {{this.role}}</p>
-            {{/with}}
-            
-            <a href="/api/sessions/logout">Logout</a>
-            <a href="http://localhost:8080/api/carts/{{user.cartId}}">Ver carrito</a>
-            <div>
-                    <p>Filtrar por cartegoria</p>
-                <ul>
-                    {{#each uniqueCategories}}
-                        <li><a href="/api/products?category={{this}}">{{this}}</a></li>
-                    {{/each}}
-                </ul>
-            </div>
-            {{#each product}}
-            <div class="card">
-                <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
-                <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
-                <a href="/api/productdetail/{{this._id}}">Ver detalle</a>
-            </div>
+        {{/with}}
+        
+        <a href="/api/sessions/logout" class="button">Logout</a>
+        <a href="http://localhost:8080/carts/{{user.cartId}}" class="button">Ver carrito</a>
+    </div>
+    <div class="filtro-product">
+            <p>Filtrar por cartegoria</p>
+        <ul>
+            {{#each uniqueCategories}}
+                <li><a href="/products?category={{this}}">{{this}}</a></li>
             {{/each}}
+        </ul>
+    </div>
+    <div class="card-container">
+        {{#each product}}
+        <div class="card">
+            <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
+            <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
+            <a href="/productdetail/{{this._id}}">Ver detalle</a>
         </div>
-        <div>
-            {{#if hasPrevPage}}
-                <a href="/api/products?pageQuery={{prevPage}}">Anterior</a>
-            {{/if}}
-            <label>{{page}}</label>
-            {{#if hasNextPage}}
-                <a href="/api/products?pageQuery={{nextPage}}">Siguiente</a>
-            {{/if}}
-        </div>
-    </center>
-</div>
+        {{/each}}
+    </div>
+    <div class="page-product">
+        {{#if hasPrevPage}}
+            <a href="/products?pageQuery={{prevPage}}">Anterior</a>
+        {{/if}}
+        <label>{{page}}</label>
+        {{#if hasNextPage}}
+            <a href="/products?pageQuery={{nextPage}}">Siguiente</a>
+        {{/if}}
+    </div>
+</section>

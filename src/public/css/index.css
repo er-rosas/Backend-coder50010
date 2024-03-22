@@ -1,0 +1,69 @@
+/* Estilos para la sección de descripciones de marcas */
+.brand-descriptions {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.brand {
+    margin-bottom: 40px;
+}
+
+.brand-logo {
+    width: 150px;
+    height: auto;
+}
+
+.brand h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.brand-description {
+    font-size: 1.1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+.brand-description {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+
+.brand-descriptions {
+    display: flex;
+    justify-content: space-around; /* Cambiar a 'space-between' si deseas espacio entre las cards */
+    align-items: flex-start;
+    gap: 20px; /* Espacio entre las cards */
+}
+
+.brand {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 30%; /* Ajustar el ancho según tus necesidades */
+    transition: transform 0.3s ease; /* Animación */
+}
+
+.brand:hover {
+    transform: translateY(-5px);
+}
+
+.brand img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.brand h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.brand p {
+    font-size: 1rem;
+    line-height: 1.5;
+}

@@ -1,91 +1,31 @@
-import ClassRouter from './router';
-import {
-    renderInicio,
-    renderProfile,
-    renderDetalle,
-    renderCart,
+import express from 'express';
+import viewsController from '../controllers/views.controller.js';
+import { passportCall } from '../middleware/pasportCall.js';
+import { authorization } from '../middleware/authentication.js';
+
+const router = express.Router()
+
+const {
+    renderRedirect,
+    renderIndex,
+    // renderProfile,
     renderProducts,
+    renderDetail,
+    renderCart,
     renderLogin,
     renderRegister,
-    renderRealTimeProducts
-} from '../controllers/views.controller';
+    renderUsers,
+    renderRealTimeProducts } = new viewsController();
 
-class ViewsRouter extends ClassRouter {
-    init() {
-        this.get('/',                 ['PUBLIC'], renderProducts);
-        this.get('/inicio',           ['PUBLIC'], renderInicio);
-        this.get('/profile',          ['PUBLIC'], renderProfile);
-        this.get('/detalle/:pid',     ['PUBLIC'], renderDetalle);
-        this.get('/carts/:cid',       ['USER'],   renderCart);
-        this.get('/login',            ['PUBLIC'], renderLogin);
-        this.get('/register',         ['PUBLIC'], renderRegister);
-        this.get('/realtimeproducts', ['PUBLIC'], renderRealTimeProducts);
-    }
-}
+router.get('/', renderRedirect)
+router.get('/login', renderLogin)
+router.get('/register', renderRegister)
+router.get('/inicio', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderIndex);
+// router.get('/profile', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderProfile)
+router.get('/products', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderProducts)
+router.get('/productdetail/:pid', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderDetail)
+router.get('/carts/:cid', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderCart)
+router.get('/users', passportCall('jwt'), authorization( ['PUBLIC','ADMIN'] ), renderUsers)
+router.get('/realtimeproducts', passportCall('jwt'), authorization( ['ADMIN'] ), renderRealTimeProducts)
 
-
-// import express from 'express';
-
-// const router = express.Router();
-
-// router.get("/", async (req, res) => {
-//     try {
-//         res.render("index");
-//     } catch (error) {
-//         console.log(error);
-//         res.render("Error");
-//         return;
-//     }
-// });
-
-// export default router;
-export default new ViewsRouter();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-router.get('/', (req, res) => {
-    res.redirect('/login');
-});
-
-router.get('/login', (req, res) => {
-    res.render('login')
-});
-
-router.get('/register', (req, res) => {
-    res.render('register')
-});
-
-// router.get('/products', async (req, res) => {
-//     try {
-//         const productsData = await productController.getProducts(req, res);
-//         res.render('products', productsData, {
-//                 product: docs,
-//                 hasPrevPage,
-//                 hasNextPage,
-//                 prevPage,
-//                 nextPage,
-//                 page,
-//                 uniqueCategories,
-//                 user: userData
-//             });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
-
-// export default router;
+export default router;
