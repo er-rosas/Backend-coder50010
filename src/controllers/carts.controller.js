@@ -1,11 +1,9 @@
-// import CartManagerMongo from "../daos/mongo/cart.mongo.js";
 import { cartService } from "../services/index.js";
-//const { cartService } = require("../services")
 
 class CartController{
     constructor(){
-        // this.service = new CartManagerMongo()
         this.service = cartService
+        // this.service = new CartManagerMongo()
     };
     createCart = async (req, res) => {
         try {
@@ -32,16 +30,11 @@ class CartController{
             res.status(500).send(`Error de servidor. ${error.message}`);
         }
     };
-    // arreglar despues
+
     addProductToCart = async (req, res) => {
         try {
             const { cid, pid } = req.params
-            // const { quantity } = req.body
-            // De esta forma si no hay quantity se añade 1
-            // if (quantity === undefined) {
-            //     quantity = 1;
-            // }
-            const quantity =1
+            const quantity = 1
             const product = { id: pid, quantity }
             console.log('cart controller: ',product)
             console.log('cart controller cid: ',cid)
@@ -53,33 +46,7 @@ class CartController{
                 status: 'success', 
                 message: 'Product added to cart',
                 payload: resp
-            })
-            // const { cid, pid } = req.params;
-            
-            // // Antes era const
-            // let { quantity } = req.body;
-            
-            // // De esta forma si no hay quantity se añade 1
-            // if (quantity === undefined) {
-            //     quantity = 1;
-            // }
-            
-            // // Verificar si la cantidad es un número positivo
-            // if (!Number.isInteger(quantity) || quantity <= 0) {
-            //     return res.status(400).send("La cantidad debe ser un número entero positivo.");
-            // }
-            
-            // const cart = await this.service.getCart({ _id: cid });
-            // // cart.products.push({ product: pid, quantity });
-            
-            // let result = await this.service.addProductToCart({ _id: cid }, cart);
-            // res.send({
-                //     status: "succes",
-                //     payload: result,
-                // });
-                // console.log(userData);
-            // const userData = req.user;
-            // res.redirect(`/carts/${userData.cartId}`);
+            });
         } catch (error) {
             res.status(500).send(`Error de servidor. ${error.message}`);
         }
@@ -126,89 +93,8 @@ class CartController{
         }
     };
     purchaseCart = async (req, res) => {
+        // agregar algo relacionado con el purchace del carrito
         try {
-            //         const cart = await this.service.getById(cid).populate('products.product');
-            //         const productsToPurchase = cart.products;
-            
-            //         // Array para almacenar los IDs de los productos que no se pudieron comprar
-    //         const failedProducts = [];
-    
-    //         // Verificar el stock y realizar la compra para cada producto en el carrito
-    //         for (const item of productsToPurchase) {
-    //             const product = item.product;
-    //             const quantityToPurchase = item.quantity;
-    
-    //             // Verificar si hay suficiente stock
-    //             if (product.stock >= quantityToPurchase) {
-    //                 // Restar la cantidad comprada del stock del producto
-    //                 product.stock -= quantityToPurchase;
-    //                 await product.save();
-    
-    //                 // Generar un ticket con los datos de la compra
-    //                 await Ticket.create({
-        //                     code: 1, // Generar un código único para el ticket
-    //                     // purchase_datetime: new Date(),
-    //                     amount: product.price * quantityToPurchase,
-    //                     purchaser: req.user.email // Suponiendo que tienes un middleware para autenticación y req.user contiene la información del usuario
-    //                 });
-    
-    //                 // Eliminar el producto del carrito
-    //                 cart.products = cart.products.filter(prod => prod.product !== product._id);
-    //             } else {
-    //                 // Si no hay suficiente stock, agregar el ID del producto a failedProducts
-    //                 failedProducts.push(product._id);
-    //             }
-    //         }
-    
-    //         // Guardar los cambios en el carrito
-    //         await cart.save();
-    
-    //         res.send({
-    //             status: 'success',
-    //             failedProducts: failedProducts // Devolver los IDs de los productos que no se pudieron comprar
-    //         });
-    //     } catch (error) {
-    //         res.status(400).json({ error: error.message });
-    //     }
-    // };
-    
-        const { cid } = req.params;
-        const cart = await this.service.getById(cid);
-
-        if (!cart) {
-            return res.status(404).json({ error: "Carrito no encontrado" });
-        }
-    
-            const productsToPurchase = cart.products;
-            const failedProducts = [];
-            
-            for (const item of productsToPurchase) {
-                const product = item.product;
-                const quantityToPurchase = item.quantity;
-
-                if (product.stock >= quantityToPurchase) {
-                    product.stock -= quantityToPurchase;
-                    await product.save();
-
-                    const code = 13 // Generar un código único para el ticket
-                    const amount = product.price * quantityToPurchase
-                    const purchaser = 'a@gmail.com'
-                    await this.service.createTicket(
-                        code,
-                        // purchase_datetime //  new Date() // O la fecha de compra que corresponda
-                        amount,
-                        purchaser
-                    );
-
-                    cart.products = cart.products.filter(prod => prod.product !== product._id);
-                } else {
-                    failedProducts.push(product._id);
-                }
-            }
-
-            await cart.save();
-            // await this.service.removeAllProducts(cid);
-
             res.json({
                 status: 'success',
                 failedProducts: failedProducts
@@ -217,11 +103,6 @@ class CartController{
             res.status(400).json({ error: error.message });
         }
     };
-    
-    // Función para generar un código único para el ticket (puedes ajustarla según tus necesidades)
-    // function generateUniqueCode() {
-    //     return Math.random().toString(36).substr(2, 9);
-    // }
 };
 
 export default CartController;

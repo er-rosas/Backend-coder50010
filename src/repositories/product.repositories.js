@@ -51,11 +51,6 @@ class ProductRepository {
     }
     async getPaginate(limit, pageQuery, query){
         try {
-            // objConfig.limit = objConfig.limit &&  parseInt(objConfig.limit)
-            // objConfig.page  = objConfig.page  && parseInt(objConfig.page)
-            // objConfig.sort  = objConfig.sort  && parseInt(objConfig.sort)
-            // // console.log('objConfig: ',objConfig)
-            // return await this.dao.get(objConfig) 
             return await this.dao.getPaginate(limit, pageQuery, query)
         } catch (error) {
             return error

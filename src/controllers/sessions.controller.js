@@ -1,6 +1,3 @@
-// import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
-// import UserManagerMongo from "../daos/mongo/user.mongo.js";
-import CartManagerMongo from "../daos/mongo/cart.mongo.js";
 import { generateToken, verifyToken } from "../utils/jsonwebtoken.js";
 import { createHash, isValidPassword } from "../utils/hashBcrypt.js";
 import { userService, cartService, productService } from "../services/index.js";
@@ -55,66 +52,51 @@ class SessionController{
         }
     };
     loginSession = async (req, res)=>{
-        const { email, password } = req.body
-        console.log(req.body.email, req.body.password)
-    
-        const userFoundDB = await userService.getUser( {email} )
-        console.log(userFoundDB)
-        console.log(userFoundDB.password)
-    
-        // validar el password
-        if ( !isValidPassword(password, userFoundDB.password) ) {
-            return res.status(401).send('Contraseña incorrecta')
+        try {
+            const { email, password } = req.body
+            console.log(req.body.email, req.body.password)
+        
+            const userFoundDB = await userService.getUser( {email} )
+            console.log(userFoundDB)
+            console.log(userFoundDB.password)
+        
+            // validar el password
+            if ( !isValidPassword(password, userFoundDB.password) ) {
+                return res.status(401).send('Contraseña incorrecta')
+            }
+        
+            const token = generateToken({id: userFoundDB._id, email, first_name: userFoundDB.first_name, role: userFoundDB.role, cartId: userFoundDB.cartId})
+        
+            res.cookie('cookieToken', token, {
+                maxAge: 60*60*1000*24,
+                httpOnly: true
+            }).redirect('/inicio')
+        } catch (error) {
+            console.error('Error al procesar la solicitud:', error);
         }
-    
-        const token = generateToken({id: userFoundDB._id, email, first_name: userFoundDB.first_name, role: userFoundDB.role, cartId: userFoundDB.cartId})
-    
-        res.cookie('cookieToken', token, {
-            maxAge: 60*60*1000*24,
-            httpOnly: true
-        }).redirect('/inicio')
+        
     };
     logoutSession = (req, res)=>{
-        res.clearCookie('cookieToken').redirect('/login')
+        try {
+            res.clearCookie('cookieToken').redirect('/login')
+        } catch (error) {
+            console.log(error)
+        }
     };
     currentSession = async (req, res) => {
         try {
-            res.send({message: 'datos sensibles'})            
+            const userEmail = req.user.email
+            const user = await this.service.getUserCurrent({ email: userEmail });
+            res.send({
+                message: 'datos sensibles',
+                id: user._id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email
+            })            
         } catch (error) {
             res.send({status: 'error', error})   
         }
-        
-        // // Obtener el token de la cookie
-        // const token = req.cookies.cookieToken;
-        
-        // // Verificar si el token está presente
-        // if (!token) {
-        //     return res.status(401).send('No se proporcionó el token');
-        // }
-    
-        // try {
-        //     // Verificar el token
-        //     const decodedToken = verifyToken(token);
-            
-        //     // Obtener el usuario asociado al token
-        //     const user = await this.service.getUser(decodedToken.id);
-            
-        //     if (!user) {
-        //         return res.status(404).send('Usuario no encontrado');
-        //     }
-    
-        //     // Si todo está bien, enviar los datos del usuario
-        //     return res.send({
-        //         id: user._id,
-        //         first_name: user.first_name,
-        //         last_name: user.last_name,
-        //         email: user.email
-        //         // Otros datos sensibles que desees devolver
-        //     });
-        // } catch (error) {
-        //     console.error(error);
-        //     return res.status(401).send('Token inválido');
-        // }
     };
 };
 

@@ -1,7 +1,5 @@
 import express from "express"
 import SessionController from "../../controllers/sessions.controller.js"
-// import { generateToken, verifyToken } from '../../utils/jsonwebtoken.js'
-// import { createHash, isValidPassword } from "../../utils/hashBcrypt.js"
 import { passportCall } from '../../middleware/pasportCall.js';
 import { authorization } from '../../middleware/authentication.js';
 

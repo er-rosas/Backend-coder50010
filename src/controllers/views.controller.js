@@ -1,6 +1,4 @@
 import { productService, cartService, userService } from '../services/index.js';
-// import { userService } from '../services/index.js';
-// import { logger } from '../middleware/logger';
 
 class ViewsController {
     async renderRedirect(req, res) {
@@ -118,16 +116,6 @@ class ViewsController {
     }
 
     async renderDetail(req, res) {
-        // try {
-        //     const { pid } = req.params;
-        //     const product = await productService.getProduct(pid);
-        //     res.render('productDetail', {
-        //         product,
-        //         showNav: true
-        //     });
-        // } catch (error) {
-        //     // logger.error(error);
-        // }
         try {
             const { pid } = req.params;
             const productid = await productService.getProduct(pid);
@@ -192,17 +180,7 @@ class ViewsController {
             res.render("Error al obtener la lista de productos!");
             return;
         }
-        // try {
-        //     // console.log('realtime products')
-        //     // return  res.send('realtime')
-        //     // const products = await Product.getProducts()
-        //     res.render('realTimeProducts', {
-        //         showNav: true
-        //     });
-        // } catch (error) {
-        //     console.log(error);
-        // }
-    }
-}
+    };
+};
 
 export default ViewsController;

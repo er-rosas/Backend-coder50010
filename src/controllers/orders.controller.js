@@ -91,19 +91,8 @@ class OrdersController {
             productsNotPurchased,
             ticket
         });
-    }
-    // async createOrder(req, res){
-    //     try {
-    //         const {body} = req
-    //         console.log(body)
-    //         const resp = await orderService.ceateOrder(body)
-    //         console.log(resp)
-    //         res.send(resp)
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    };
+    
     updateOrder(){}
     deleteOrder(){}
 }

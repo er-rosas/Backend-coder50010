@@ -1,6 +1,5 @@
 import UserDTO from "../dto/user.dto.js"
-// import UserManagerMongo from "../daos/mongo/user.mongo"
-// const { UserDto } = require("../dto/userDto")
+import UserCurrentDTO from "../dto/userCurrent.dto.js"
 
 class UserRpositories {
     constructor(userDao){
@@ -46,6 +45,15 @@ class UserRpositories {
     async getPaginate(limit, pageQuery){
         try {
             return await this.dao.getPaginate(limit, pageQuery)
+        } catch (error) {
+            return error
+        }
+    }
+    async getUserCurrent(filter){
+        try {
+            const user = await this.dao.getBy(filter)
+            const userCurrent = new UserCurrentDTO(user)
+            return userCurrent
         } catch (error) {
             return error
         }

@@ -14,6 +14,9 @@ const { persistence } = configObject;
 // const persistence = 'MONGO';
 
 switch (persistence) {
+    
+    // NO ME FUNCIONO ESTA FORMA
+
     // case 'MONGO':
     //     connectDB(); // 2 llamada a la conexión
     //     const ProductDaoMongo = (import('./mongo/product.mongo.js')).default

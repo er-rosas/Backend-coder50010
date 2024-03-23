@@ -1,11 +1,9 @@
 import express from 'express';
-// import ProductManagerMongo from '../../daos/mongo/productsManagerMongo.js';
 import RealTimeProductsController from '../../controllers/realTimeProducts.controller.js';
 import { passportCall } from '../../middleware/pasportCall.js';
 import { authorization } from '../../middleware/authentication.js';
 
 const router = express.Router();
-// const managerMongo = new ProductManagerMongo();
 
 const {
     getRealTaProducts,

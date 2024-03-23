@@ -1,10 +1,9 @@
-import ProductManagerMongo from "../daos/mongo/product.mongo.js";
 import { productService } from "../services/index.js";
 
 class RealTimeProductsController {
     constructor(){
-        // this.service = new ProductManagerMongo()
         this.service = productService
+        // this.service = new ProductManagerMongo()
     };
     getRealTaProducts = async (req, res) => {
         try {
@@ -46,11 +45,6 @@ class RealTimeProductsController {
     };
     updateRealTaProduct = async (req, res) => {
         try {
-            // const { pid } = req.params;
-            // const updatedFields = req.body;
-    
-            // await this.service.updateProduct(pid, updatedFields);
-
             const productId = req.params.pid;
             const updatedFields = req.body;
     

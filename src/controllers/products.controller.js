@@ -1,5 +1,3 @@
-// import { ProductDao } from "../daos/factory.js";
-// import ProductManagerMongo from "../daos/mongo/productsDao.mongo.js";
 import { productService } from "../services/index.js";
 
 class ProductController{

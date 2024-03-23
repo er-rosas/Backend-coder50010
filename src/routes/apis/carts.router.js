@@ -1,13 +1,10 @@
 import express from 'express';
-// import CartManagerMongo from '../../daos/mongo/cart.mongo.js';
-// import cartsModel from '../../daos/models/carts.model.js'
 import CartController from '../../controllers/carts.controller.js';
 import { passportCall } from '../../middleware/pasportCall.js';
 import { authorization } from '../../middleware/authentication.js';
 
 const router = express.Router()
 
-// const cartsManagerMongo = new CartManagerMongo();
 
 const {
     getCartById,

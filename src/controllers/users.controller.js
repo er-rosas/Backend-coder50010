@@ -1,7 +1,3 @@
-
-// import { UserDao } from "../daos/factory.js";
-// import UserManagerMongo from '../daos/mongo/userDao.mongo.js';
-
 import { userService } from "../services/index.js";
 // import UserDTO from "../dto/user.dto.js";
 
