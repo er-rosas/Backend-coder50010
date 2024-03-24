@@ -2,6 +2,9 @@ import { generateToken, verifyToken } from "../utils/jsonwebtoken.js";
 import { createHash, isValidPassword } from "../utils/hashBcrypt.js";
 import { userService, cartService, productService } from "../services/index.js";
 import { sendMail } from "../utils/sendEmail.js";
+import CustomError from "../utils/errors/customError.js";
+import generateUserErrorInfo from "../utils/errors/info.js";
+import EErrors from "../utils/errors/enums.js";
 
 class SessionController{
     constructor(){
@@ -10,7 +13,7 @@ class SessionController{
         // this.service = new UserManagerMongo()
         // this.cartService = new CartManagerMongo()
     };
-    registerSession = async (req, res)=>{
+    registerSession = async (req, res, next)=>{
         try {
             const {
                 first_name,
@@ -19,6 +22,19 @@ class SessionController{
                 password
             } = req.body 
         
+            if(!first_name || !last_name || !email) {
+                CustomError.createError({
+                    name: "User creation error",
+                    cause: generateUserErrorInfo({
+                        first_name,
+                        last_name,
+                        email
+                    }),
+                    message: 'Error truing to created user',
+                    code: EErrors.INVALID_TYPE_ERROR
+                })
+            };
+
             // Verificar si el usuario ya existe en la base de datos
             const existingUser = await this.service.getUser({email});
             if (existingUser) {
@@ -47,8 +63,9 @@ class SessionController{
             console.log("user: " + result)
             res.redirect('/login');
         } catch (error) {
-            console.error('Error al procesar la solicitud:', error);
-            res.status(500).send({status: 'error', message: 'Hubo un problema al procesar la solicitud.'});
+            // console.error('Error al procesar la solicitud:', error);
+            // res.status(500).send({status: 'error', message: 'Hubo un problema al procesar la solicitud.'});
+            next(error)
         }
     };
     loginSession = async (req, res)=>{

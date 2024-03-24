@@ -8,8 +8,8 @@ const productsSchema = new Schema({
         type: String,
         index: true,
         },
-    description: String, 
     code: String,
+    description: String, 
     price: Number,
     stock: Number,
     category: {
@@ -20,13 +20,13 @@ const productsSchema = new Schema({
         type: [String], // Indica que es un array de Strings
         default: [],    // Valor por defecto: un array vacío
     },
-    status: {
-        type: Boolean,
-        default: true,
-    },
     isActive: {
         type: Boolean,
         default: true
+    },
+    atCreate: {
+        type: Date,
+        default: new Date()
     }
 });
 

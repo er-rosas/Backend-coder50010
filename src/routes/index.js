@@ -13,6 +13,8 @@ import realtimeproductsRouter from './apis/realTimeProducts.router.js';
 import multerRouter from './apis/multer.router.js';
 import messaggesRouter from './apis/messages.router.js';
 import pruebasRouter from './apis/pruebas.router.js';
+import { errorHandler } from "../middleware/error/index.js";
+import CustomError from "../utils/errors/customError.js";
 
 const router = express.Router()
 // const router = express.Router()
@@ -36,5 +38,7 @@ router.use('*', async (req, res)=>{
         mensaje: 'ruta no encontrada'
     })
 });
+
+router.use(errorHandler)
 
 export default router

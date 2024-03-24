@@ -23,7 +23,8 @@ const usersSchema = new Schema({
         default: true
     },
     cartId: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: 'carts'
     },
     role: {
         type: String,

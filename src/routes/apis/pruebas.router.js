@@ -1,9 +1,82 @@
 import express from "express"
 import { fork } from 'child_process'
 import { sendMail } from "../../utils/sendEmail.js"
+import { faker } from "@faker-js/faker"
 
 const router = express.Router()
 
+const generateProducts = () => {
+    return {
+        _id: {"$oid": faker.database.mongodbObjectId()},
+        title: faker.commerce.productName(),
+        code: faker.string.alphanumeric(6),
+        desciption: faker.commerce.productDescription(),
+        price: faker.commerce.price(),
+        stock: parseInt(faker.string.numeric()),
+        image: [faker.image.url()],
+        isActive: faker.datatype.boolean(1.0)
+        
+        // id: faker.database.mongodbObjectId(),
+    }
+}
+// {"_id":{"$oid":"65b814c886c75ad230e29334"},"title":"iPhone 15","description":"Descripcion del Iphone 15","code":"COD001","price":{"$numberInt":"1000"},"stock":{"$numberInt":"0"},"category":"apple","thumbnails":[],"status":true,"isActive":true,"__v":{"$numberInt":"0"}}
+
+// title: {
+//     type: String,
+//     index: true,
+//     },
+// description: String, 
+// code: String,
+// price: Number,
+// stock: Number,
+// category: {
+//     type: String,
+//     index: true,
+//     },
+// thumbnails: {
+//     type: [String], // Indica que es un array de Strings
+//     default: [],    // Valor por defecto: un array vacío
+// },
+// status: {
+//     type: Boolean,
+//     default: true,
+// },
+// isActive: {
+//     type: Boolean,
+//     default: true
+// }
+
+// const generateUser = () => {
+//     let numberOfProducts = parseInt(faker.string.numeric(1, { bannedDigits: ['0']}))
+//     let products = []
+
+//     for (let i = 0; i < numberOfProducts; i++) {
+//         products.push(generateProducts())
+        
+//     }
+//     return {
+//         id: faker.database.mongodbObjectId(),
+//         first_name: faker.person.firstName(),
+//         last_name: faker.person.lastName(),
+//         sex: faker.person.sex(),
+//         birthDate: faker.date.birthdate(),
+//         phone: faker.phone.number(),
+//         image: faker.image.avatar(),
+//         email: faker.internet.email(),
+//         products     
+//     }
+// }
+
+router.get('/mockingproducts', (req, res) => {
+    let products = []
+    for (let i = 0; i < 100; i++) {
+        products.push(generateProducts())        
+    }
+    res.send({
+        status: '',
+        payload: products
+    })
+}) 
 
 router.get('/mail', (req, res) => {    
         const destinatario = 'er.rosas24@gmail.com'

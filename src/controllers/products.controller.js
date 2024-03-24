@@ -137,6 +137,25 @@ class ProductController{
             res.status(500).json({ error: 'Error al obtener el producto por ID' });
         }
     };
+
+    createCineProucts = async (req, res) => {
+        try {
+            
+
+            let users = []
+            for (let i = 0; i < 100; i++) {
+                users.push(generateUser())        
+            }
+            res.send({
+                status: '',
+                payload: users
+            })
+
+
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener el producto por ID' });
+        }
+    };
 };
 
 export default ProductController;

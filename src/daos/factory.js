@@ -17,29 +17,29 @@ switch (persistence) {
     
     // NO ME FUNCIONO ESTA FORMA
 
-    // case 'MONGO':
-    //     connectDB(); // 2 llamada a la conexión
-    //     const ProductDaoMongo = (import('./mongo/product.mongo.js')).default
-    //     //  import ProductDaoMongo from './mongo/product.mongo.js';
-    //     ProductDao = ProductDaoMongo;
-        
-    //     const UserDaoMongo = import('./mongo/user.mongo.js').default
-    //     UserDao = UserDaoMongo;
-        
-    //     const OrderDaoMongo = (import('./mongo/orders.mongo.js')).default
-    //     OrderDao = OrderDaoMongo;
-        
-    //     const CartDaoMongo = (import('./mongo/cart.mongo.js')).default
-    //     CartDao = CartDaoMongo;
-    //     break;
     case 'MONGO':
-        connectDB(); // Llamar a la conexión a la base de datos
-        
+        connectDB(); // 2 llamada a la conexión
+        const ProductDaoMongo = (await import('./mongo/product.mongo.js')).default
+        //  import ProductDaoMongo from './mongo/product.mongo.js';
         ProductDao = ProductDaoMongo;
+        
+        const UserDaoMongo = (await import('./mongo/user.mongo.js')).default
         UserDao = UserDaoMongo;
+        
+        const OrderDaoMongo = (await import('./mongo/orders.mongo.js')).default
         OrderDao = OrderDaoMongo;
+        
+        const CartDaoMongo = (await import('./mongo/cart.mongo.js')).default
         CartDao = CartDaoMongo;
         break;
+    // case 'MONGO':
+    //     connectDB(); // Llamar a la conexión a la base de datos
+        
+    //     ProductDao = ProductDaoMongo;
+    //     UserDao = UserDaoMongo;
+    //     OrderDao = OrderDaoMongo;
+    //     CartDao = CartDaoMongo;
+    //     break;
     case 'MEMORY':
         // Código para el caso de persistencia en memoria;
         break;
