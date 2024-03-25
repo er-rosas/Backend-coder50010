@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { productService } from "../services/index.js";
 
 class ProductController{
@@ -58,7 +59,7 @@ class ProductController{
             res.status(500).json({ error: 'Error al obtener el producto por ID' });
         }
     };
-    createProduct = async (req, res) => {
+    createProductss = async (req, res) => {
         try {
             const {
                 title,
@@ -138,18 +139,52 @@ class ProductController{
         }
     };
 
+
+    // No me funciono pero en el que hice en el pruebas.router si
     createCineProucts = async (req, res) => {
         try {
             
+            // const generateProducts = () => {
+            //     return {
+            //         title: faker.commerce.productName(),
+            //         code: faker.string.alphanumeric(6),
+            //         desciption: faker.commerce.productDescription(),
+            //         price: Number(faker.commerce.price()),
+            //         stock: parseInt(faker.string.numeric()),
+            //         category: faker.commerce.productAdjective(),
+            //         thumbnails: faker.image.url(),
+            //     }
+            // }
 
-            let users = []
-            for (let i = 0; i < 100; i++) {
-                users.push(generateUser())        
-            }
-            res.send({
-                status: '',
-                payload: users
-            })
+            // // let newproducts
+            // // const addedProduct = {}
+            // // for (let i = 0; i < 1; i++) {
+            // //     newproducts.push(generateProducts())
+            // //     addedProduct = await this.service.createProduct(newproducts);
+            // // }
+
+            // // let newProducts = [];
+            // // for (let i = 0; i < 1; i++) {
+            // //     newProducts.push(await this.service.generateProducts());
+            // // }
+
+            // // const promises = newProducts.map(product => this.service.createProduct(product));
+            // // const addedProduct = await Promise.all(promises);
+
+            // //const addedProducts = [];
+            // for (let i = 0; i < 1; i++) {
+            //     const newProduct = generateProducts();
+            //     console.log(newProduct)
+            //     //const addedProduct = await this.service.createProduct(newProduct);
+            //     //addedProducts.push(addedProduct);
+            // }
+
+            // const addedProduct = await this.service.generateProducts();
+
+            // res.send({
+            //     status: '',
+            //     payload: addedProduct
+            // })
 
 
         } catch (error) {

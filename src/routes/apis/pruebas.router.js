@@ -2,49 +2,27 @@ import express from "express"
 import { fork } from 'child_process'
 import { sendMail } from "../../utils/sendEmail.js"
 import { faker } from "@faker-js/faker"
+import ProductManagerMongo from "../../daos/mongo/product.mongo.js"
 
 const router = express.Router()
 
+const productManager = new ProductManagerMongo()
+
 const generateProducts = () => {
     return {
-        _id: {"$oid": faker.database.mongodbObjectId()},
+        //_id: {"$oid": faker.database.mongodbObjectId()},
         title: faker.commerce.productName(),
         code: faker.string.alphanumeric(6),
         desciption: faker.commerce.productDescription(),
-        price: faker.commerce.price(),
+        price: Number(faker.commerce.price()),
         stock: parseInt(faker.string.numeric()),
-        image: [faker.image.url()],
-        isActive: faker.datatype.boolean(1.0)
-        
+        category: faker.commerce.productAdjective(),
+        thumbnails: [faker.image.url()],
+        //isActive: faker.datatype.boolean(1.0)
         // id: faker.database.mongodbObjectId(),
     }
 }
-// {"_id":{"$oid":"65b814c886c75ad230e29334"},"title":"iPhone 15","description":"Descripcion del Iphone 15","code":"COD001","price":{"$numberInt":"1000"},"stock":{"$numberInt":"0"},"category":"apple","thumbnails":[],"status":true,"isActive":true,"__v":{"$numberInt":"0"}}
 
-// title: {
-//     type: String,
-//     index: true,
-//     },
-// description: String, 
-// code: String,
-// price: Number,
-// stock: Number,
-// category: {
-//     type: String,
-//     index: true,
-//     },
-// thumbnails: {
-//     type: [String], // Indica que es un array de Strings
-//     default: [],    // Valor por defecto: un array vacío
-// },
-// status: {
-//     type: Boolean,
-//     default: true,
-// },
-// isActive: {
-//     type: Boolean,
-//     default: true
-// }
 
 // const generateUser = () => {
 //     let numberOfProducts = parseInt(faker.string.numeric(1, { bannedDigits: ['0']}))
@@ -67,15 +45,28 @@ const generateProducts = () => {
 //     }
 // }
 
-router.get('/mockingproducts', (req, res) => {
-    let products = []
-    for (let i = 0; i < 100; i++) {
-        products.push(generateProducts())        
+router.get('/mockingproducts', async (req, res) => {
+    try {
+        let newProduct
+        // for (let i = 0; i < 100; i++) {
+        //     products.push(generateProducts())        
+        // }
+        const addedProducts = []
+        let addedProduct
+        for (let i = 0; i < 10; i++) {
+            newProduct = generateProducts();
+            console.log(newProduct)
+            addedProduct = await productManager.create(newProduct);
+            addedProducts.push(addedProduct);
+        }
+        res.send({
+            status: '',
+            payload: addedProducts
+        })
+    } catch (error) {
+        return error
     }
-    res.send({
-        status: '',
-        payload: products
-    })
+    
 }) 
 
 router.get('/mail', (req, res) => {    

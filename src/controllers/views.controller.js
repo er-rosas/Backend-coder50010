@@ -84,7 +84,7 @@ class ViewsController {
             // Obtener los datos del usuario del objeto request
             const userData = req.user;
     
-            const { limit = 5, pageQuery = 1, category } = req.query;
+            const { limit = 9, pageQuery = 1, category } = req.query;
             const uniqueCategories = await productService.getUniqueCategories();
             const query = category ? { category, isActive: true } : { isActive: true };
             const {
