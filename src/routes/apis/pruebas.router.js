@@ -80,6 +80,24 @@ router.get('/mail', (req, res) => {
     })
 
 
+
+router.get('/loggerTest', (req, res) => {
+    // req.logger.warning('warning ejecutandose')
+    // // req.logger.error('errror ejecutandose')
+
+    // res.send('logger ejecutado')
+    req.logger.fatal('Esto es un mensaje de fatal');
+    req.logger.error('Esto es un mensaje de error');
+    req.logger.warning('Esto es un mensaje de warning');
+    req.logger.info('Esto es un mensaje de info');
+    req.logger.debug('Esto es un mensaje de debug');
+    req.logger.http('Esto es un mensaje de http');
+
+    res.send('Logs probados');
+})
+
+
+
 // const router = Router()
 
 // const operacionCompleja = () => {

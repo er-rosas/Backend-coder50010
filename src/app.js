@@ -1,5 +1,5 @@
 import express from "express";
-import logger from 'morgan'
+//import logger from 'morgan'
 import handlebars from 'express-handlebars';
 import { configObject } from './config/config.js';
 
@@ -14,6 +14,7 @@ import { __dirname } from './utils.js';
 import cookieParser from "cookie-parser"
 import passport from "passport"
 import { initializePassport } from "./config/initializePassport.config.js";
+import { addLogger, logger } from "./utils/logger.js";
 
 // Server
 const app = express();
@@ -33,13 +34,14 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(logger('dev'))
+//app.use(logger('dev'))
 
 
 app.use(cookieParser())
 
 initializePassport()
 app.use(passport.initialize())
+app.use(addLogger)
 
 
 app.use(appRouter)
@@ -50,5 +52,6 @@ initProductsSocket(io)
 
 httpServer.listen(PORT, err =>{
     if (err) console.log(err)
-    console.log(`Escuchando en el puerto: ${PORT}`);
+    //console.log(`Escuchando en el puerto: ${PORT}`);
+    logger.info(`Escuchando en el puerto: ${PORT}`);
 });
