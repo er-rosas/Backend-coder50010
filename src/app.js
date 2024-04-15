@@ -10,7 +10,7 @@ import { initProductsSocket } from "./utils/socket.js";
 
 import appRouter from './routes/index.js'
 
-import { __dirname } from './utils.js';
+import { __dirname } from './utils/dirname.js';
 import cookieParser from "cookie-parser"
 import passport from "passport"
 import { initializePassport } from "./config/initializePassport.config.js";

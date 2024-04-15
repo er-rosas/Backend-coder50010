@@ -94,7 +94,7 @@ class UserController{
     getAllUsers = async (request, responses)=>{
         try {
             // const users = await this.service.gets()
-            const users = await userService.getUsers()
+            const users = await this.service.getUsers()
             responses.send({
                 status: 'success',
                 result: users
@@ -103,6 +103,33 @@ class UserController{
             console.log(error)
         }
     };
+    upgradeToPremiun = async (req, res) => {
+        try {
+            
+            const { uid } = req.params
+
+            // Verificar si el usuario ha cargado los documentos requeridos
+            const user = await this.service.getUser({_id: uid})
+            if (!user.documents || user.documents.length < 3) {
+                return res.status(400).json({ 
+                status: 'error',
+                error: `El usuario no ha terminado de procesar su documentación. Falta ${3 - user.documents.length} documento.` })
+            }
+            // console.log(user)
+            // console.log(user.documents.length)
+            // Actualizar al usuario a premium
+            user.isPremium = true
+            await user.save()
+
+            res.status(200).send({
+                status: 'success',
+                payload: user,
+                documentsLength: user.documents.length
+            })
+        } catch (error) {
+            console.log(error)
+        }       
+    }
 };
 
 export default UserController;

@@ -32,6 +32,17 @@ class ViewsController {
         }
     }
 
+    async renderForgotPassword(req, res) {
+        try {
+            res.status(200).render('forgotPassword', {
+                //showNav: true,
+                style: 'forgotPassword.css'
+            });
+        } catch (error) {
+            // logger.info(error);
+        }
+    }
+
     async renderIndex(req, res) {
         try {
             res.render('index', {

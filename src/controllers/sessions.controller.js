@@ -5,6 +5,8 @@ import { sendMail } from "../utils/sendEmail.js";
 import CustomError from "../utils/errors/customError.js";
 import generateUserErrorInfo from "../utils/errors/info.js";
 import EErrors from "../utils/errors/enums.js";
+import { logger } from "../utils/logger.js";
+//import { use } from "passport";
 
 class SessionController{
     constructor(){
@@ -96,6 +98,7 @@ class SessionController{
     logoutSession = (req, res)=>{
         try {
             res.clearCookie('cookieToken').redirect('/login')
+            //res.status(200).redirect('/login')
         } catch (error) {
             console.log(error)
         }
@@ -115,6 +118,99 @@ class SessionController{
             res.send({status: 'error', error})   
         }
     };
+    
+    forgotPassword = async (req, res)=>{
+        try {
+            
+            const { email } = req.body
+            console.log(email)
+            // buscar el usuario en la base de datos
+            //const {_doc: doc} = await userModel.findOne( {email})
+            const user = await this.service.getUser({email});
+            console.log(user)
+
+            //const {password, _id, ...} = user        
+            logger.info(user)
+            if (!user) return res.status(400).send({status: 'error', message: 'El usuario no existe'})
+        
+            // generar un token para el usuario
+            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId})
+            // logger.info(token)
+            console.log(token)
+            console.log(user.first_name);
+
+
+            // configurar el mail
+            const destinatario =  `${email}`;//'er.rosas24@gmail.com'
+            const subject = 'Restablecer contraseña'
+            const html = `
+                            <p> Hola ${user.first_name}, </p>
+                            <p> Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para continuar:</p>
+                            <a href="http://localhost:8080/api/sessions/reset-password/${token}">Restablecer contraseña</a>
+                            <p>Este enlace expirará en 1 hora.</p>
+                        `
+        
+            // enviar un mail con el link para cambiar la contraseña
+            sendMail(destinatario, subject, html)
+        
+            res.status(200).send({status: 'success', message: 'Mail enviado, revise su bandeja de entrada o spam'})
+        } catch (error) {
+            logger.info(error)
+        }
+    }
+
+    resetPasswordToken = async (req, res)=>{
+        try {
+            const {token} = req.params
+            res.render('resetPass', {token, showNav: false})
+        } catch (error) {
+            logger.info(error)
+        }
+    }
+
+    resetPassword = async (req, res)=>{
+        try {
+            const { passwordNew, passwordConfirm, token } = req.body
+        
+            // validar las contraseñas recibidas si estan vacias y si son iguales
+            if (!passwordNew || !passwordConfirm || passwordNew !== passwordConfirm) return res.status(400).send({
+                status: 'error', 
+                message: 'Las contraseñas no pueden estar vacías y deben coincidir'
+            })
+            if (passwordNew !== passwordConfirm) return res.status(400).send({status: 'error', message: 'Las contraseñas no coinciden'})
+        
+            const decodedUser = verifyToken(token)
+            console.log(decodedUser.email)
+            
+            
+            if (!decodedUser) return res.status(400).send({status: 'error', message: 'El token no es válido o ha expirado'})
+        
+            // // buscar el usuario en la base de datos
+            const userDB = await this.service.getUser({email: decodedUser.email})
+            
+            if (!userDB) return res.status(400).send({status: 'error', message: 'El usuario no existe'})
+        
+            // verificar si las contraseñas sean iguales no es valida
+            let isValidPass = isValidPassword(passwordNew, userDB.password)
+            
+            if (isValidPass) return res.status(400).send({status: 'error', message: 'No puedes usar una contraseña anterior.'})
+        
+            const result = await this.service.updateUser({_id: userDB._id}, {
+                password: createHash(passwordNew)
+            })
+        
+            if (!result) return res.status(400).send({status: 'error', message: 'Error al actualizar la contraseña'})
+        
+            res.status(200).send({
+                status: 'success', 
+                message: 'Contraseña actualizada correctamente'
+            })
+        } catch (error) {
+            logger.info(error)
+        }
+    }
+
+    
 };
 
 export default SessionController;

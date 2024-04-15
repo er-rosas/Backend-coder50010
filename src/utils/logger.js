@@ -1,4 +1,22 @@
 import winston from 'winston'
+import { program } from './commander.js'
+
+const { mode } = program.opts()
+//console.log(mode)
+
+const enviroment = mode
+let console
+let file
+
+if (enviroment === 'development') {
+    console = 'debug'
+    file = 'warning'
+} else {
+    console = 'info'
+    file = 'warning'
+}
+
+
 import { configObject } from '../config/config.js'
 // const winston = require('winston')
 
@@ -36,8 +54,9 @@ const logger = winston.createLogger({
     levels: levelOptions.levels,
     transports: [
         new winston.transports.Console({
-            level: 'http',
+            //level: 'http',
             //level: configObject.logger_level_console,
+            level: console,
             format: winston.format.combine(
                 winston.format.colorize({ colors: levelOptions.colors }),
                 winston.format.simple()
@@ -45,8 +64,9 @@ const logger = winston.createLogger({
         }),
         new winston.transports.File({
             filename: './errors.log',
-            level: 'warning',
+            //level: 'warning',
             //level: configObject.logger_level_file,
+            level: file,
             format: winston.format.simple()
         })
     ]

@@ -9,6 +9,11 @@ const { mode } = program.opts()
 
 const enviroment = mode || "development"
 
+// export let logg
+// if (enviroment === 'development') {
+//     console = ''
+// }
+
 logger.info(mode)
 
 dotenv.config({

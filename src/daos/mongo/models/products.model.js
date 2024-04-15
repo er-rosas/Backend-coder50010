@@ -24,6 +24,10 @@ const productsSchema = new Schema({
         type: Boolean,
         default: true
     },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
     atCreate: {
         type: Date,
         default: new Date()

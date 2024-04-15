@@ -7,6 +7,7 @@ const router = express.Router()
 
 const {
     renderRedirect,
+    renderForgotPassword,
     renderIndex,
     // renderProfile,
     renderProducts,
@@ -20,6 +21,7 @@ const {
 router.get('/', renderRedirect)
 router.get('/login', renderLogin)
 router.get('/register', renderRegister)
+router.get('/forgotPassword', renderForgotPassword)
 router.get('/inicio', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderIndex);
 // router.get('/profile', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderProfile)
 router.get('/products', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderProducts)

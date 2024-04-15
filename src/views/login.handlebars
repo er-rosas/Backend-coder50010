@@ -1,10 +1,46 @@
 <section class="login-section">
-    <form id="loginForm" action="/api/sessions/login" method="POST" class="login-form">
+    <form id="loginForm" class="login-form">
         <label for="email" class="login-label">Email</label><br>
         <input type="text" name="email" placeholder="Ingrese el email" class="login-input"><br>
         <label for="password" class="login-label">Password</label><br>
         <input type="password" name="password" placeholder="Ingrese el password" class="login-input"><br>
+        <a href="/forgotPassword" class="register-link">Olvidé mi contraseña</a><br>
         <button type="submit" class="login-button">Enviar</button>
     </form>
     <a href="/register" class="register-link">Registrarse</a><br>
 </section>
+
+<script>
+    const handleSubmit = function (evt){
+        evt.preventDefault()
+        let email = document.querySelector('input[name="email"]').value
+        let password = document.querySelector('input[name="password"]').value
+        //console.log(email, password)
+        fetch('/api/sessions/login',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email ,
+                password 
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Si la solicitud se completa correctamente, redirigir al usuario al inicio
+                window.location.href = '/inicio'; // Cambia '/inicio' con la URL de tu página de inicio
+            } else {
+                // Manejar errores de respuesta aquí
+                console.error('Error en la solicitud de inicio de sesión:', response.statusText);
+            }
+        })
+        .catch(error => {
+            // Manejar errores de red o solicitud aquí
+            console.error('Error en la solicitud de inicio de sesión:', error);
+        });
+    }
+
+    document.querySelector('#loginForm').addEventListener('submit', handleSubmit)
+
+</script>
