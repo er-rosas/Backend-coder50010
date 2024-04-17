@@ -19,6 +19,9 @@ class UserManagerMongo {
     async update(uid, userUpdate){
         return await userModel.findByIdAndUpdate({_id: uid}, userUpdate, {new: true})
     }
+    // async update(uid, userUpdate){
+    //     return await userModel.findByIdAndUpdate({_id: uid}, {userUpdate}, {new: true})
+    // }
     async delete(uid){
         return await userModel.findByIdAndUpdate({_id: uid}, {isActive: false})
         // return await userModel.findByIdAndDelete({_id: uid})

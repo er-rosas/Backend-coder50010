@@ -134,7 +134,7 @@ class SessionController{
             if (!user) return res.status(400).send({status: 'error', message: 'El usuario no existe'})
         
             // generar un token para el usuario
-            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId})
+            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId}, '1h')
             // logger.info(token)
             console.log(token)
             console.log(user.first_name);
@@ -180,10 +180,18 @@ class SessionController{
             if (passwordNew !== passwordConfirm) return res.status(400).send({status: 'error', message: 'Las contraseñas no coinciden'})
         
             const decodedUser = verifyToken(token)
-            console.log(decodedUser.email)
+            //console.log("Token(decoder) Email:    " + decodedUser.email)
             
             
             if (!decodedUser) return res.status(400).send({status: 'error', message: 'El token no es válido o ha expirado'})
+
+            // if (!decodedUser) {
+            //     res.status(400).send({ status: 'error', message: 'El token no es válido o ha expirado' });
+
+            //     setTimeout(() => {
+            //         res.redirect('/forgotPassword');
+            //     }, 5000); // 5000 milisegundos = 5 segundos
+            // }
         
             // // buscar el usuario en la base de datos
             const userDB = await this.service.getUser({email: decodedUser.email})
@@ -194,10 +202,23 @@ class SessionController{
             let isValidPass = isValidPassword(passwordNew, userDB.password)
             
             if (isValidPass) return res.status(400).send({status: 'error', message: 'No puedes usar una contraseña anterior.'})
+
+            //console.log("   ---");
+
+            const uid = userDB._id;
+            //console.log("uid:     " + uid);
+            // let uidObj = uid.toObjet();
+            // console.log(uidObj + "  user id to object");
+
+            let userPassword = {password: createHash(passwordNew)}
+            //console.log("userpassword:     " + userPassword.password);
         
-            const result = await this.service.updateUser({_id: userDB._id}, {
-                password: createHash(passwordNew)
-            })
+            const result = await this.service.updateUser(uid, userPassword)
+            // const result = await userModel.findByIdAndUpdate({_id: userDB._id}, {
+            //     password: createHash(passwordNew)
+            // })
+            // console.log("uidYpassnew:     " + uid, passwordNew);
+            // console.log("Result:    " + result)
         
             if (!result) return res.status(400).send({status: 'error', message: 'Error al actualizar la contraseña'})
         
