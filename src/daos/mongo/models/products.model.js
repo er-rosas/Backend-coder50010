@@ -27,7 +27,7 @@ const productsSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'users',
-        default: 'admin'
+        //default: 'admin'
     },
     atCreate: {
         type: Date,

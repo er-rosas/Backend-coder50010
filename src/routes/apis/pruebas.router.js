@@ -18,6 +18,7 @@ const generateProducts = () => {
         stock: parseInt(faker.string.numeric()),
         category: faker.commerce.productAdjective(),
         thumbnails: [faker.image.url()],
+        owner: faker.database.mongodbObjectId()
         //isActive: faker.datatype.boolean(1.0)
         // id: faker.database.mongodbObjectId(),
     }

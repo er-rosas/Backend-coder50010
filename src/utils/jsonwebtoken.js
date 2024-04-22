@@ -15,5 +15,9 @@ export const generateToken = (user={}, expiresIn='5d') => {
 
 // Función para verificar un token JWT
 export function verifyToken(token) {
-    return jwt.verify(token, PRIVATE_KEY);
+    try {
+        return jwt.verify(token, PRIVATE_KEY);
+    } catch (error) {
+        return false
+    }
 }

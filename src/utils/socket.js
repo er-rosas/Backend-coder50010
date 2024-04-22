@@ -8,6 +8,7 @@ const initProductsSocket = (io) => {
             socket.emit('updateProducts', managerMongo.getProducts());
 
             socket.on("addProduct", async (data) => {
+                console.log("Datos recibidos del formulario:", data);
                 const newProduct = {
                     title: data.title,
                     description: data.description,
@@ -16,7 +17,9 @@ const initProductsSocket = (io) => {
                     status: true,
                     stock: data.stock,
                     category: data.category,
-                    thumbnail: data.thumbnail || [],
+                    //thumbnail: data.thumbnail || [],
+                    thumbnails: data.thumbnails,
+                    owner: data.owner
                 };
 
                 const existingCode = await managerMongo.getProductCode(data.code);

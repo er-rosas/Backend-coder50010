@@ -31,7 +31,7 @@ class UserController{
     getUser = async (request, responses)=>{
         try {
             const { uid } = request.params
-            const user = await this.service.get({_id: uid})
+            const user = await this.service.getUser({_id: uid})
             responses.json({
                 status: 'success',
                 result: user
@@ -50,7 +50,7 @@ class UserController{
                 email,
                 password })
 
-            const result = await this.service.create(newUser)
+            const result = await this.service.createUser(newUser)
 
             responses.send({
                 status: 'success',
@@ -67,7 +67,7 @@ class UserController{
             
             // Aquí podrías validar que hay datos en el body antes de intentar actualizar el usuario
             
-            const result = await this.service.update(uid, body);
+            const result = await this.service.updateUser(uid, body);
             
             responses.send({
                 status: 'success',
@@ -85,7 +85,7 @@ class UserController{
     deleteUser = async (request, responses)=>{
         try {
             const {uid} = request.params
-            const result = await this.service.delete(uid)
+            const result = await this.service.deleteUser(uid)
             responses.send('delete user')
         } catch (error) {
             console.log(error)
@@ -108,23 +108,45 @@ class UserController{
             
             const { uid } = req.params
 
-            // Verificar si el usuario ha cargado los documentos requeridos
+            // // Verificar si el usuario ha cargado los documentos requeridos
             const user = await this.service.getUser({_id: uid})
-            if (!user.documents || user.documents.length < 3) {
-                return res.status(400).json({ 
-                status: 'error',
-                error: `El usuario no ha terminado de procesar su documentación. Falta ${3 - user.documents.length} documento.` })
+            //const userObject = user.toObject()
+            console.log("USER SIN ACTUALIZAR " + user);
+            
+            // let body = {}
+            let result = {};
+
+            if (user.role === 'USER') {
+                let body = {'role': 'USER_PREMIUM'}
+                result = await this.service.updateUser(uid, body);
+            } else {
+                let body = {'role': 'USER'}
+                result = await this.service.updateUser(uid, body);
             }
+            // if (user.role === 'USER_PREMIUM') {
+            //     body = {'role': 'USER'}
+            //     //const result = await this.service.update(uid, body);
+            // }
+            //const result = await this.service.update(uid, body);
+            console.log("USER ACTUALIZADO " + result);
+
+
+            // if (!user.documents || user.documents.length < 3) {
+            //     return res.status(400).json({ 
+            //     status: 'error',
+            //     error: `El usuario no ha terminado de procesar su documentación. Falta ${3 - user.documents.length} documento.` })
+            // }
             // console.log(user)
             // console.log(user.documents.length)
             // Actualizar al usuario a premium
-            user.isPremium = true
-            await user.save()
+            // user.isPremium = true
+            // await user.save()
 
             res.status(200).send({
                 status: 'success',
-                payload: user,
-                documentsLength: user.documents.length
+                //payload: result,
+                result
+                //documentsLength: user.documents.length
             })
         } catch (error) {
             console.log(error)

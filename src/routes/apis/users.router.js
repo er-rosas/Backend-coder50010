@@ -11,7 +11,8 @@ const {
     createUser,
     updateUser,
     deleteUser,
-    getAllUsers
+    getAllUsers,
+    upgradeToPremiun
 } = new UserController()
 
 router.get('/', passportCall('jwt'), authorization( ['USER_PREMIUM', 'ADMIN'] ), getUsers);
@@ -20,5 +21,6 @@ router.post('/', createUser);
 router.put('/:uid', updateUser)
 router.delete('/:uid', deleteUser)
 router.get('/allusers', getAllUsers);
+router.get('/premiun/:uid', authorization( ['PUBLIC'] ), upgradeToPremiun)
 
 export default router;

@@ -13,10 +13,11 @@ const {
     deleteRealTaProduct
 } = new RealTimeProductsController();
 
-router.get('/', passportCall('jwt'), authorization('ADMIN'), getRealTaProducts)
-router.get('/:pid', getRealTaProduct)
-router.post('/', createRealTaProduct)
-router.put('/:pid', updateRealTaProduct)
-router.delete('/:pid', deleteRealTaProduct)
+//router.get('/', passportCall('jwt'), authorization(['PUBLIC', 'USER', 'USER_PREMIUM', 'ADMIN']), getRealTaProducts)
+router.get('/', authorization(['PUBLIC']), getRealTaProducts)
+router.get('/:pid', authorization(['PUBLIC']), getRealTaProduct)
+router.post('/', authorization(['PUBLIC']), createRealTaProduct)
+router.put('/:pid', authorization(['PUBLIC']), updateRealTaProduct)
+router.delete('/:pid', passportCall('jwt'), authorization(['PUBLIC', 'USER', 'USER_PREMIUM', 'ADMIN']), deleteRealTaProduct)
 
 export default router;

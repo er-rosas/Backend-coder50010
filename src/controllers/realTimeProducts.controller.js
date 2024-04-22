@@ -62,6 +62,9 @@ class RealTimeProductsController {
     deleteRealTaProduct = async (req, res) => {
         try {
             const { pid } = req.params;
+            const userData = req.user;
+            console.log(userData);
+
             await this.service.deleteProduct(pid);
     
             res.status(201).send({

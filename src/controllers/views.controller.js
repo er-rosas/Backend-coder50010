@@ -182,8 +182,13 @@ class ViewsController {
                 ...product.toObject(),
                 }));
             // console.log('GET / route called - Rendering realTimeProducts');
+            const userData = req.user;
+            console.log(userData);
+            const owner = userData
+            console.log(owner.id + "     holaaa");
             res.render("realTimeProducts", {
                 product,
+                owner,
                 showNav: true
             });
         } catch (error) {

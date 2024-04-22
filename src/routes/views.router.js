@@ -28,6 +28,6 @@ router.get('/products', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PRE
 router.get('/productdetail/:pid', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderDetail)
 router.get('/carts/:cid', passportCall('jwt'), authorization( ['PUBLIC', 'USER_PREMIUM', 'ADMIN'] ), renderCart)
 router.get('/users', passportCall('jwt'), authorization( ['PUBLIC','ADMIN'] ), renderUsers)
-router.get('/realtimeproducts', passportCall('jwt'), authorization( ['ADMIN'] ), renderRealTimeProducts)
+router.get('/realtimeproducts', passportCall('jwt'), authorization( ['PUBLIC', 'PREMIUM', 'USER_PREMIUM', 'ADMIN'] ), renderRealTimeProducts)
 
 export default router;

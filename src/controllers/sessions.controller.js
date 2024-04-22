@@ -134,7 +134,7 @@ class SessionController{
             if (!user) return res.status(400).send({status: 'error', message: 'El usuario no existe'})
         
             // generar un token para el usuario
-            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId}, '1h')
+            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId}, '5000')
             // logger.info(token)
             console.log(token)
             console.log(user.first_name);
@@ -178,9 +178,10 @@ class SessionController{
                 message: 'Las contraseñas no pueden estar vacías y deben coincidir'
             })
             if (passwordNew !== passwordConfirm) return res.status(400).send({status: 'error', message: 'Las contraseñas no coinciden'})
-        
+            //console.log("Aqui")
             const decodedUser = verifyToken(token)
-            //console.log("Token(decoder) Email:    " + decodedUser.email)
+
+            //console.log("Token(decoder) Email:    " + decodedUser)
             
             
             if (!decodedUser) return res.status(400).send({status: 'error', message: 'El token no es válido o ha expirado'})
@@ -228,6 +229,7 @@ class SessionController{
             })
         } catch (error) {
             logger.info(error)
+            //return res.status(400).send({status: 'error', message: 'El token no es válido o ha expirado'})
         }
     }
 

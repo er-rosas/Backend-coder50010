@@ -3,6 +3,8 @@ const socket = io(); // Conexión con el servidor de Socket.io
     // Manejar el envío del formulario para agregar un nuevo producto
     const addProductForm = document.getElementById('addProductForm');
 
+    //document.getElementById("owner").value =`${owner.id}`;
+
 addProductForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -14,6 +16,7 @@ addProductForm.addEventListener('submit', (event) => {
         const stock = parseInt(document.getElementById('stock').value);
         const category = document.getElementById('category').value.trim();
         const thumbnails = document.getElementById('thumbnails').value.trim().split(',');
+        const owner = document.getElementById('owner').value.trim();
 
         // Construir el objeto del nuevo producto
         const newProduct = {
@@ -23,7 +26,8 @@ addProductForm.addEventListener('submit', (event) => {
             price,
             stock,
             category,
-            thumbnails
+            thumbnails,
+            owner
         };
 
         // Enviar los datos del nuevo producto al servidor a través de WebSocket
@@ -50,6 +54,7 @@ addProductForm.addEventListener('submit', (event) => {
                 <h4>${product.code}: ${product.title}</h4>
                 <p>ID de producto: ${id}</p>
                 <p>${product.description} - $${product.price} - Stock: ${product.stock}</p>
+                <p>Owner: ${product.owner}</p>
                 <button type="button" onclick="deleteProduct('${id}')">Eliminar producto</button>   
                 `;
                 productList.appendChild(productContainer);

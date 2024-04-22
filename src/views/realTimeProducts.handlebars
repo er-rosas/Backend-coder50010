@@ -23,6 +23,11 @@
         <label for="thumbnails">URL de Thumbnails:</label>
         <input type="text" id="thumbnails" name="thumbnails"><br>
 
+        {{#with owner}}
+        <label for="owner">Owner: (Por defecto viene su id ya que así se guardara)</label>
+        <input type="text" id="owner" name="owner" value="{{this.id}}"><br>
+        {{/with}}
+
         <button type="submit">Agregar Producto</button>
     </form>
 

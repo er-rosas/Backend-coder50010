@@ -107,8 +107,15 @@ class ProductController{
     deleteProduct = async (req, res) => {
         try {
             const productId = req.params.pid;
-    
-            await this.service.deleteProduct(productId);
+            
+            const respuesta = await this.service.deleteProduct(productId);
+
+            if (!respuesta) {
+                return res.status(401).json({
+                    status: 'error',
+                    payload: 'Producto no existe en la base de datos'
+                })
+            }
     
             res.json({ message: 'Producto eliminado correctamente' });
         } catch (error) {
