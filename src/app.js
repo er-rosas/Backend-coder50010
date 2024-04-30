@@ -16,6 +16,10 @@ import passport from "passport"
 import { initializePassport } from "./config/initializePassport.config.js";
 import { addLogger, logger } from "./utils/logger.js";
 
+//Documentacion
+import swaggerJsDocs from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
+
 // Server
 const app = express();
 const httpServer = new HttpServer(app)
@@ -43,6 +47,27 @@ initializePassport()
 app.use(passport.initialize())
 app.use(addLogger)
 
+// sweagger config -> documentación
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentación de app SmartStore',
+            description: 'Descripción de nuestra app SmartStore',
+            version: '1.0.0'
+        },
+        servers: [
+            {
+                url: 'http://localhost:8000',
+                description: 'Servidor Local de producción'
+            }
+        ]
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+} 
+
+const specs = swaggerJsDocs(swaggerOptions)
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 app.use(appRouter)
 

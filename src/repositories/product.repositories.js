@@ -105,20 +105,6 @@ class ProductRepository {
             return error
         }
     }
-
-    // async generateProducts() {
-    //     return {
-    //         //_id: {"$oid": faker.database.mongodbObjectId()},
-    //         title: faker.commerce.productName(),
-    //         code: faker.string.alphanumeric(6),
-    //         desciption: faker.commerce.productDescription(),
-    //         price: faker.commerce.price(),
-    //         stock: parseInt(faker.string.numeric()),
-    //         category: faker.commerce.productAdjective(),
-    //         thumbnails: [faker.image.url()],
-    //         // isActive: faker.datatype.boolean(1.0)
-    //     }
-    // }
 }
 
 export default ProductRepository

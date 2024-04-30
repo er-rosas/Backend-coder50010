@@ -14,7 +14,24 @@ import multerRouter from './apis/multer.router.js';
 import messaggesRouter from './apis/messages.router.js';
 import pruebasRouter from './apis/pruebas.router.js';
 import { errorHandler } from "../middleware/error/index.js";
-import CustomError from "../utils/errors/customError.js";
+//import CustomError from "../utils/errors/customError.js";
+
+// //Documentacion
+// import swaggerJsDocs from "swagger-jsdoc";
+// import swaggerUiExpress from "swagger-ui-express";
+// import { __dirname } from '../utils/dirname.js';
+
+// const swaggerOptions = {
+//     definition: {
+//         openapi: '3.0.1',
+//         info: {
+//             title: 'Documentación de app Adoptame',
+//             description: 'Descripción de nuestra app Adoptame'
+//         }
+//     },
+//     apis: [`${__dirname}/../../docs/**/*.yaml`]
+// } 
+// const specs = swaggerJsDocs(swaggerOptions)
 
 const router = express.Router()
 // const router = express.Router()
@@ -38,6 +55,11 @@ router.use('*', async (req, res)=>{
         mensaje: 'ruta no encontrada'
     })
 });
+
+
+
+// router.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
+
 
 router.use(errorHandler)
 

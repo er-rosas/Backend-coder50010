@@ -7,26 +7,36 @@ class UserController{
     }
     getUsers = async (request, responses)=>{
         try {
-            const {limit = 1, pageQuery = 1} = request.query
-            const {
-                docs,
-                hasPrevPage, 
-                hasNextPage,
-                prevPage, 
-                nextPage,
-                page 
-                } = await this.service.getPaginate(limit, pageQuery)
-                responses.render('users', {
-                    users: docs,
-                    hasPrevPage, 
-                    hasNextPage,
-                    prevPage, 
-                    nextPage,
-                    page,
-                })
-            } catch (error) {
-                console.log(error)
-            }
+            // const users = await this.service.gets()
+            const users = await this.service.getUsers()
+            responses.send({
+                status: 'success',
+                result: users
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        // try {
+        //     const {limit = 1, pageQuery = 1} = request.query
+        //     const {
+        //         docs,
+        //         hasPrevPage, 
+        //         hasNextPage,
+        //         prevPage, 
+        //         nextPage,
+        //         page 
+        //         } = await this.service.getPaginate(limit, pageQuery)
+        //         responses.render('users', {
+        //             users: docs,
+        //             hasPrevPage, 
+        //             hasNextPage,
+        //             prevPage, 
+        //             nextPage,
+        //             page,
+        //         })
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
     };
     getUser = async (request, responses)=>{
         try {
@@ -91,27 +101,37 @@ class UserController{
             console.log(error)
         }
     };
-    getAllUsers = async (request, responses)=>{
+    getUsersPaginate = async (request, responses)=>{
         try {
-            // const users = await this.service.gets()
-            const users = await this.service.getUsers()
-            responses.send({
-                status: 'success',
-                result: users
-            })
-        } catch (error) {
-            console.log(error)
-        }
+            const {limit = 1, pageQuery = 1} = request.query
+            const {
+                docs,
+                hasPrevPage, 
+                hasNextPage,
+                prevPage, 
+                nextPage,
+                page 
+                } = await this.service.getPaginate(limit, pageQuery)
+                responses.render('users', {
+                    users: docs,
+                    hasPrevPage, 
+                    hasNextPage,
+                    prevPage, 
+                    nextPage,
+                    page,
+                })
+            } catch (error) {
+                console.log(error)
+            }
     };
     upgradeToPremiun = async (req, res) => {
         try {
             
             const { uid } = req.params
 
-            // // Verificar si el usuario ha cargado los documentos requeridos
             const user = await this.service.getUser({_id: uid})
             //const userObject = user.toObject()
-            console.log("USER SIN ACTUALIZAR " + user);
+            //console.log("USER SIN ACTUALIZAR " + user);
             
             // let body = {}
             let result = {};
@@ -123,24 +143,8 @@ class UserController{
                 let body = {'role': 'USER'}
                 result = await this.service.updateUser(uid, body);
             }
-            // if (user.role === 'USER_PREMIUM') {
-            //     body = {'role': 'USER'}
-            //     //const result = await this.service.update(uid, body);
-            // }
-            //const result = await this.service.update(uid, body);
-            console.log("USER ACTUALIZADO " + result);
 
-
-            // if (!user.documents || user.documents.length < 3) {
-            //     return res.status(400).json({ 
-            //     status: 'error',
-            //     error: `El usuario no ha terminado de procesar su documentación. Falta ${3 - user.documents.length} documento.` })
-            // }
-            // console.log(user)
-            // console.log(user.documents.length)
-            // Actualizar al usuario a premium
-            // user.isPremium = true
-            // await user.save()
+            //console.log("USER ACTUALIZADO " + result);
 
             res.status(200).send({
                 status: 'success',

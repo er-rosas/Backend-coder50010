@@ -59,7 +59,7 @@ class ProductManagerMongo {
         } catch (error) {
             console.log(error);
         }
-        }
+    }
 
     async delete(pid) {
         try {
@@ -89,26 +89,6 @@ class ProductManagerMongo {
     async getPaginate (limit, pageQuery, query){
         return await productsModel.paginate(query, { limit, page: pageQuery, sort: { title: -1 }, lean: true });
     }
-
-    // async createCienPro (){
-    //     const generateProducts = () => {
-    //         return {
-    //             _id: faker.datatype.uuid(),
-    //             title: faker.commerce.productName(),
-    //             code: faker.string.alphanumeric(6),
-    //             desciption: faker.commerce.productDescription(),
-    //             price: Number(faker.commerce.price()),
-    //             stock: parseInt(faker.string.numeric()),
-    //             category: faker.commerce.productAdjective(),
-    //             thumbnails: faker.image.url(),
-    //         }
-    //     }
-    //     let products = []
-    //     for (let i = 0; i < 100; i++) {
-    //         products.push(generateProducts())        
-    //     }
-    //     return products
-    // }
 }
 
 export default ProductManagerMongo;

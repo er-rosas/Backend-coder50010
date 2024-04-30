@@ -19,9 +19,10 @@ class CartController{
     getCartById = async (req, res) => {
         try {
             const { cid } = req.params;
-            const cart = await this.service.getById(cid);
+            const cart = await this.service.getCart(cid);
+            console.log(cart);
             console.log(cart.products);
-            const cartId = await this.service.getById(cid);
+            const cartId = await this.service.getCart(cid);
             const cartObject = cartId.toObject();
             const carrito = cartObject.products
             res.render("carts", { carrito });

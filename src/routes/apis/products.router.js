@@ -11,19 +11,17 @@ const {
     createProductss,
     updateProduct,
     deleteProduct,
+    getProductsPaginate,
     createCineProucts
 } = new ProductController();
 
 router.get('/', getProducts);
-router.get('/:pid', passportCall('jwt'), authorization('ADMIN'), getProductById);
-router.post('/', passportCall('jwt'), authorization('ADMIN'), createProductss);
-router.put('/:pid', passportCall('jwt'), authorization('ADMIN'), updateProduct)
-router.delete('/:pid', passportCall('jwt'), authorization('ADMIN'), deleteProduct)
-// router.get('/allproducts', getAllUsers);
-
-
-// No me funciono pero en el que hice en el pruebas.router si
-//Crear 100 productos
-router.get('/mockingproducts', createCineProucts)
+router.post('/', createProductss);
+router.get('/productPaginate', getProductsPaginate);
+router.get('/mockingproducts', createCineProucts);
+router.get('/:pid', getProductById);
+router.put('/:pid', updateProduct);
+router.delete('/:pid', deleteProduct);
 
 export default router;
+//router.delete('/:pid', passportCall('jwt'), authorization('ADMIN'), deleteProduct)

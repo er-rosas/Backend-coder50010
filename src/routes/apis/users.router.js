@@ -11,7 +11,7 @@ const {
     createUser,
     updateUser,
     deleteUser,
-    getAllUsers,
+    getUsersPaginate,
     upgradeToPremiun
 } = new UserController()
 
@@ -20,7 +20,7 @@ router.get('/:uid', getUser);
 router.post('/', createUser);
 router.put('/:uid', updateUser)
 router.delete('/:uid', deleteUser)
-router.get('/allusers', getAllUsers);
+router.get('/usersPaginate', getUsersPaginate);
 router.get('/premiun/:uid', authorization( ['PUBLIC'] ), upgradeToPremiun)
 
 export default router;
