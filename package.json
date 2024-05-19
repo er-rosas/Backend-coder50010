@@ -8,9 +8,9 @@
     "start": "node src/app.js",
     "dev": "node --watch src/app.js",
     "start:dev": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test1": "mocha test/products.test.js",
     "test2": "mocha test/carts.test.js",
-    "test3": "mocha test/products.test.js"
+    "test3": "mocha test/sessions.test.js"
   },
   "keywords": [],
   "author": "",
