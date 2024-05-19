@@ -15,8 +15,8 @@ const CartsSchema = new Schema({
                 ref: 'products'
             },
             quantity: {
-                type: Number, // Indica que es un array de Strings
-                default: 1,    // Valor por defecto: un array vacío
+                type: Number,
+                default: 1,
             },
         }]
     }

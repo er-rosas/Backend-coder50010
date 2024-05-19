@@ -62,7 +62,7 @@ class SessionController{
         
             sendMail(destinatario, subject, html)
             
-            console.log("user: " + result)
+            console.log("user: " + result);
             res.redirect('/login');
         } catch (error) {
             // console.error('Error al procesar la solicitud:', error);
@@ -134,7 +134,7 @@ class SessionController{
             if (!user) return res.status(400).send({status: 'error', message: 'El usuario no existe'})
         
             // generar un token para el usuario
-            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId}, '5000')
+            const token = generateToken({id: user._id, email, first_name: user.first_name, role: user.role, cartId: user.cartId}, '1h')
             // logger.info(token)
             console.log(token)
             console.log(user.first_name);

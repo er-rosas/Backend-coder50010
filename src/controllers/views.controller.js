@@ -155,11 +155,11 @@ class ViewsController {
             const {limit = 2, pageQuery = 1} = request.query
             const {
                 docs,
-                hasPrevPage, 
+                hasPrevPage,
                 hasNextPage,
-                prevPage, 
+                prevPage,
                 nextPage,
-                page 
+                page
                 } = await userService.getPaginate(limit, pageQuery)
                 responses.render('users', {
                     showNav: true,

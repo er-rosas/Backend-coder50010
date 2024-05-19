@@ -110,23 +110,50 @@ class CartManagerMongo {
     }
 
     // Actualizar la cantidad de un producto en el carrito
-    async updateProductQuantity(cartId, productId, quantity) {
-        const cart = await cartModel.findById(cartId);
-        if (!cart) {
-            throw new Error("Carrito no encontrado");
+    async updateProductQuantity(cid, pid, quantity) {
+        // const cart = await cartModel.findById(cartId);
+        // if (!cart) {
+        //     throw new Error("Carrito no encontrado");
+        // }
+
+        // const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
+        // // if (productIndex !== -1) {
+        // //     // Asegurarse de que la cantidad sea un número válido
+        // //     if (isNaN(quantity) || quantity < 0) {
+        // //         throw new Error("La cantidad debe ser un número válido y mayor o igual a cero");
+        // //     }
+        // //     cart.products[productIndex].quantity = quantity;
+        // //     await cart.save();
+        // // }
+        // cart.products[productIndex].quantity = quantity;
+        // await cart.save();
+
+
+        // return cart;
+
+        //Encuentra el carrito por su ID
+        const cart = await cartModel.findById(cid);
+        console.log(cart + "--------------1--");
+        console.log(cart.products + "---------1-5--");
+        // Busca el índice del producto en el carrito
+        //const productIndex = cart.products.findIndex(product => product.productId === productId);
+        //console.log(productIndex);
+
+        const index = cart.products.findIndex(
+            (product) => product.product._id.toString() === pid
+        );
+        console.log(index);
+        // Si el producto no está en el carrito, lanza un error
+        if (index === -1) {
+            throw new Error("Producto no encontrado en el carrito.");
         }
 
-        const productIndex = cart.products.findIndex(item => item.product.toString() === productId);
-        if (productIndex !== -1) {
-            // Asegurarse de que la cantidad sea un número válido
-            if (isNaN(quantity) || quantity < 0) {
-                throw new Error("La cantidad debe ser un número válido y mayor o igual a cero");
-            }
-            cart.products[productIndex].quantity = quantity;
-            await cart.save();
-        }
+        // // Actualiza la cantidad del producto
+        cart.products[index].quantity = quantity;
 
-        return cart;
+        // // Guarda el carrito actualizado
+        const updatedCart = await cart.save();
+        return updatedCart;
     }
 
     // Eliminar todos los productos del carrito

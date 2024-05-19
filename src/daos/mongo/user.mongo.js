@@ -1,10 +1,7 @@
 import userModel from "./models/user.model.js";
 
 class UserManagerMongo {
-    // async getUsersPaginate(limit=10, page=1){
-    //     return await userModel.paginate({},{limit, page, lean: true})
-    // }
-    async gets(){
+    gets = async () => {
         return await userModel.find({isActive: true})
     }
     async get(uid){
@@ -26,6 +23,9 @@ class UserManagerMongo {
         return await userModel.findByIdAndUpdate({_id: uid}, {isActive: false})
         // return await userModel.findByIdAndDelete({_id: uid})
     }
+    // async getUsersPaginate(limit=10, page=1){
+    //     return await userModel.paginate({},{limit, page, lean: true})
+    // }
     async getPaginate(limit, pageQuery){
         return await userModel.paginate({isActive: true}, {limit, page: pageQuery, sort: {first_name: -1}, lean: true})
     }

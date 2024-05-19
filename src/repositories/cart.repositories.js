@@ -46,6 +46,14 @@ class CartService {
         }
     }
 
+    async updateProductQuantity(cid, pid, quantity){
+        try {
+            return await this.cartDao.updateProductQuantity(cid, pid, quantity)
+        } catch (error) {
+            return new Error(error)
+        }
+    }
+
     async deleteProductFromCart(cid, pid){
         try {
             return await this.cartDao.deleteItem(cid, pid)

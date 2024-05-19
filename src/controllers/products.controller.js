@@ -60,7 +60,14 @@ class ProductController{
             
             const addedProduct = await this.service.createProduct(newProduct);
             
-            res.status(201).json(addedProduct);
+            res.status(200).send({
+                message: "Producto creado correctamente",
+                payload: addedProduct
+            });
+            // res.status(201).json({
+            //     message: "Producto creado correctamente",
+            //     payload: addedProduct
+            // });
         } catch (error) {
             res.status(500).json({ error: 'Error al agregar el producto' });
         }

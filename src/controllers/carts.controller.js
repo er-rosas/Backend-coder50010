@@ -7,7 +7,13 @@ class CartController{
     };
     createCart = async (req, res) => {
         try {
-            const result = await this.service.createCart({ products: [] });
+            // De esta forma podemos pasarle un email el la - /api/carts/ - (Solo si queremos, ya que el model lo admite)
+            const { email } = req.body;
+
+            const result = await this.service.createCart(email);
+            if (!result) {
+                return res.status(404).json(result);
+            };
             res.send({
                 status: "succes",
                 payload: result,
@@ -20,12 +26,20 @@ class CartController{
         try {
             const { cid } = req.params;
             const cart = await this.service.getCart(cid);
-            console.log(cart);
-            console.log(cart.products);
-            const cartId = await this.service.getCart(cid);
-            const cartObject = cartId.toObject();
-            const carrito = cartObject.products
-            res.render("carts", { carrito });
+            if (!cart) {
+                return res.status(404).json(cart);
+            };
+            // console.log(cart);
+            // console.log(cart.products);
+            // const cartId = await this.service.getCart(cid);
+            // const cartObject = cartId.toObject();
+            // const carrito = cartObject.products
+            //res.render("carts", { carrito });
+            res.status(200).json({
+                status: 'success', 
+                message: 'Cart obtained',
+                payload: cart
+            });
     
         } catch (error) {
             res.status(500).send(`Error de servidor. ${error.message}`);
@@ -57,8 +71,13 @@ class CartController{
             const { cid } = req.params;
             const { products } = req.body;
 
-            const updatedCart = await this.service.updateCart(cid, { products });
-            res.json(updatedCart);
+            const updatedCart = await this.service.updateCartProducts(cid, { products });
+            res.json({
+                status: 'success', 
+                message: 'Products updated to cart',
+                payload: updatedCart
+            });
+            //res.json(updatedCart);
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -67,9 +86,16 @@ class CartController{
         try {
             const { cid, pid } = req.params;
             const { quantity } = req.body;
+            console.log(cid, pid, quantity);
         
             const updatedCart = await this.service.updateProductQuantity(cid, pid, quantity);
-            res.json(updatedCart);
+            console.log(updatedCart + "------------2--");
+            res.status(200).json({
+                status: 'success', 
+                message: 'Product quantity updated',
+                payload: updatedCart
+            });
+            //res.json(updatedCart);
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -78,8 +104,13 @@ class CartController{
         try {
             const { cid } = req.params;
         
-            await this.service.removeAllProducts(cid);
-            res.json({ message: 'Productos eliminados del carrito correctamente' });
+            const deleted = await this.service.deleteCart(cid);
+            //res.json({ message: 'Productos eliminados del carrito correctamente' });
+            //req.send(deletedProd)
+            res.json({
+                message: 'All products deleted from cart',
+                payload: deleted
+            });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -88,7 +119,12 @@ class CartController{
         try {
             const { cid, pid } = req.params;
             const updatedCart = await this.service.deleteProductFromCart(cid, pid);
-            res.json(updatedCart);
+            res.status(200).json({
+                status: 'success', 
+                message: 'Product deleted from cart',
+                payload: updatedCart
+            });
+            //res.json(updatedCart);
         } catch (error) {
             res.status(400).json({ error: error.message });
         }

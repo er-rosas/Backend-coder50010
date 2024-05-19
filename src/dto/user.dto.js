@@ -7,5 +7,14 @@ class UserDTO {
         this.cartId = newUser.cartId
     }
 }
+// class UserDTO {
+//     static getUserTokenFrom = (newUser) =>{
+//         return {
+//             name: `${newUser.first_name} ${newUser.last_name}`,
+//             role: newUser.role,
+//             email:newUser.email
+//         }
+//     }
+// }
 
 export default UserDTO
