@@ -5,14 +5,8 @@ import MongoSingleton from '../utils/mongoSingleton.js'
 import { logger } from '../utils/logger.js'
 
 const { mode } = program.opts()
-//console.log(mode)
 
 const enviroment = mode || "development"
-
-// export let logg
-// if (enviroment === 'development') {
-//     console = ''
-// }
 
 logger.info(mode)
 
@@ -37,7 +31,6 @@ export const connectDB = async () => {
         // await mongoose.connect(process.env.MONGO_URL)
         // console.log('Base de datos conectada')           
     } catch (error) {
-        //console.log(error)
         logger.error(error)
     }
 }

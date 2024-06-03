@@ -22,8 +22,6 @@ class OrderDaoMongo {
     }
     async create(newOrder){
         try {
-            // const order = this.ordersModel(newOrder)
-            // order.save
             return await this.ordersModel.create(newOrder)            
         } catch (error) {
             new Error(error)

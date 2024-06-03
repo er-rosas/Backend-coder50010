@@ -1,4 +1,3 @@
-// const EErrors = require("../../utils/errors/enums")
 import EErrors from "../../utils/errors/enums.js";
 
 const errorHandler = () => (error, req, res, next) => {

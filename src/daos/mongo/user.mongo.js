@@ -16,16 +16,9 @@ class UserManagerMongo {
     async update(uid, userUpdate){
         return await userModel.findByIdAndUpdate({_id: uid}, userUpdate, {new: true})
     }
-    // async update(uid, userUpdate){
-    //     return await userModel.findByIdAndUpdate({_id: uid}, {userUpdate}, {new: true})
-    // }
     async delete(uid){
         return await userModel.findByIdAndUpdate({_id: uid}, {isActive: false})
-        // return await userModel.findByIdAndDelete({_id: uid})
     }
-    // async getUsersPaginate(limit=10, page=1){
-    //     return await userModel.paginate({},{limit, page, lean: true})
-    // }
     async getPaginate(limit, pageQuery){
         return await userModel.paginate({isActive: true}, {limit, page: pageQuery, sort: {first_name: -1}, lean: true})
     }

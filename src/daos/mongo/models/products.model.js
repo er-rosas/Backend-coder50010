@@ -35,12 +35,6 @@ const productsSchema = new Schema({
     }
 });
 
-// // para sacar las propiedades de un producto
-// productsSchema.methods.toJSON = function(){
-//     const {__v, isActive, ...data} = this.toObject()
-//     return data
-// }
-
 
 productsSchema.plugin(paginate);
 

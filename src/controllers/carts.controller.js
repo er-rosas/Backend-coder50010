@@ -3,7 +3,6 @@ import { cartService } from "../services/index.js";
 class CartController{
     constructor(){
         this.service = cartService
-        // this.service = new CartManagerMongo()
     };
     createCart = async (req, res) => {
         try {
@@ -29,12 +28,6 @@ class CartController{
             if (!cart) {
                 return res.status(404).json(cart);
             };
-            // console.log(cart);
-            // console.log(cart.products);
-            // const cartId = await this.service.getCart(cid);
-            // const cartObject = cartId.toObject();
-            // const carrito = cartObject.products
-            //res.render("carts", { carrito });
             res.status(200).json({
                 status: 'success', 
                 message: 'Cart obtained',
@@ -56,7 +49,6 @@ class CartController{
             console.log('cart controller pid: ',pid)
             const resp = await cartService.addProductToCart(cid, product)
             if (!resp) return res.status(404).json({status: 'error', message: 'Cart not found'})
-            // res.status(200).redirect(`/carts/${req.user._id}`);
             res.status(200).json({
                 status: 'success', 
                 message: 'Product added to cart',
@@ -77,7 +69,7 @@ class CartController{
                 message: 'Products updated to cart',
                 payload: updatedCart
             });
-            //res.json(updatedCart);
+
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -95,7 +87,7 @@ class CartController{
                 message: 'Product quantity updated',
                 payload: updatedCart
             });
-            //res.json(updatedCart);
+
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -105,8 +97,7 @@ class CartController{
             const { cid } = req.params;
         
             const deleted = await this.service.deleteCart(cid);
-            //res.json({ message: 'Productos eliminados del carrito correctamente' });
-            //req.send(deletedProd)
+
             res.json({
                 message: 'All products deleted from cart',
                 payload: deleted
@@ -124,7 +115,7 @@ class CartController{
                 message: 'Product deleted from cart',
                 payload: updatedCart
             });
-            //res.json(updatedCart);
+
         } catch (error) {
             res.status(400).json({ error: error.message });
         }

@@ -2,11 +2,7 @@
     <h2>Formularios de carga de archivos</h2>
     <div>
         <h2>Subir imagen de perfil</h2>
-        {{!-- <form action="/api/users/{{user.id}}/documents" method="POST" enctype="multipart/form-data">
-            <label for="profile">Seleccionar imagen de perfil:</label>
-            <input type="file" name="profile" accept="image/*" required>
-            <button type="submit">Enviar</button>
-        </form> --}}
+
         <form action="/api/users/{{user.id}}/profile" method="POST" enctype="multipart/form-data">
             <label for="profile">Seleccionar imagen de perfil:</label>
             <input type="file" name="profile" accept="image/*" required>
@@ -17,8 +13,7 @@
     <div>
         <h2>Subir documentos de usuario</h2>
         <form action="/api/users/{{user.id}}/documents" method="POST" enctype="multipart/form-data">
-            {{!-- <label for="name">Nombre del documento:</label>
-            <input type="text" name="name" required> --}}
+
             <label for="documents">Seleccionar documentos:</label>
             <input type="file" name="documents" id="documents" multiple>
             

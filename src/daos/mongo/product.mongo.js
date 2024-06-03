@@ -2,14 +2,6 @@ import { faker } from "@faker-js/faker";
 import productsModel from "./models/products.model.js";
 
 class ProductManagerMongo {
-    // constructor(){
-    //     this.product = productsModel
-    // }
-    //get
-    //getById
-    //create
-    //update
-    //remove
     async gets() {
         try {
             return await productsModel.find({ isActive: true });

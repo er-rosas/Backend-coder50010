@@ -88,19 +88,7 @@ class ViewsController {
             }, 0);
 
             console.log('Total Price:', totalPrice);
-            // const cart = await cartService.getCart(cid);
-            // const cartProducts = cart.products.map(item => ({
-            //     product: item.product.toObject(),  // Convert Mongoose Document to plain object
-            //     quantity: item.quantity,
-            //     _id: item._id,
-            // }));
-            // console.log('Retrieved cart:', JSON.stringify(cartProducts, null, 2));
-            // const cart = await cartService.getCart(cid);
-            // console.log('Retrieved cart:', JSON.stringify(cart, null, 2));
-            // const cartId = await cartService.getCart(cid);
-            // const carrito = cartId.toObject();
-            // const carrito = cartObject.products
-            // console.log(carrito);
+
             res.render("carts", { 
                 cart,
                 user: userData,

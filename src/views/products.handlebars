@@ -1,16 +1,4 @@
 <section class="product-section">
-    {{!-- <div class="title-product">
-        <h1>Products</h1>
-        {{#with user}}
-            <p>Bienvenido</p>
-            <p>Usuario: {{this.first_name}}</p>
-            <p>Email: {{this.email}}</p>
-            <p>Role: {{this.role}}</p>
-        {{/with}}
-        
-        <a href="/api/sessions/logout" class="button">Logout</a>
-        <a href="http://localhost:8080/carts/{{user.cartId}}" class="button">Ver carrito</a>
-    </div> --}}
     <div class="product-s-container">
         <div class="filtro-product">
             <p>Filtrar por cartegoria</p>
@@ -36,7 +24,6 @@
                         <h5 class="card-title">{{this.title}}</h5>
                         <p class="card-description">{{this.description}}</p>
                         <p class="card-price">USD $ {{this.price}}</p>
-                        {{!-- <a href="/productdetail/{{this._id}}">Ver detalle</a> --}}
                     </div>
                 </div>
                 </a>

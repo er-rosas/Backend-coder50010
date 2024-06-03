@@ -8,10 +8,6 @@ const transport = nodemailer.createTransport({
         user: configObject.gmail_user,
         pass: configObject.gmail_pass
     }
-    // auth: {
-    //     user: 'er.rosas24@gmail.com', // Cambia esto por tu dirección de correo electrónico
-    //     pass: 'nfjzyjcbzcvutnib' // Cambia esto por tu contraseña de correo electrónico
-    // }
 });
 
 

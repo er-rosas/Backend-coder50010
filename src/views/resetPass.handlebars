@@ -1,8 +1,8 @@
-{{!-- {{!< layouts}} --}}
+
 <section>
     <div>
         <h1>Reset Password</h1>
-        {{!-- <form action="/api/session/reset-password/{{token}}" method="POST"> --}}
+
         <form action="/api/sessions/reset-password" method="POST">
             <input type="hidden" name="token" value="{{token}}">
             <input type="password" name="passwordNew" placeholder="Enter new password" required>

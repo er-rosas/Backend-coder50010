@@ -3,10 +3,6 @@ import { configObject } from '../config/config.js';
 
 const PRIVATE_KEY = configObject.jwt_secret_Key
 
-// export const generateToken = user => jwt.sign(user, PRIVATE_KEY, {
-//     expiresIn: '1d'
-// });
-
 export const generateToken = (user={}, expiresIn='5d') => {
     // console.log(user)
     const token = jwt.sign(user, PRIVATE_KEY, {expiresIn})

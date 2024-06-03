@@ -3,7 +3,7 @@ const socket = io(); // Conexión con el servidor de Socket.io
     // Manejar el envío del formulario para agregar un nuevo producto
     const addProductForm = document.getElementById('addProductForm');
 
-    //document.getElementById("owner").value =`${owner.id}`;
+
 
 addProductForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -43,9 +43,7 @@ addProductForm.addEventListener('submit', (event) => {
         if (productList && Array.isArray(data.products)) {
             productList.innerHTML = "";
 
-            // const h2 = document.createElement("h1");
-            // h2.textContent = "Lista de productos:";
-            // productList.appendChild(h2);
+            
 
             data.products.forEach((product) => {
                 const id = product._id.toString();
@@ -53,8 +51,7 @@ addProductForm.addEventListener('submit', (event) => {
                 productContainer.setAttribute("id", id);
                 productContainer.classList.add("p-list-card");
                 
-                // const parametro = "id";
-                // productContainer.setAttribute(parametro, id);
+                
 
                 const thumbnail = product.thumbnails.length > 0 ? product.thumbnails[0] : "default-thumbnail-url";
 
@@ -71,13 +68,7 @@ addProductForm.addEventListener('submit', (event) => {
                     <button class="product-button" type="button" onclick="deleteProduct('${id}')">Eliminar (Borrado lógico)</button>
                 `;
 
-                // productContainer.innerHTML = ` 
-                // <h4>${product.code}: ${product.title}</h4>
-                // <p>ID de producto: ${id}</p>
-                // <p>${product.description} - $${product.price} - Stock: ${product.stock}</p>
-                // <p>Owner: ${product.owner}</p>
-                // <button type="button" onclick="deleteProduct('${id}')">Eliminar producto</button>   
-                // `;
+                
                 productList.appendChild(productContainer);
             });
         } else {

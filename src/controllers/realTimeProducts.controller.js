@@ -3,7 +3,7 @@ import { productService } from "../services/index.js";
 class RealTimeProductsController {
     constructor(){
         this.service = productService
-        // this.service = new ProductManagerMongo()
+
     };
     getRealTaProducts = async (req, res) => {
         try {

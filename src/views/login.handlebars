@@ -2,9 +2,9 @@
     <div class="login-section-1">
         <p>Login</p>
         <form id="loginForm" class="login-form">
-            {{!-- <label for="email" class="login-label">Email</label><br> --}}
+
             <input type="text" name="email" placeholder="Email" class="login-input">
-            {{!-- <label for="password" class="login-label">Password</label><br> --}}
+
             <input type="password" name="password" placeholder="Password" class="login-input">
             <a href="/forgotPassword" class="forgotpass-link">¿Has olvidado la contraseña?</a>
             <button type="submit" class="login-button">Enviar</button>
@@ -23,7 +23,7 @@
         evt.preventDefault()
         let email = document.querySelector('input[name="email"]').value
         let password = document.querySelector('input[name="password"]').value
-        //console.log(email, password)
+
         fetch('/api/sessions/login',{
             method: 'POST',
             headers: {

@@ -38,7 +38,7 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + "/public"));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-//app.use(logger('dev'))
+
 
 
 app.use(cookieParser())
@@ -72,12 +72,10 @@ app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 app.use(appRouter)
 
 // socket_______________________________________________________________
-// initChatSocket(io)
 initProductsSocket(io);
 initChatSocket(io);
 
 httpServer.listen(PORT, err =>{
     if (err) console.log(err)
-    //console.log(`Escuchando en el puerto: ${PORT}`);
     logger.info(`Escuchando en el puerto: ${PORT}`);
 });

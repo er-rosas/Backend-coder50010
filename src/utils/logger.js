@@ -2,7 +2,6 @@ import winston from 'winston'
 import { program } from './commander.js'
 
 const { mode } = program.opts()
-//console.log(mode)
 
 const enviroment = mode
 let console
@@ -16,21 +15,6 @@ if (enviroment === 'development') {
     file = 'warning'
 }
 
-
-import { configObject } from '../config/config.js'
-// const winston = require('winston')
-
-// const logger = winston.createLogger({
-//     transports: [
-//         new winston.transports.Console({level: 'http'}),
-//         new winston.transports.File({
-//             filename: './errors.log', 
-//             level: 'warn'
-//         })
-//     ]
-// })
-
-//const {logger_level_console, logger_level_file} = configObject
 
 const levelOptions = {
     levels: {

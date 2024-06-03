@@ -12,8 +12,7 @@ class SessionController{
     constructor(){
         this.service = userService
         this.cartService = cartService
-        // this.service = new UserManagerMongo()
-        // this.cartService = new CartManagerMongo()
+
     };
     registerSession = async (req, res, next)=>{
         try {
@@ -48,7 +47,6 @@ class SessionController{
             console.log("cartid: " + cart._id + " cart: " + cart)
             // Si el usuario no existe, crearlo
             // Crear el usuario y asignarle el ID del carrito
-            //const cartId = cart._id
             const result = await this.service.createUser({
                 first_name,
                 last_name,
@@ -65,8 +63,7 @@ class SessionController{
             console.log("user: " + result);
             res.redirect('/login');
         } catch (error) {
-            // console.error('Error al procesar la solicitud:', error);
-            // res.status(500).send({status: 'error', message: 'Hubo un problema al procesar la solicitud.'});
+
             next(error)
         }
     };
@@ -98,7 +95,7 @@ class SessionController{
     logoutSession = (req, res)=>{
         try {
             res.clearCookie('cookieToken').redirect('/login')
-            //res.status(200).redirect('/login')
+
         } catch (error) {
             console.log(error)
         }
@@ -186,13 +183,7 @@ class SessionController{
             
             if (!decodedUser) return res.status(400).send({status: 'error', message: 'El token no es válido o ha expirado'})
 
-            // if (!decodedUser) {
-            //     res.status(400).send({ status: 'error', message: 'El token no es válido o ha expirado' });
 
-            //     setTimeout(() => {
-            //         res.redirect('/forgotPassword');
-            //     }, 5000); // 5000 milisegundos = 5 segundos
-            // }
         
             // // buscar el usuario en la base de datos
             const userDB = await this.service.getUserBy({email: decodedUser.email})
@@ -204,22 +195,13 @@ class SessionController{
             
             if (isValidPass) return res.status(400).send({status: 'error', message: 'No puedes usar una contraseña anterior.'})
 
-            //console.log("   ---");
-
             const uid = userDB._id;
-            //console.log("uid:     " + uid);
-            // let uidObj = uid.toObjet();
-            // console.log(uidObj + "  user id to object");
+
 
             let userPassword = {password: createHash(passwordNew)}
             //console.log("userpassword:     " + userPassword.password);
         
             const result = await this.service.updateUser(uid, userPassword)
-            // const result = await userModel.findByIdAndUpdate({_id: userDB._id}, {
-            //     password: createHash(passwordNew)
-            // })
-            // console.log("uidYpassnew:     " + uid, passwordNew);
-            // console.log("Result:    " + result)
         
             if (!result) return res.status(400).send({status: 'error', message: 'Error al actualizar la contraseña'})
         
@@ -229,7 +211,6 @@ class SessionController{
             })
         } catch (error) {
             logger.info(error)
-            //return res.status(400).send({status: 'error', message: 'El token no es válido o ha expirado'})
         }
     }
 

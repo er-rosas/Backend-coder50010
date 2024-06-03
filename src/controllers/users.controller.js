@@ -1,6 +1,4 @@
 import { userService } from "../services/index.js";
-import userModel from "../daos/mongo/models/user.model.js";
-// import UserDTO from "../dto/user.dto.js";
 
 class UserController{
     constructor(){
@@ -17,27 +15,7 @@ class UserController{
         } catch (error) {
             console.log(error)
         }
-        // try {
-        //     const {limit = 1, pageQuery = 1} = request.query
-        //     const {
-        //         docs,
-        //         hasPrevPage, 
-        //         hasNextPage,
-        //         prevPage, 
-        //         nextPage,
-        //         page 
-        //         } = await this.service.getPaginate(limit, pageQuery)
-        //         responses.render('users', {
-        //             users: docs,
-        //             hasPrevPage, 
-        //             hasNextPage,
-        //             prevPage, 
-        //             nextPage,
-        //             page,
-        //         })
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
+        
     };
     getUser = async (request, responses)=>{
         try {
@@ -131,10 +109,7 @@ class UserController{
             const { uid } = req.params
 
             const user = await this.service.getUser(uid)
-            //const userObject = user.toObject()
-            //console.log("USER SIN ACTUALIZAR " + user);
             
-            // let body = {}
             let result = {};
 
             if (user.role === 'USER') {
@@ -145,13 +120,12 @@ class UserController{
                 result = await this.service.updateUser(uid, body);
             }
 
-            //console.log("USER ACTUALIZADO " + result);
-
+            
             res.status(200).send({
                 status: 'success',
-                //payload: result,
+
                 result
-                //documentsLength: user.documents.length
+
             })
         } catch (error) {
             console.log(error)
@@ -164,8 +138,7 @@ class UserController{
             // const { name } = req.body;
             const file = req.file
             console.log(file.length)
-            // Validar si se cargaron los documentos requeridos
-            // if (!files || (files.length < 3)) {
+
             if (!file) {
                 return res.status(400).json({ 
                     status: 'error',
@@ -180,15 +153,7 @@ class UserController{
             }
             console.log(user)
         
-            // Actualizar el usuario con los nuevos documentos y referencias generadas
-            // user.documents = user.documents || []
-        
-            // files.forEach((file) => {
-            //     user.documents.push({
-            //     name: file.filename,
-            //     reference: file.destination, // Utilizar el nombre de archivo generado por Multer como referencia
-            //     })
-            // })
+
 
             user.profileImg = [{
                 name: file.filename,
@@ -232,12 +197,7 @@ class UserController{
             // Actualizar el usuario con los nuevos documentos y referencias generadas
             user.documents = user.documents || []
         
-            // files.forEach((file) => {
-            //     user.documents.push({
-            //     name: file.filename,
-            //     reference: file.destination, // Utilizar el nombre de archivo generado por Multer como referencia
-            //     })
-            // })
+
 
             user.documents.push({
                 name: file.filename,

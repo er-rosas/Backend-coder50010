@@ -35,7 +35,6 @@ class ProductRepository {
             return error
         }
     }
-    //    updateProduct  = async (pid, productToUpdate) => await this.dao.create(pid, productToUpdate)
     async deleteProduct(pid){
         try {
             return await this.dao.delete(pid)            

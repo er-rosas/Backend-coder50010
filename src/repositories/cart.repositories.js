@@ -1,6 +1,3 @@
-// import cartsModel from '../models/cartsModel'; 
-
-
 class CartService {
 
     constructor(cartDao){
@@ -19,22 +16,13 @@ class CartService {
 
     async getCart(cid){
         try {
-            // return await this.cartDao.getById(cid)
             const res = await this.cartDao.getById(cid)
             return res
         } catch (error) {
             return new Error(error)
         }
     }
-    // async getCart(cid) {
-    //     try {
-    //         const cart = await cartsModel.findById(cid).populate('products.product').exec();
-    //         return cart;
-    //     } catch (error) {
-    //         console.error('Error fetching cart:', error);
-    //         throw error;
-    //     }
-    // }
+    
 
     async createCart(userEmail){
         try {

@@ -109,7 +109,7 @@ class ProductController{
         try {
             const { pid } = req.params;
             const productid = await this.service.getProduct(pid);
-            // console.log(productid)
+
             const userData = req.user;
             
             if (!productid) {
@@ -128,13 +128,6 @@ class ProductController{
 
     getProductsPaginate = async (req, res) => {
         try {
-            // Verificar si la cookieToken no está presente en la solicitud
-            // if (!req.cookies.cookieToken) {
-            //     // Redirigir al usuario al login
-            //     return res.redirect('/login');
-            // }
-            
-            // Obtener los datos del usuario del objeto request
             const userData = req.user;
             
             const { limit = 5, pageQuery = 1, category } = req.query;
