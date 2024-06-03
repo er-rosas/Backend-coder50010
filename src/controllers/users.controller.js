@@ -1,4 +1,5 @@
 import { userService } from "../services/index.js";
+import userModel from "../daos/mongo/models/user.model.js";
 // import UserDTO from "../dto/user.dto.js";
 
 class UserController{
@@ -41,7 +42,7 @@ class UserController{
     getUser = async (request, responses)=>{
         try {
             const { uid } = request.params
-            const user = await this.service.getUser({_id: uid})
+            const user = await this.service.getUser(uid)
             responses.json({
                 status: 'success',
                 result: user
@@ -129,7 +130,7 @@ class UserController{
             
             const { uid } = req.params
 
-            const user = await this.service.getUser({_id: uid})
+            const user = await this.service.getUser(uid)
             //const userObject = user.toObject()
             //console.log("USER SIN ACTUALIZAR " + user);
             
@@ -155,6 +156,104 @@ class UserController{
         } catch (error) {
             console.log(error)
         }       
+    }
+
+    uploadProfile = async (req, res) => {
+        try {
+            const { uid } = req.params
+            // const { name } = req.body;
+            const file = req.file
+            console.log(file.length)
+            // Validar si se cargaron los documentos requeridos
+            // if (!files || (files.length < 3)) {
+            if (!file) {
+                return res.status(400).json({ 
+                    status: 'error',
+                    error: 'Faltan datos o archivos requeridos.' })
+            }
+        
+            // Obtener el usuario y agregar los documentos
+            const user = await userService.getUser(uid)
+            console.log(user);
+            if (!user) {
+                return res.status(404).json({ error: 'Usuario no encontrado.' })
+            }
+            console.log(user)
+        
+            // Actualizar el usuario con los nuevos documentos y referencias generadas
+            // user.documents = user.documents || []
+        
+            // files.forEach((file) => {
+            //     user.documents.push({
+            //     name: file.filename,
+            //     reference: file.destination, // Utilizar el nombre de archivo generado por Multer como referencia
+            //     })
+            // })
+
+            user.profileImg = [{
+                name: file.filename,
+                reference: file.destination,
+            }];
+        
+            let  result = await userService.updateUser(uid, user);
+        
+            res.status(400).json({ 
+                status: 'success', 
+                payload: result
+            })
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Ocurrió un error en el servidor.' })
+        }
+    }
+
+    uploadDocuments = async (req, res) => {
+        try {
+            const { uid } = req.params
+            // const { name } = req.body;
+            const file = req.file
+            console.log(file.length)
+            // Validar si se cargaron los documentos requeridos
+            // if (!files || (files.length < 3)) {
+            if (!file) {
+                return res.status(400).json({ 
+                    status: 'error',
+                    error: 'Faltan datos o archivos requeridos.' })
+            }
+        
+            // Obtener el usuario y agregar los documentos
+            const user = await userService.getUser(uid)
+            console.log(user);
+            if (!user) {
+                return res.status(404).json({ error: 'Usuario no encontrado.' })
+            }
+            console.log(user)
+        
+            // Actualizar el usuario con los nuevos documentos y referencias generadas
+            user.documents = user.documents || []
+        
+            // files.forEach((file) => {
+            //     user.documents.push({
+            //     name: file.filename,
+            //     reference: file.destination, // Utilizar el nombre de archivo generado por Multer como referencia
+            //     })
+            // })
+
+            user.documents.push({
+                name: file.filename,
+                reference: file.destination,
+            })
+        
+            let  result = await userService.updateUser(uid, user);
+        
+            res.status(400).json({ 
+                status: 'success', 
+                payload: result
+            })
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Ocurrió un error en el servidor.' })
+        }
     }
 };
 

@@ -1,9 +1,9 @@
-import {Router} from 'express'
+// import {Router} from 'express'
 
-const router = Router()
+// const router = Router()
 
-router.get('/', (resquest, response) => {
-    response.render('messages', {})
-})
+// router.get('/', (resquest, response) => {
+//     response.render('messages', {})
+// })
 
-export default router
+// export default router

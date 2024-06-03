@@ -1,47 +1,151 @@
 /* Estilos generales */
 .product-section {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    margin: 100px 0;
+}
+
+.filtro-product {
+    font-size: 18px;
+    border: 1px solid #ccc;
+    /* margin: 20px 0; */
+    padding: 15px;
+}
+
+.filtro-product p {
+    font-weight: bold;
+    border-bottom: 1px solid #373737;
+    padding-bottom: 5px;
+}
+
+.filtro-product a {
+    text-decoration: unset;
+    color: unset;
+}
+
+.filtro-product ul {
+    margin: 10px 0;
+    list-style: none;
+}
+
+.filtro-product ul li {
+    border: 1px solid #ffffff00;
+}
+
+.filtro-product ul li:hover {
+    border: 1px solid #ccc;
+    box-shadow: 0 10px 20px #0003
+}
+
+.product-s-container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 1vw;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .card-container{
     display: grid;
-    grid-template-columns: auto auto auto;
+    /* grid-template-columns: auto auto auto; */
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
     row-gap: 5vw;
-    gap: 5vw;
+    gap: 1vw;
 }
 
 .card {
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
+    /* padding: 10px; */
+    /* margin-bottom: 20px; */
+    height: 400px;
     width: 300px;
     font-size: 18px;
 }
 
+.card:hover {
+    box-shadow: 0 10px 20px #0003
+}
+
+.card-link {
+    text-decoration: unset;
+    color: unset;
+}
+
+/* .card-p1 {
+    height: 50%px;
+} */
+
+.card-p2 {
+    padding: 10px;
+}
+
+.card img {
+    height: 200px;
+    /* width: 280px; */
+    padding: 10px;
+    object-fit: contain;
+    width: 100%;
+}
+
 .card-title {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
-.card-text {
+.card-description {
+    font-size: 0.7em;
+    color: #5e5e5e;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    box-orient: vertical;
+    /* height: 2.4em; */
+    text-overflow: ellipsis;
     margin-bottom: 10px;
 }
 
-a {
+.card-price {
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.page-product {
+    align-self: center;
+    margin: 15px 0;
+    padding: 10px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.page-product img {
+    height: 15px;
+    /* width: 10px; */
+}
+
+.prev-page img {
+    transform: rotate(180deg);
+}
+
+/* .card a {
     text-decoration: none;
     color: #007bff;
-    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 a:hover {
     text-decoration: underline;
-}
+} */
 
-ul {
+/* ul {
     list-style: none;
     padding: 0;
 }
@@ -50,17 +154,12 @@ ul {
     font-size: 18px;
 }
 
-.filtro-product{
-    font-size: 18px;
-    margin: 20px 0;
-}
-
 .page-product{
     font-size: 18px;
     margin: 30px 0;
-}
+} */
 
-.button {
+/* .button {
     display: inline-block;
     padding: 10px 20px;
     font-size: 18px;
@@ -71,38 +170,38 @@ ul {
     border: none;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    background-color: #007bff; /* Color de fondo */
-    color: #fff; /* Color del texto */
+    background-color: #007bff; 
+    color: #fff; 
     transition: background-color 0.3s ease;
-}
+} */
 
 /* Estilos para cambiar el color al pasar el mouse */
-.button:hover {
-    background-color: #0056b3; /* Nuevo color de fondo al pasar el mouse */
-}
+/* .button:hover {
+    background-color: #0056b3; 
+} */
 
 
 
 /* Estilos específicos para el formulario */
 
-p {
+/* p {
     margin: 5px 0;
-}
+} */
 
 /* Estilos para los botones de paginación */
 
-label {
+/* label {
     margin: 0 10px;
-}
+} */
 
 /* Estilos para el enlace "Ver detalle" */
-a[href^="/productdetail"] {
+/* a[href^="/productdetail"] {
     background-color: #007bff;
     color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
-}
+} */
 
-a[href^="/productdetail"]:hover {
+/* a[href^="/productdetail"]:hover {
     background-color: #0056b3;
-}
+} */

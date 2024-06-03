@@ -31,9 +31,14 @@ class CartManagerMongo {
     }
 
     // Buscar un carrito por ID
+    // async getById(cid) {
+    //     const cart = await cartModel.findById(cid);
+    //     return cart;
+    // }
+
     async getById(cid) {
-        const cart = await cartModel.findById(cid);
-        return cart;
+        const res = await cartModel.findOne({_id: cid}).lean();
+        return res;
     }
 
     // Crear un carrito

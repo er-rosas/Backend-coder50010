@@ -1,20 +1,23 @@
-<section class="centered-content">
-    <div class="size">
-        <h1 class="product-title">Product Details</h1>
-        <a href="http://localhost:8080/carts/{{user.cartId}}" class="button-link">Ver carrito</a>
-    </div>
-    <div class="card">
-        {{#with product}}
-            <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
-            <p class="card-text"><strong>Description: </strong>{{this.description}}</p>
-            <p class="card-text"><strong>Code: </strong>{{this.code}}</p>
-            <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
-            <p class="card-text"><strong>Stock: </strong>{{this.stock}}</p>
-            <p class="card-text"><strong>Category: </strong>{{this.category}}</p>
-            <p class="card-text"><strong>Status: </strong>{{this.status}}</p>
-        {{/with}}
-    </div>
-    <div class="size">
-        <a href="http://localhost:8080/api/carts/{{user.cartId}}/product/{{product._id}}" class="button-link">Agregar al carrito</a>
-    </div>
+<section class="product-detail-section">
+    {{#with product}}
+        <div class="pd-1">
+            <img src="{{this.thumbnails.[0]}}" alt="Product Image">
+        </div>
+        <div class="pd-2">
+            <div class="product-desc">
+                    <h1 class="desc-title">{{this.title}}</h1>
+                    <p class="desc-r-code">Reference code: {{this.code}}</p>
+                    <h2 class="desc-d-text">{{this.description}}</h2>
+                    <p class="desc-category">Categoría: {{this.category}}</p>
+                    <p class="desc-stock">Unidades disponibles: {{this.stock}}</p>
+                    <p class="desc-price">USD $ {{this.price}}</p>
+    {{/with}}
+                    {{#if product.stock}}
+                        <a href="http://localhost:8080/api/carts/{{user.cartId._id}}/product/{{product._id}}" class="add-product">AGREGAR AL CARRITO</a>
+                    {{else}}
+                        <p class="no-stock">No hay stock</p>
+                    {{/if}}
+
+            </div>
+        </div>
 </section>

@@ -13,7 +13,7 @@ const generateProducts = () => {
         //_id: {"$oid": faker.database.mongodbObjectId()},
         title: faker.commerce.productName(),
         code: faker.string.alphanumeric(6),
-        desciption: faker.commerce.productDescription(),
+        description: faker.commerce.productDescription(),
         price: Number(faker.commerce.price()),
         stock: parseInt(faker.string.numeric()),
         category: faker.commerce.productAdjective(),

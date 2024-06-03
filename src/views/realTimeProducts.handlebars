@@ -1,50 +1,59 @@
-<main>
-    <h1>Real-Time Products</h1>
-    <!-- Formulario para agregar nuevos productos -->
-    <form id="addProductForm">
-        <label for="title">Título:</label>
-        <input type="text" id="title" name="title" required><br>
+<section class="real-time-products">
+    <div class="rt-products-1">
+        <h2>Formulario para cargar nuevos productos</h2>
+        <!-- Formulario para agregar nuevos productos -->
+        <form id="addProductForm" class="add-p-form">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required>
 
-        <label for="description">Descripción:</label>
-        <textarea id="description" name="description" required></textarea><br>
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" required></textarea>
 
-        <label for="code">Código:</label>
-        <input type="text" id="code" name="code" required><br>
+            <label for="code">Código:</label>
+            <input type="text" id="code" name="code" required>
 
-        <label for="price">Precio:</label>
-        <input type="number" id="price" name="price" step="0.01" required><br>
+            <label for="price">Precio:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
 
-        <label for="stock">Stock:</label>
-        <input type="number" id="stock" name="stock" required><br>
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
 
-        <label for="category">Categoría:</label>
-        <input type="text" id="category" name="category" required><br>
+            <label for="category">Categoría:</label>
+            <input type="text" id="category" name="category" required>
 
-        <label for="thumbnails">URL de Thumbnails:</label>
-        <input type="text" id="thumbnails" name="thumbnails"><br>
+            <label for="thumbnails">URL de Thumbnails (Imagen):</label>
+            <input type="text" id="thumbnails" name="thumbnails">
 
-        {{#with owner}}
-        <label for="owner">Owner: (Por defecto viene su id ya que así se guardara)</label>
-        <input type="text" id="owner" name="owner" value="{{this.id}}"><br>
-        {{/with}}
+            {{#with owner}}
+            <label for="owner">Owner: (Por defecto viene su id ya que así se guardara)</label>
+            <input type="text" id="owner" name="owner" value="{{this.id}}">
+            {{/with}}
 
-        <button type="submit">Agregar Producto</button>
-    </form>
-
-    <div id="productList">
-        <h1>Lista de productos:</h1>
-        {{#each product}}
-        <div id="{{_id}}">
-            <h4>{{code}}: {{title}}</h4>
-            <p>ID de producto: {{_id}}</p>
-            <p>{{description}} - ${{price}} - Stock: {{stock}}</p>
-            <button type="button" onclick="deleteProduct('{{_id}}')">Eliminar producto</button>
-        </div>
-        {{/each}}
+            <button type="submit">Agregar Producto</button>
+        </form>
     </div>
-</main>
+    <div class="rt-products-2">
+        <h2 class="pl-title">Lista de productos: (Real-Time Products)</h2>
+        <div id="productList" class="product-list">
+        {{#each product}}
+            <div id="{{_id}}" class="p-list-card">
+                <img src="{{thumbnails.[0]}}" class="product-img" alt="Producto">
+                <div class="product-description">
+                    <h3 class="product-title">{{title}}</h3>
+                    <p class="product-">ID de producto: {{_id}}</p>
+                    <p class="product-">{{code}}</p>
+                    <p class="product-">{{description}}</p>
+                    <p class="product-">USD $ {{price}}</p>
+                    <p class="product-">Stock: {{stock}}</p>
+                </div>
+                <button class="product-button" type="button" onclick="deleteProduct('{{_id}}')">Eliminar (Borrado lógico)</button>
+            </div>
+        {{/each}}
+        </div>
+    </div>
+</section>
 
 <script> </script>
 
-<script src="/socket.io/socket.io.js"></script>
+{{!-- <script src="/socket.io/socket.io.js"></script> --}}
 <script src="/js/realTimeProducts.js"></script>

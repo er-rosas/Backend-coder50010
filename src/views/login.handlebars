@@ -1,13 +1,21 @@
 <section class="login-section">
-    <form id="loginForm" class="login-form">
-        <label for="email" class="login-label">Email</label><br>
-        <input type="text" name="email" placeholder="Ingrese el email" class="login-input"><br>
-        <label for="password" class="login-label">Password</label><br>
-        <input type="password" name="password" placeholder="Ingrese el password" class="login-input"><br>
-        <a href="/forgotPassword" class="register-link">Olvidé mi contraseña</a><br>
-        <button type="submit" class="login-button">Enviar</button>
-    </form>
-    <a href="/register" class="register-link">Registrarse</a><br>
+    <div class="login-section-1">
+        <p>Login</p>
+        <form id="loginForm" class="login-form">
+            {{!-- <label for="email" class="login-label">Email</label><br> --}}
+            <input type="text" name="email" placeholder="Email" class="login-input">
+            {{!-- <label for="password" class="login-label">Password</label><br> --}}
+            <input type="password" name="password" placeholder="Password" class="login-input">
+            <a href="/forgotPassword" class="forgotpass-link">¿Has olvidado la contraseña?</a>
+            <button type="submit" class="login-button">Enviar</button>
+        </form>
+    </div>
+    <div class="login-section-2">
+        <p class="text-1">Hola, Usuario!</p>
+        <p class="text-2">Si no tienes una cuenta puedes registrarte haciendo click en el botón de aquí abajo</p>
+        <img src="/image/login/image-1.png" class="img-1" alt="">
+        <a href="/register" class="register-link">Registrarse</a>
+    </div>
 </section>
 
 <script>

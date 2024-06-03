@@ -1,14 +1,22 @@
 <section class="register-section">
-    <form action="/api/sessions/register" method="POST" class="register-form">
-        <label for="first_name" class="register-label">Nombre</label><br>
-        <input type="text" name="first_name" placeholder="Ingrese el Nombre" class="register-input"><br>
-        <label for="last_name" class="register-label">Apellido</label><br>
-        <input type="text" name="last_name" placeholder="Ingrese el Apellido" class="register-input"><br>
-        <label for="email" class="register-label">Email</label><br>
-        <input type="text" name="email" placeholder="Ingrese el email" class="register-input"><br>
-        <label for="password" class="register-label">Password</label><br>
-        <input type="password" name="password" placeholder="Ingrese el password" class="register-input"><br>
-        <button class="register-button">Enviar</button>
-    </form>
-    <a href="/login" class="login-link">Iniciar sesión</a><br>
+    <div class="register-section-1">
+        <img src="/image/singup/image-1.png" class="img-1" alt="">
+        <p class="text-3">Si ya tienes un usuario, has click en el botón de abajo</p>
+        <a href="/login" class="login-link">Iniciar sesión</a>
+    </div>
+    <div class="register-section-2">
+        <p class="text-1">Sing up</p>
+        <form action="/api/sessions/register" method="POST" class="register-form">
+            {{!-- <label for="first_name" class="register-label">Nombre</label> --}}
+            <input type="text" name="first_name" placeholder="Primer nombre" class="register-input">
+            {{!-- <label for="last_name" class="register-label">Apellido</label> --}}
+            <input type="text" name="last_name" placeholder="Primer apellido" class="register-input">
+            {{!-- <label for="email" class="register-label">Email</label> --}}
+            <input type="text" name="email" placeholder="Email" class="register-input">
+            {{!-- <label for="password" class="register-label">Password</label> --}}
+            <input type="password" name="password" placeholder="Password" class="register-input">
+            <p class="text-2">By signing up, you agree to our <a href="" class="terms">Terms</a>, <a href="" class="terms">Privacy Policy</a> and <a href="" class="terms">Cookies Policy</a>.</p>
+            <button class="register-button">Enviar</button>
+        </form>
+    </div>
 </section>

@@ -6,7 +6,7 @@ import { configObject } from './config/config.js';
 // socket io _______________________________________________________________
 import { Server as ServerIO } from 'socket.io';
 import { Server as HttpServer } from 'http';
-import { initProductsSocket } from "./utils/socket.js";
+import { initProductsSocket, initChatSocket } from "./utils/socket.js";
 
 import appRouter from './routes/index.js'
 
@@ -73,7 +73,8 @@ app.use(appRouter)
 
 // socket_______________________________________________________________
 // initChatSocket(io)
-initProductsSocket(io)
+initProductsSocket(io);
+initChatSocket(io);
 
 httpServer.listen(PORT, err =>{
     if (err) console.log(err)

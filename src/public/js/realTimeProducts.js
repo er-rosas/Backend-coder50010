@@ -42,27 +42,48 @@ addProductForm.addEventListener('submit', (event) => {
 
         if (productList && Array.isArray(data.products)) {
             productList.innerHTML = "";
-            const h1 = document.createElement("h1");
-            h1.textContent = "Lista de productos:";
-            productList.appendChild(h1);
+
+            // const h2 = document.createElement("h1");
+            // h2.textContent = "Lista de productos:";
+            // productList.appendChild(h2);
+
             data.products.forEach((product) => {
                 const id = product._id.toString();
                 const productContainer = document.createElement("div");
-                const parametro = "id";
-                productContainer.setAttribute(parametro, id);
-                productContainer.innerHTML = ` 
-                <h4>${product.code}: ${product.title}</h4>
-                <p>ID de producto: ${id}</p>
-                <p>${product.description} - $${product.price} - Stock: ${product.stock}</p>
-                <p>Owner: ${product.owner}</p>
-                <button type="button" onclick="deleteProduct('${id}')">Eliminar producto</button>   
+                productContainer.setAttribute("id", id);
+                productContainer.classList.add("p-list-card");
+                
+                // const parametro = "id";
+                // productContainer.setAttribute(parametro, id);
+
+                const thumbnail = product.thumbnails.length > 0 ? product.thumbnails[0] : "default-thumbnail-url";
+
+                productContainer.innerHTML = `
+                    <img src="${thumbnail}" class="product-img" alt="Producto">
+                    <div class="product-description">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-">ID de producto: ${id}</p>
+                        <p class="product-">${product.code}</p>
+                        <p class="product-">${product.description}</p>
+                        <p class="product-">USD ${product.price}</p>
+                        <p class="product-">Stock: ${product.stock}</p>
+                    </div>
+                    <button class="product-button" type="button" onclick="deleteProduct('${id}')">Eliminar (Borrado lógico)</button>
                 `;
+
+                // productContainer.innerHTML = ` 
+                // <h4>${product.code}: ${product.title}</h4>
+                // <p>ID de producto: ${id}</p>
+                // <p>${product.description} - $${product.price} - Stock: ${product.stock}</p>
+                // <p>Owner: ${product.owner}</p>
+                // <button type="button" onclick="deleteProduct('${id}')">Eliminar producto</button>   
+                // `;
                 productList.appendChild(productContainer);
-                });
-            } else {
-                console.log("Error: La estructura de datos de 'data' no es válida.");
-            }
-        });
+            });
+        } else {
+            console.log("Error: La estructura de datos de 'data' no es válida.");
+        }
+    });
 
     function deleteProduct(idProduct) {
         socket.emit("deleteProduct", { idProduct });

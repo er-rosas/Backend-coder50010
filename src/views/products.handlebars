@@ -1,5 +1,5 @@
 <section class="product-section">
-    <div class="title-product">
+    {{!-- <div class="title-product">
         <h1>Products</h1>
         {{#with user}}
             <p>Bienvenido</p>
@@ -10,31 +10,47 @@
         
         <a href="/api/sessions/logout" class="button">Logout</a>
         <a href="http://localhost:8080/carts/{{user.cartId}}" class="button">Ver carrito</a>
-    </div>
-    <div class="filtro-product">
+    </div> --}}
+    <div class="product-s-container">
+        <div class="filtro-product">
             <p>Filtrar por cartegoria</p>
-        <ul>
-            {{#each uniqueCategories}}
-                <li><a href="/products?category={{this}}">{{this}}</a></li>
-            {{/each}}
-        </ul>
-    </div>
-    <div class="card-container">
-        {{#each product}}
-        <div class="card">
-            <h5 class="card-title"><strong>Title: </strong>{{this.title}}</h5>
-            <p class="card-text"><strong>Price: </strong>{{this.price}}</p>
-            <a href="/productdetail/{{this._id}}">Ver detalle</a>
+            <ul>
+                {{#each uniqueCategories}}
+                    <li><a href="/products?category={{this}}">{{this}}</a></li>
+                {{/each}}
+            </ul>
         </div>
-        {{/each}}
-    </div>
-    <div class="page-product">
-        {{#if hasPrevPage}}
-            <a href="/products?pageQuery={{prevPage}}">Anterior</a>
-        {{/if}}
-        <label>{{page}}</label>
-        {{#if hasNextPage}}
-            <a href="/products?pageQuery={{nextPage}}">Siguiente</a>
-        {{/if}}
+        <div class="page-container">
+            <div class="card-container">
+                {{#each product}}
+                <a class="card-link" href="/productdetail/{{this._id}}">
+                <div class="card">
+                    <div class="card-p1">
+                        {{#if this.thumbnails.length}}
+                            <img src="{{this.thumbnails.[0]}}" alt="Product Image">
+                        {{else}}
+                            <img src="/image/products/no_image.png" class="no-image" alt="No Image Available">
+                        {{/if}}
+                    </div> 
+                    <div class="card-p2">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-description">{{this.description}}</p>
+                        <p class="card-price">USD $ {{this.price}}</p>
+                        {{!-- <a href="/productdetail/{{this._id}}">Ver detalle</a> --}}
+                    </div>
+                </div>
+                </a>
+                {{/each}}
+            </div>
+            <div class="page-product">
+                {{#if hasPrevPage}}
+                    <a class="prev-page" href="/products?pageQuery={{prevPage}}"><img src="/image/pages/flecha.png" alt=""> Anterior</a>
+                {{/if}}
+                <label>{{page}}</label>
+                {{#if hasNextPage}}
+                    <a class="next-page" href="/products?pageQuery={{nextPage}}">Siguiente <img src="/image/pages/flecha.png" alt=""></a>
+                {{/if}}
+            </div>
+        </div>
     </div>
 </section>

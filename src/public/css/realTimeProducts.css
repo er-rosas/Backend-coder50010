@@ -1,0 +1,126 @@
+.real-time-products {
+    display: flex;
+    margin: 50px 0;
+    height: 700px;
+}
+
+.rt-products-1 {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rt-products-1 h2 {
+    font-size: 1vw;
+}
+
+.add-p-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-p-form label {
+    font-size: 1vw;
+}
+
+.add-p-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 15px;
+    background-color: #ffffff;
+    transition: 0.5s;
+}
+
+.add-p-form textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 15px;
+    background-color: #ffffff;
+}
+
+.add-p-form button {
+    width: 75%;
+    padding: 10px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    align-self: center;
+    font-weight: bold;
+    border: 2px solid black;
+    transition: 1s;
+}
+
+.add-p-form button:hover {
+    background-color: white;
+    color: black;
+}
+
+.rt-products-2 {
+    width: 50%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pl-title {
+    margin: 25px 0;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.product-list {
+    color: black;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    overflow: auto;
+    height: 500px;
+}
+
+.p-list-card {
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    margin-bottom: 15px;
+    gap: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.product-img {
+    height: 120px;
+    width: 120px;
+}
+
+.product-description {
+    width: 380px;
+}
+
+.product-title {
+    font-size: 1.2vw;
+}
+
+.product-button {
+    height: 120px;
+    width: 120px;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid black;
+    transition: 1s;
+}
+
+.product-button:hover {
+    background-color: rgb(255, 72, 72);
+    color: white;
+    cursor: pointer;
+}

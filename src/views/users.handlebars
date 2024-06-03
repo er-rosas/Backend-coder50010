@@ -1,9 +1,18 @@
-<div>
-    <center>
-        <h1>Users</h1>
+<section class="user-section">
+    <h1 class="user-title">USERS</h1>
         {{#each users}}
-            <p><strong>Nombre: </strong>{{this.first_name}} {{this.last_name}}- <strong>Email: </strong>{{this.email}}</p>
+    <div class="user-card">
+            <img class="user-img" src="{{this.profileImg.refence}}{{this.profileImg.name}}" alt="Falta agregar imagen">
+            <div>
+                <p class="user-"><strong>Nombre:</strong> {{this.first_name}}</p>
+                <p class="user-"><strong>Apellido:</strong> {{this.last_name}}</p>
+                <p class="user-"><strong>Email:</strong> {{this.email}}</p>
+                <p class="user-"><strong>CartID:</strong> {{this.cartId}}</p>
+                <p class="user-"><strong>Role:</strong> {{this.role}}</p>
+            </div>
+    </div>
         {{/each}}
+    <div>
         {{#if hasPrevPage}}
             <a href="users?pageQuery={{prevPage}}">Anterior</a>
         {{/if}}
@@ -11,6 +20,5 @@
         {{#if hasNextPage}}
             <a href="users?pageQuery={{nextPage}}">Siguiente</a>
         {{/if}}
-
-    </center>
-</div>
+    </div>
+</section>

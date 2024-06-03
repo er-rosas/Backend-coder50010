@@ -45,8 +45,13 @@ class ViewsController {
 
     async renderIndex(req, res) {
         try {
+            const userData = req.user;
+
             res.render('index', {
                 showNav: true,
+                showFooter: true,
+                title: 'Inicio',
+                user: userData,
                 style: 'index.css'
             });
         } catch (error) {
@@ -55,28 +60,54 @@ class ViewsController {
             return;
         }}
 
-    // async renderProfile(req, res) {
-    //     try {
-    //         res.status(200).render('profile', {
-    //             showNav: true
-    //         });
-    //     } catch (error) {
-    //         // logger.error(error);
-    //     }
-    // }
+    async renderProfile(req, res) {
+        try {
+            const userData = req.user;
+            console.log(userData);
+            res.status(200).render('profile', {
+                user: userData,
+                showNav: true,
+                showFooter: true,
+                style: 'profile.css'
+            });
+        } catch (error) {
+            // logger.error(error);
+        }
+    }
 
     async renderCart(req, res) {
         try {
             const { cid } = req.params;
             const cart = await cartService.getCart(cid);
             console.log(cart);
-            const cartId = await cartService.getCart(cid);
-            const cartObject = cartId.toObject();
-            const carrito = cartObject.products
+
+            const userData = req.user;
+
+            const totalPrice = cart.products.reduce((total, item) => {
+                return total + (item.product.price * item.quantity);
+            }, 0);
+
+            console.log('Total Price:', totalPrice);
+            // const cart = await cartService.getCart(cid);
+            // const cartProducts = cart.products.map(item => ({
+            //     product: item.product.toObject(),  // Convert Mongoose Document to plain object
+            //     quantity: item.quantity,
+            //     _id: item._id,
+            // }));
+            // console.log('Retrieved cart:', JSON.stringify(cartProducts, null, 2));
+            // const cart = await cartService.getCart(cid);
+            // console.log('Retrieved cart:', JSON.stringify(cart, null, 2));
+            // const cartId = await cartService.getCart(cid);
+            // const carrito = cartId.toObject();
+            // const carrito = cartObject.products
+            // console.log(carrito);
             res.render("carts", { 
-                carrito,
                 cart,
-                showNav: true
+                user: userData,
+                totalPrice,
+                showNav: true,
+                showFooter: true,
+                style: 'cart.css'
             });
     
         } catch (error) {
@@ -107,8 +138,10 @@ class ViewsController {
                 page
             } = await productService.getPaginate(limit, pageQuery, query);
             // const productsData = await productService.getProducts();
+            console.log(docs);
             res.status(200).render('products', {
                 showNav: true,
+                showFooter: true,
                 product: docs,
                 hasPrevPage,
                 hasNextPage,
@@ -141,6 +174,7 @@ class ViewsController {
             // console.log(product)
             res.render("productDetail", {
                 showNav: true,
+                showFooter: true,
                 product, 
                 user: userData,
                 style: 'productDetail.css'
@@ -150,9 +184,9 @@ class ViewsController {
         }
     }
 
-    async renderUsers(request, responses) {
+    async renderUsers(req, responses) {
         try {
-            const {limit = 2, pageQuery = 1} = request.query
+            const {limit = 5, pageQuery = 1} = req.query
             const {
                 docs,
                 hasPrevPage,
@@ -161,14 +195,22 @@ class ViewsController {
                 nextPage,
                 page
                 } = await userService.getPaginate(limit, pageQuery)
+
+                console.log(docs);
+
+                const userData = req.user;
+
                 responses.render('users', {
                     showNav: true,
+                    showFooter: true,
                     users: docs,
                     hasPrevPage, 
                     hasNextPage,
                     prevPage, 
                     nextPage,
                     page,
+                    user: userData,
+                    style: 'users.css'
                 })
             } catch (error) {
                 console.log(error)
@@ -181,15 +223,22 @@ class ViewsController {
             const product = products.map((product) => ({
                 ...product.toObject(),
                 }));
+
+            console.log(product);
             // console.log('GET / route called - Rendering realTimeProducts');
             const userData = req.user;
             console.log(userData);
-            const owner = userData
+
+            const owner = userData;
             console.log(owner.id + "     holaaa");
+
             res.render("realTimeProducts", {
                 product,
                 owner,
-                showNav: true
+                user: userData,
+                showNav: true,
+                showFooter: true,
+                style: 'realTimeProducts.css'
             });
         } catch (error) {
             console.log(error);
@@ -197,6 +246,22 @@ class ViewsController {
             return;
         }
     };
+    async renderChat(req, res) {
+        try {
+            const userData = req.user;
+            console.log(userData);
+            res.render("chat", {
+                user: userData,
+                showNav: true,
+                showFooter: true,
+                style: 'chat.css'
+            });
+        } catch (error) {
+            console.log(error);
+            res.render("Error al obtener la lista de productos!");
+            return;
+        }
+    }
 };
 
 export default ViewsController;

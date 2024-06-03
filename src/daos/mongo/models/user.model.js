@@ -1,5 +1,6 @@
 import {Schema, model} from 'mongoose';
 import mongoosePaginate from "mongoose-paginate-v2";
+//import { profile } from 'winston';
 
 const usersCollection = 'users'
 
@@ -30,9 +31,33 @@ const usersSchema = new Schema({
         type: String,
         enum: ['user', 'user_premium','admin', 'PUBLIC', 'USER', 'USER_PREMIUM', 'ADMIN'],
         default: 'USER'
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'user', 'premium'],
+        default: 'user'
+    },
+    profileImg: [
+        {
+            name: String,
+            reference: String
+        }
+    ],
+    documents: [
+        {
+            name: String,
+            reference: String
+        }
+    ],    
+    last_connection: {
+        type: Date,
+        default: Date.now
     }
 })
 
+usersSchema.pre('findOne', function() {
+    this.populate('cartId')
+});
 
 usersSchema.plugin(mongoosePaginate);
 

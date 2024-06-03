@@ -4,27 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="shortcut icon" href="/image/layout/favicon.ico" type="image/cristal-icon">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/{{style}}">
 </head>
 <body>
     {{#if showNav}}
-        <nav class="navbar">
-            <a href="/inicio">Inicio</a>
-            <a href="/users">Usuarios</a>
-            {{!-- <a href="/profile">Perfil</a> --}}
-            <a href="/products">Productos</a>
-            <a href="/realtimeproducts">Productos en tiempo real</a>
-            {{!-- <a href="/api/chats">Chats en tiempo real</a> --}}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-            <a href="/api/session/logout">Logout</a>
-            {{!-- <a href="/cart">🛒</a> --}}
-            {{!-- <a href="#" id="cart">🛒</a> --}}
-            {{!-- <a href="http://localhost:8080/multer/">multer</a> --}}
-        </nav>
+        <header class="header">
+            <nav class="navbar navBar-position">
+                <div class="logo-container">
+                    <img src="/image/layout/logo-1.png" class="logo-img" alt="">
+                    <p class="logo-text">CRISTAL</p>
+                </div>
+                
+                <a href="/inicio">Inicio</a>
+                <a href="/products">Productos</a>
+                <a href="/realtimeproducts">Real-Time Products</a>
+                <a href="/chat">Chat</a>
+
+                <div class="menu-cont">
+                    <a class="button-menu">
+                    menu <img src="" alt="">
+                    </a>
+                </div>
+                
+                {{!-- <div class="side-menu" id="sideMenu">
+                    <div class="content-menu">
+                        <a href="http://localhost:8080/carts/{{user.cartId}}" class="button">Ver carrito</a>
+                        <a href="/api/session/logout">Logout</a>
+                    </div>
+                </div> --}}
+
+                {{!-- <div class="side-menu" id="sideMenu">
+                    <div class="content-menu">
+                        <a href="http://localhost:8080/carts/{{user.cartId}}" class="button">Ver carrito</a>
+                        <a href="/api/session/logout">Logout</a>
+                    </div>
+                </div> --}}
+
+                <div class="side-menu" id="sideMenu">
+                    <div class="content-menu">
+                        <button class="button-menu button">X</button>
+                        {{#with user}}
+                            <p>Rol: {{this.role}}</p>
+                            <p>Usuario: {{this.first_name}}</p>
+                            <p>Email: {{this.email}}</p>
+                        {{/with}}
+                        <a href="http://localhost:8080/carts/{{user.cartId._id}}" class="button">Ver carrito</a>
+                        <a href="/profile" class="button">Perfil</a>
+                        <a href="/api/sessions/logout" class="button">Logout</a>
+                        <a href="/users" class="button">Usuarios</a>
+                    </div>
+                </div>
+
+                {{!-- <a href="/api/chats">Chats en tiempo real</a> --}}
+                {{!-- <a href="/login">Login</a>
+                <a href="/register">Register</a> --}}
+                
+                
+                {{!-- <a href="/cart">🛒</a> --}}
+                {{!-- <a href="#" id="cart">🛒</a> --}}
+                {{!-- <a href="http://localhost:8080/multer/">multer</a> --}}
+            </nav>
+        </header>
     {{/if}}
     {{{body}}}
+    {{#if showFooter}}
+        <footer class="footerStyle">
+        <div class="footerItems">
+            <div class="footerImg">
+                <div class="logoFooter">
+                    <p>
+                        CRISTAL
+                    </p>
+                </div>
+                <ul class="socialNet">
+                    <li>
+                        <img src="/image/layout/instagram.png" alt="">
+                    </li>
+                    <li>
+                        <img src="/image/layout/facebook.png" alt="">
+                    </li>
+                    <li>
+                        <img src="/image/layout/youtube.png" alt="">
+                    </li>
+                    <li>
+                        <img src="/image/layout/twitter.png" alt="">
+                    </li>
+                    <li>
+                        <img src="/image/layout/linkedin.png" alt="">
+                    </li>
+                </ul>
+            </div>
+            <div class="footerInf">
+                <div>
+                    <p>INDEX</p>
+                    <ul>
+                        <li>
+                            <a href="">Explore</a>
+                        </li>
+                        <li>
+                            <a href="">Shop</a>
+                        </li>
+                        <li>
+                            <a href="">About us</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <p>FAQ</p>
+                    <ul>
+                        <li>
+                            <a href="">Terms and Conditions</a>
+                        </li>
+                        <li>
+                            <a href="">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="">Frequently Asked Questions</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <p>CONTACT US</p>
+                    <ul>
+                        <li>
+                            <a href="">Montevideo, Uruguay.</a>
+                        </li>
+                    </ul>
+                    <p>
+                        Phone Number:
+                    </p>
+                    <a href="">+598 4444 6666</a>
+                </div>
+            </div>
+        </div>
+        <div class="payment">
+            <ul>
+                <li>
+                    <img src="/image/layout/american-express.png" alt="">
+                </li>
+                <li>
+                    <img src="/image/layout/pago-de-apple.png" alt="">
+                </li>
+                <li>
+                    <img class="specialSize" src="/image/layout/tarjeta.png" alt="">
+                </li>
+                <li>
+                    <img class="specialSize" src="/image/layout/paypal.png" alt="">
+                </li>
+                <li>
+                    <img class="specialSize" src="/image/layout/visa.png" alt="">
+                </li>
+            </ul>
+        </div>
+        <div class="copyRight">
+            <p>© 2024 CRISTAL | All rights reserved.</p>
+        </div>
+    </footer>
+    {{/if}}
 </body>
 {{!-- <script src="/socket.io/socket.io.js"></script> --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButtons = document.querySelectorAll('.button-menu');
+        const sideMenu = document.getElementById('sideMenu');
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('side-menu-active');
+        }
+
+        menuButtons.forEach(button => {
+            button.addEventListener('click', toggleMenu);
+        });
+    });
+</script>
+        {{!-- menuButton.addEventListener('click', function() {
+            sideMenu.classList.toggle('side-menu-active');
+        }); --}}
 </html>

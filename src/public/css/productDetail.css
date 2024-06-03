@@ -1,41 +1,100 @@
-.centered-content {
+.product-detail-section {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     /* font-size: 18px; */
+    /* align-items: center; */
+    margin: 50px 0;
+    height: 500px;
+}
+
+.pd-1 {
+    width: 50%;
+    /* background-color: rgb(245, 245, 245); */
+    /* background-color: rgba(0, 0, 0, 0); */
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.product-title {
-    font-size: 30px;
+.pd-1 img {
+    height: 500px;
+    /* width: 280px; */
+    /* padding: 10px; */
+    object-fit: contain;
 }
 
-.card {
-    border: 1px solid #ccc;
+.pd-2 {
+    width: 50%;
+    /* background-color: rgb(228, 228, 228); */
+    /* background-color: rgba(0, 0, 0, 0); */
+}
+
+.product-desc {
+    /* border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
-    margin: 20px;
-    width: 400px; /* Tamaño de la tarjeta */
-    font-size: 18px; /* Tamaño del texto */
+    margin: 20px; */
+    width: 500px;
+    font-size: 18px;
+    margin-left: 25px;
 }
-.card-title {
-    font-size: 24px; /* Tamaño del título */
-    margin-bottom: 10px;
+
+.desc-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 25px 0;
 }
-.card-text {
+
+.desc-r-code {
+    font-size: 14px;
+    color: #616161;
+    margin-bottom: 15px;
+}
+
+.desc-d-text {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.desc-category {
+    font-size: 15px;
+    color: #616161;
     margin-bottom: 5px;
 }
 
-.button-link {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 10px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
+.desc-stock {
+    font-size: 15px;
+    color: #616161;
+    margin-bottom: 15px;
 }
 
-.button-link:hover {
-    background-color: #0056b3;
+.desc-price {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.add-product {
+    text-decoration: unset;
+    color: rgb(255, 255, 255);
+    background-color: #000000;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #000000;
+    border-radius: 3px;
+    transition: 1s;
+}
+
+.add-product:hover {
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+}
+
+.no-stock {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    margin-top: 15px;
 }

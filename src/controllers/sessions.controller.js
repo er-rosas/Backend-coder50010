@@ -38,7 +38,7 @@ class SessionController{
             };
 
             // Verificar si el usuario ya existe en la base de datos
-            const existingUser = await this.service.getUser({email});
+            const existingUser = await this.service.getUserBy({email});
             if (existingUser) {
                 // Si el usuario ya existe, enviar un mensaje de error o realizar alguna acción apropiada
                 return res.status(400).send({ status: 'error', message: 'El usuario ya está registrado.' });
@@ -75,7 +75,7 @@ class SessionController{
             const { email, password } = req.body
             console.log(req.body.email, req.body.password)
         
-            const userFoundDB = await userService.getUser( {email} )
+            const userFoundDB = await userService.getUserBy( {email} )
             console.log(userFoundDB)
             console.log(userFoundDB.password)
         
@@ -84,7 +84,7 @@ class SessionController{
                 return res.status(401).send('Contraseña incorrecta')
             }
         
-            const token = generateToken({id: userFoundDB._id, email, first_name: userFoundDB.first_name, role: userFoundDB.role, cartId: userFoundDB.cartId})
+            const token = generateToken({id: userFoundDB._id, email, first_name: userFoundDB.first_name, role: userFoundDB.role, cartId: userFoundDB.cartId, profileImg: userFoundDB.profileImg})
         
             res.cookie('cookieToken', token, {
                 maxAge: 60*60*1000*24,
@@ -126,7 +126,7 @@ class SessionController{
             console.log(email)
             // buscar el usuario en la base de datos
             //const {_doc: doc} = await userModel.findOne( {email})
-            const user = await this.service.getUser({email});
+            const user = await this.service.getUserBy({email});
             console.log(user)
 
             //const {password, _id, ...} = user        
@@ -195,7 +195,7 @@ class SessionController{
             // }
         
             // // buscar el usuario en la base de datos
-            const userDB = await this.service.getUser({email: decodedUser.email})
+            const userDB = await this.service.getUserBy({email: decodedUser.email})
             
             if (!userDB) return res.status(400).send({status: 'error', message: 'El usuario no existe'})
         

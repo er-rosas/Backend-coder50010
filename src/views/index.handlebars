@@ -1,9 +1,65 @@
 <section class="welcome-section">
-    <h1>Bienvenido a mi E-commerce</h1>
-    <p>Somos tu tienda en línea especializada en smartphones de las marcas más reconocidas.</p>
+    {{!-- <h1 class="animate">Bienvenido a Cristal</h1>
+    <p class="animate">Un lugar donde podes compar</p>
+    <p class="animate">Y vender</p> --}}
+    <p class="animate" id="text"></p>
+    <div class="stage">
+        <div class="diamond rotor-x">
+            <div class="diamond rotor-y">
+                <div class="diamond rotor-z">
+                    <!-- Bottom Down Triangles -->
+                    <div class="triangle bottom face-1"></div>
+                    <div class="triangle bottom face-2"></div>
+                    <div class="triangle bottom face-3"></div>
+                    <div class="triangle bottom face-4"></div>
+                    <div class="triangle bottom face-5"></div>
+                    <div class="triangle bottom face-6"></div>
+                    <div class="triangle bottom face-7"></div>
+                    <div class="triangle bottom face-8"></div>
+
+                    <!-- Middle Bottom Triangles -->
+                    <div class="triangle middle-bottom face-1"></div>
+                    <div class="triangle middle-bottom face-2"></div>
+                    <div class="triangle middle-bottom face-3"></div>
+                    <div class="triangle middle-bottom face-4"></div>
+                    <div class="triangle middle-bottom face-5"></div>
+                    <div class="triangle middle-bottom face-6"></div>
+                    <div class="triangle middle-bottom face-7"></div>
+                    <div class="triangle middle-bottom face-8"></div>
+
+                    <!-- Middle Top Triangles -->
+                    <div class="triangle middle-top face-1"></div>
+                    <div class="triangle middle-top face-2"></div>
+                    <div class="triangle middle-top face-3"></div>
+                    <div class="triangle middle-top face-4"></div>
+                    <div class="triangle middle-top face-5"></div>
+                    <div class="triangle middle-top face-6"></div>
+                    <div class="triangle middle-top face-7"></div>
+                    <div class="triangle middle-top face-8"></div>
+
+                    <!-- Top Triangles -->
+                    <div class="triangle top face-1"></div>
+                    <div class="triangle top face-2"></div>
+                    <div class="triangle top face-3"></div>
+                    <div class="triangle top face-4"></div>
+                    <div class="triangle top face-5"></div>
+                    <div class="triangle top face-6"></div>
+                    <div class="triangle top face-7"></div>
+                    <div class="triangle top face-8"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="sparkle-wrap-1">
+            <div class="sparkle-1"></div>
+        </div>
+        <div class="sparkle-wrap-2">
+            <div class="sparkle-2"></div>
+        </div>
+    </div>
 </section>
 
-<section class="brand-descriptions">
+{{!-- <section class="brand-descriptions">
     <div class="brand">
         <img src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png" alt="iPhone" class="brand-logo">
         <h2>iPhone</h2>
@@ -19,4 +75,31 @@
         <h2>Xiaomi</h2>
         <p class="brand-description">Sumérgete en la innovación con los dispositivos Xiaomi. Con una combinación perfecta de calidad, rendimiento y precio, los smartphones Xiaomi te brindan una experiencia móvil excepcional que se adapta a tu estilo de vida.</p>
     </div>
-</section>
+</section> --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const textElement = document.getElementById('text');
+        const texts = [
+            "Bienvenido a Cristal",
+            "Un lugar donde podes comprar",
+            "Y vender"
+        ];
+        let index = 0;
+
+        function showText() {
+            textElement.textContent = texts[index];
+            textElement.classList.add('show');
+            textElement.classList.remove('hide');
+            setTimeout(hideText, 2000); // Tiempo que el texto permanece visible
+        }
+
+        function hideText() {
+            textElement.classList.add('hide');
+            textElement.classList.remove('show');
+            index = (index + 1) % texts.length; // Ciclo a través de los textos
+            setTimeout(showText, 1000); // Tiempo entre la desaparición y la aparición del siguiente texto
+        }
+
+        showText();
+    });
+</script>

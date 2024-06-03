@@ -1,69 +1,45 @@
-<style>
-    .card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px;
-            width: 300px; /* Puedes ajustar el ancho según tus necesidades */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-    .card-title {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-
-    .card-text {
-        color: #555;
-    }
-
-    a {
-        text-decoration: none;
-        color: #007bff;
-        display: block;
-        margin-top: 10px;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-</style>
-<div id="cart-details">
-    <center>
-        <h1>Cart Detail</h1>
-        {{#each carrito }}
-        <div class="card">
-            <h5 class="card-title"><strong>Title: </strong>{{this.product.title}}</h5>
-            <p class="card-text"><strong>Price: </strong>{{this.product.price}}</p>
-            <a href="/productdetail/{{this.product._id}}">Ver detalle</a>
-            <p class="card-text"><strong>Quantity: </strong>{{this.quantity}}</p>
-            <button class="btn btn-outline-danger" onclick="eliminarProduct('{{this.product._id}}')"><strong> Eliminar </strong></button>
+<section class="cart-section">
+    <div class="cart-p1">
+        <div class="cart-resume" id="cart-details">
+            {{#each cart.products }}
+            <div class="card">
+                <a href="/productdetail/{{this.product._id}}">
+                    <img src="{{this.product.thumbnails.[0]}}" alt="Product Image">
+                </a>
+                <div>
+                    <p class="card-title">{{this.product.title}}</p>
+                    <p class="card-quantity">Quantity: {{this.quantity}}</p>
+                    <p class="card-price">USD ${{this.product.price}}</p>
+                    {{!-- <a href="/productdetail/{{this.product._id}}">Ver detalle</a> --}}
+                </div>
+                <button class="card-delete" onclick="eliminarProduct('{{this.product._id}}')">X</button>
+            </div>
+            {{/each}}
         </div>
-        {{/each}}
-        <div>
-            <p>Subtotal:</p>
-            <p>Total:</p>
-            <button id="terminar-compra" class="btn btn-outline-success">Terminar compra</button>
+    </div>
+    <div class="cart-p2">
+        <div class="cart-payment">
+            <h1 class="payment-title-1">CART DETAIL</h1>
+            <h2 class="payment-title-2">Payment</h2>
+            <div>
+                <p class="payment-subtotal">Subtotal: {{ totalPrice }}</p>
+                <p class="payment-total">Total: {{ totalPrice }}</p>
+                <button id="terminar-compra" class="payment-button">Terminar compra</button>
+            </div>
         </div>
-    </center>
-</div>
-
-<div id="success-message" style="display: none; text-align: center; margin-top: 20px;">
-    <h2>Compra exitosa</h2>
-    <p>¡Gracias por tu compra!</p>
-    <a href="/products">Volver a productos</a>
-</div>
+    </div>
+    <div id="success-message" class="purchase">
+        <h2>Compra exitosa</h2>
+        <p>¡Gracias por tu compra!</p>
+        <a href="/products">Volver a productos</a>
+    </div>
+</section>
 
 <script>
-    function getCIDFromURL() {
-        const url = window.location.href;
-        const parts = url.split('/');
-        return parts[parts.length - 1]; // Devuelve el último segmento de la URL, que debería ser el cid
-    }
-
     function eliminarProduct(pid) {
-        const cid = getCIDFromURL();
-        fetch(`/api/carts/${cid}/products/${pid}`, {
+        const cid = "{{cart._id}}"
+        console.log(cid + "  -----  " + pid)
+        fetch(`/api/carts/${cid}/product/${pid}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -77,12 +53,14 @@
     const button = document.querySelector('#terminar-compra')
     button.addEventListener('click', function() {
         generarTicket();
-        document.getElementById('cart-details').style.display = 'none';
-        document.getElementById('success-message').style.display = 'block';
+        document.querySelector('.cart-p1').classList.add('no-active');
+        document.querySelector('.cart-p2').classList.add('no-active');
+        document.querySelector('.cart-section').classList.add('center');
+        document.querySelector('.purchase').classList.add('active');
     });
 
     function generarTicket() {
-        const cid = getCIDFromURL();
+        const cid = "{{cart._id}}"
         fetch(`/api/orders/${cid}`, {
             method: 'POST',
             headers: {

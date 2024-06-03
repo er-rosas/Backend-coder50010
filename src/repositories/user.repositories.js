@@ -1,7 +1,7 @@
 import UserDTO from "../dto/user.dto.js"
 import UserCurrentDTO from "../dto/userCurrent.dto.js"
 
-class UserRpositories {
+class UserRepositories {
     constructor(userDao){
         this.dao = userDao
     }
@@ -13,7 +13,14 @@ class UserRpositories {
             return error
         }
     }
-    async getUser(filter){
+    async getUser(uid){
+        try {
+            return await this.dao.get({_id: uid})   
+        } catch (error) {
+            return error
+        }
+    }
+    async getUserBy(filter){
         try {
             return await this.dao.getBy(filter)   
         } catch (error) {
@@ -60,4 +67,4 @@ class UserRpositories {
     }
 }
 
-export default UserRpositories
+export default UserRepositories

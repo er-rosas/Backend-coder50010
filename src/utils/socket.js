@@ -1,10 +1,11 @@
 import { productService } from "../services/index.js";
+import messageModel from "../daos/mongo/models/messages.models.js";
 
 const managerMongo = productService;
 
 const initProductsSocket = (io) => {
     return io.on('connection', (socket) => {
-            console.log("Usuario conectado.");
+            console.log("Usuario conectado al Real-Time Products");
             socket.emit('updateProducts', managerMongo.getProducts());
 
             socket.on("addProduct", async (data) => {
@@ -54,8 +55,62 @@ const initProductsSocket = (io) => {
         });
 }
 
+// const initChatSocket = (io) => {
+//     io.on('connection', socket => {
+//         console.log("Nuevo cliente conectado");
+
+//         socket.on('message', async (data) => {
+//             console.log('Mensaje recibido:', data);
+//             await messageModel.create(data);
+//             const mensajes = await messageModel.find();
+//             io.emit('messageLogs', mensajes);
+//         });
+
+//         socket.on('getMessages', async () => {
+//             const mensajes = await messageModel.find();
+//             socket.emit('messageLogs', mensajes);
+//         });
+
+//         socket.on('authenticated', (data) => {
+//             socket.broadcast.emit('newUserConnected', data);
+//         });
+
+//         socket.on('disconnect', () => {
+//             console.log("Cliente desconectado");
+//         });
+//     });
+// };
+
+const initChatSocket = (io) => {
+    io.on('connection', (socket) => {
+        console.log("Usuario conectado al Chat");
+
+        socket.on('message', async (data) => {
+            console.log('Mensaje recibido:', data);
+            await messageModel.create(data);
+            const mensajes = await messageModel.find();
+            io.emit('messageLogs', mensajes);
+        });
+
+        socket.on('getMessages', async () => {
+            const mensajes = await messageModel.find();
+            socket.emit('messageLogs', mensajes);
+        });
+
+        socket.on('authenticated', (data) => {
+            socket.broadcast.emit('newUserConnected', data);
+        });
+
+        socket.on('disconnect', () => {
+            console.log("Cliente desconectado");
+        });
+    });
+};
+
+
 export {
-    initProductsSocket
+    initProductsSocket,
+    initChatSocket
 }
 
 
